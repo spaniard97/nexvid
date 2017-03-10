@@ -8,8 +8,6 @@ This is the project's readme. As pieces get completed, they can be moved to the 
 
 #Todo
 -----
-- Requirements engineering
-- all documents
 - interface
 - app logic
 - database
