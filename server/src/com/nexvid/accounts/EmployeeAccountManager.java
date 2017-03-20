@@ -37,6 +37,7 @@ public class EmployeeAccountManager
      * @POST
      * @PATH("/addCustomer")
      * @consumes(MediaType.Application_JSON)
+     * @produces(MediaType.Application_JSON)
      */
     public static boolean addCustomer(CustomerAccount newAccount)
     {
@@ -63,7 +64,14 @@ public class EmployeeAccountManager
     /**
      * The employee's method for suspending customer accounts
      * @param account the account to suspend
-     * @return the boolean status of the account suspension
+     * @return the status of the account suspension
+     * @precondition the account exists
+     * @postcondition the account has been suspended
+     * 
+     * @POST
+     * @Path("/suspendAccount")
+     * @consumes(MediaType.Application_JSON)
+     * @produces(MediaType.Application_JSON)
      */
     public static boolean suspendAccount(CustomerAccount account)
     {
@@ -74,7 +82,14 @@ public class EmployeeAccountManager
      * The employee's method for increasing an account's fine
      * @param fine the fine to add to the account's current  balance
      * @param account the account to add the fine to
-     * @return the boolean status of the fine addition
+     * @return the status of the fine addition
+     * @precondition the account exists, the fine is a positive amount
+     * @postcondition the fine has been added to the account
+     * 
+     * @POST
+     * @Path("/addFine")
+     * @consumes(MediaType.Application_JSON)
+     * @produces(MediaType.Application_JSON)
      */
     public static boolean addFine(Fine fine, CustomerAccount account) 
     {
@@ -85,7 +100,14 @@ public class EmployeeAccountManager
      * The employee's method for reducing an account's fine
      * @param fine the fine to reduce from the account's current balance
      * @param account the account to add the fine to
-     * @return the boolean status of the fine reduction
+     * @return the status of the fine reduction
+     * @precondition the account exixts
+     * @postcondition the fine has been reduced
+     * 
+     * @POST
+     * @Path("/reducefine")
+     * @consumes(MediaType.Application_JSON)
+     * @produces(MediaType.Application_JSON)
      */
     public static boolean reduceFine(Fine fine, CustomerAccount account)
     {
@@ -95,7 +117,13 @@ public class EmployeeAccountManager
     /**
      * The manager's method for adding a new employee
      * @param employee the new employee
-     * @return the boolean status of the account employee addition 
+     * @return the status of the account employee addition 
+     * @postcondition the account has been added
+     * 
+     * @POST
+     * @Path("/addEmployee")
+     * @consumes(MediaType.Application_JSON)
+     * @produces(MediaType.Application_JSON)
      */
     public static boolean addEmployee(EmployeeAccount employee)
     {
@@ -105,7 +133,14 @@ public class EmployeeAccountManager
     /**
      * The manager's method for deactivating employees
      * @param employee the employee account to deactivate
-     * @return the boolean status of the account deactivation
+     * @return the status of the account deactivation
+     * @precondition the employee account exists
+     * @postcondition the employee account has been deactivated
+     * 
+     * @POST
+     * @Path("/deactivateEmployee")
+     * @consumes(MediaType.Application_JSON)
+     * @produces(MediaType.Application_JSON)
      */
     public static boolean deactivateEmployee(EmployeeAccount employee)
     {
@@ -115,7 +150,13 @@ public class EmployeeAccountManager
     /**
      * The system administrator's method for adding managers
      * @param manager the manager account to add
-     * @return the boolean status of the account addition
+     * @return the status of the account addition
+     * @postcondition the manager account has been added
+     * 
+     * @POST
+     * @Path("/addManager")
+     * @consumes(MediaType.Application_JSON)
+     * @produces(MediaType.Application_JSON)
      */
     public static boolean addManager(ManagerAccount manager)
     {
@@ -125,7 +166,14 @@ public class EmployeeAccountManager
     /**
      * The system administrator's method for deactivating manager accounts
      * @param manager the manager account to deactivate
-     * @return the boolean status of the account deactivation
+     * @return the status of the account deactivation
+     * @precondition the manager account exists
+     * @postcondition the manager account has been deactivated
+     * 
+     * @POST
+     * @Path("/deactivateManager")
+     * @consumes(MediaType.Application_JSON)
+     * @produces(MediaType.Application_JSON)
      */
     public static boolean deactivateManager(ManagerAccount manager)
     {

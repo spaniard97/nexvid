@@ -102,5 +102,25 @@ public class CustomerAccount extends Account
         this.passPhrase = passPhrase;
     }
     
+    /**
+     * 
+     * @param address the customer's address
+     * @param phoneNumber the customer's phone number
+     * @param email the customer's email
+     * @param confirmed the customer's account confirmation status
+     * @param passPhrase the customer's account passphrase
+     */
+    public CustomerAccount(String address, String phoneNumber, String email, Boolean confirmed, Balance balanceOwed,
+            String passPhrase)
+    {
+	super();
+	this.address = address;
+	this.phoneNumber = phoneNumber;
+	this.email = email;
+	this.confirmed = confirmed;
+	this.passPhrase = passPhrase;
+    }
+    
+    
     
 }
