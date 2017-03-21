@@ -39,9 +39,9 @@ public class EmployeeAccountManager
      * @consumes(MediaType.Application_JSON)
      * @produces(MediaType.Application_JSON)
      */
-    public static boolean addCustomer(CustomerAccount newAccount)
+    public String addCustomer(CustomerAccount newAccount)
     {
-	return true;
+	return "";
     }
     
     /**
@@ -56,9 +56,9 @@ public class EmployeeAccountManager
      * @consumes(MediaType.Application_JSON)
      * @produces(MediaType.Application_JSON)
      */
-    public static boolean deactivateAccount(CustomerAccount account)
+    public String deactivateAccount(CustomerAccount account)
     {
-	return true;
+	return "";
     }
     
     /**
@@ -73,9 +73,9 @@ public class EmployeeAccountManager
      * @consumes(MediaType.Application_JSON)
      * @produces(MediaType.Application_JSON)
      */
-    public static boolean suspendAccount(CustomerAccount account)
+    public String suspendAccount(CustomerAccount account)
     {
-	return true;
+	return "";
     }
     
     /**
@@ -91,9 +91,9 @@ public class EmployeeAccountManager
      * @consumes(MediaType.Application_JSON)
      * @produces(MediaType.Application_JSON)
      */
-    public static boolean addFine(Fine fine, CustomerAccount account) 
+    public String addFine(Fine fine, CustomerAccount account) 
     {
-	return true;
+	return "";
     }
     
     /**
@@ -101,17 +101,17 @@ public class EmployeeAccountManager
      * @param fine the fine to reduce from the account's current balance
      * @param account the account to add the fine to
      * @return the status of the fine reduction
-     * @precondition the account exixts
+     * @precondition the account exists
      * @postcondition the fine has been reduced
      * 
      * @POST
-     * @Path("/reducefine")
+     * @Path("/reduceFine")
      * @consumes(MediaType.Application_JSON)
      * @produces(MediaType.Application_JSON)
      */
-    public static boolean reduceFine(Fine fine, CustomerAccount account)
+    public String reduceFine(Fine fine, CustomerAccount account)
     {
-	return true;
+	return "";
     }
     
     /**
@@ -125,9 +125,9 @@ public class EmployeeAccountManager
      * @consumes(MediaType.Application_JSON)
      * @produces(MediaType.Application_JSON)
      */
-    public static boolean addEmployee(EmployeeAccount employee)
+    public String addEmployee(EmployeeAccount employee)
     {
-	return true;
+	return "";
     }
     
     /**
@@ -142,9 +142,9 @@ public class EmployeeAccountManager
      * @consumes(MediaType.Application_JSON)
      * @produces(MediaType.Application_JSON)
      */
-    public static boolean deactivateEmployee(EmployeeAccount employee)
+    public String deactivateEmployee(EmployeeAccount employee)
     {
-	return true;
+	return "";
     }
     
     /**
@@ -158,9 +158,9 @@ public class EmployeeAccountManager
      * @consumes(MediaType.Application_JSON)
      * @produces(MediaType.Application_JSON)
      */
-    public static boolean addManager(ManagerAccount manager)
+    public String addManager(EmployeeAccount manager)
     {
-	return true;
+	return "";
     }
     
     /**
@@ -175,8 +175,10 @@ public class EmployeeAccountManager
      * @consumes(MediaType.Application_JSON)
      * @produces(MediaType.Application_JSON)
      */
-    public static boolean deactivateManager(ManagerAccount manager)
+    public String deactivateManager(EmployeeAccount manager)
     {
-	return true;
+	return "";
     }
+
+
 }
