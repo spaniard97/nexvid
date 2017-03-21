@@ -20,12 +20,12 @@ class Account {
 	    this.firstName = firstName;
 	}
 	
-	private String getFirstName()
+	protected String getFirstName()
 	{
 	    return this.firstName;
 	}
 	
-	private String getLastName()
+	protected String getLastName()
 	{
 	    return this.lastName;
 	}
