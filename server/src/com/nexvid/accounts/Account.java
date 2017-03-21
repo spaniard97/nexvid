@@ -2,18 +2,34 @@ package com.nexvid.accounts;
 
 class Account {
 
-	private String name;
+	private String firstName;
+	private String lastName;
 	private int accountID;
 	private String password;
 	
 	
-	/**
-	 * Gets the account owner's name
-	 * @return the name
-	 */
-	protected String getName() {
-		return name;
+	
+	
+	private void setLastName(String lastName)
+	{
+	    this.lastName = lastName;
 	}
+	
+	private void setFirstName(String firstName)
+	{
+	    this.firstName = firstName;
+	}
+	
+	private String getFirstName()
+	{
+	    return this.firstName;
+	}
+	
+	private String getLastName()
+	{
+	    return this.lastName;
+	}
+	
 	/**
 	 * Gets the account ID
 	 * @return the accountID
@@ -21,6 +37,7 @@ class Account {
 	protected int getAccountID() {
 		return accountID;
 	}
+	
 	/**
 	 * Gets the current account password
 	 * @return the password
@@ -28,12 +45,15 @@ class Account {
 	protected String getPassword() {
 		return password;
 	}
+	
 	/**
 	 * Sets the account owner's name
-	 * @param name the name to set
+	 * @param firstName the account owner's first name
+	 * @param lastName the account owner's last name
 	 */
-	protected void setName(String name) {
-		this.name = name;
+	protected void setName(String firstName, String lastName) {
+		setFirstName(firstName);
+		setLastName(lastName);
 	}
 	/**
 	 * Sets the new account ID
