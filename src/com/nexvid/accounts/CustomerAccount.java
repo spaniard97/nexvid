@@ -13,6 +13,12 @@ public class CustomerAccount extends Account
     private Boolean confirmed;
     private Balance balanceOwed;
     private String passPhrase;
+    private String accountType;
+    
+    protected String getAccountType()
+    {
+        return this.accountType;
+    }
     
     
     protected String getStreetName() {
@@ -155,6 +161,7 @@ public class CustomerAccount extends Account
 		this.email = email;
 		this.confirmed = confirmed;
 		this.passPhrase = passPhrase;
+		this.accountType = RegisteredCustomer;
 	}
     
     
