@@ -10,7 +10,7 @@ public class CustomerAccount extends Account
     private String country;
     private String phoneNumber;
     private String email;
-    private Boolean confirmed;
+    private String status;
     private Balance balanceOwed;
     private String passPhrase;
     private String accountType;
@@ -74,9 +74,9 @@ public class CustomerAccount extends Account
     /**
      * @return the boolean of the customer account's confirmation status
      */
-    protected Boolean getConfirmed()
+    protected String getStatus()
     {
-        return confirmed;
+        return status;
     }
     /**
      * @return the customer's balanceOwed
@@ -110,12 +110,11 @@ public class CustomerAccount extends Account
     }
     /**
      * Sets the accounts confirmation status
-     * only necessary for online registration
      * @param confirmed the confirmation of the account
      */
-    protected void setConfirmed(Boolean confirmed)
+    protected void setStatus(String status)
     {
-        this.confirmed = confirmed;
+        this.status = status;
     }
     /**
      * Sets the customer's owing balance
