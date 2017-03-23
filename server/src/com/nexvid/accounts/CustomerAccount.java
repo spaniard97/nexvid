@@ -20,6 +20,11 @@ public class CustomerAccount extends Account
         return this.accountType;
     }
     
+    protected void setAccountType(String accountType)
+    {
+    	this.accountType = accountType;
+    }
+    
     
     protected String getStreetName() {
 		return streetName;
@@ -143,11 +148,11 @@ public class CustomerAccount extends Account
      * @param country customer's country of residence
      * @param phoneNumber customer's phone number
      * @param email customer's email
-     * @param confirmed confirmation status of customer's account
+     * @param status the status of customer's account
      * @param passPhrase passphrase for subaccounts
      */
     public CustomerAccount(String streetName, String appartmentNumber, int streetNumber, String city, String province,
-			String country, String phoneNumber, String email, Boolean confirmed,
+			String country, String phoneNumber, String email, String status,
 			String passPhrase) {
 		super();
 		this.streetName = streetName;
@@ -158,9 +163,9 @@ public class CustomerAccount extends Account
 		this.country = country;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
-		this.confirmed = confirmed;
+		this.status = status;
 		this.passPhrase = passPhrase;
-		this.accountType = RegisteredCustomer;
+		this.accountType = "RegisteredCustomer";
 	}
     
     
