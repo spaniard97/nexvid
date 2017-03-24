@@ -3,7 +3,7 @@
  */
 
 
-$("#button1").click(function(){
+$("#button1").click(function() {
     var title = $("#searchBar").val();
     console.log(title);
 
@@ -22,7 +22,7 @@ $("#button1").click(function(){
         "dataType": "json",
     }
 
-    $.ajax(settings).done(function (response) {
+    $.ajax(settings).done(function(response) {
 
         //Loggin response to conse for debugging
         console.log(response);
@@ -34,29 +34,30 @@ $("#button1").click(function(){
         console.log("Current page: " + currentPage);
 
 
+        /*
+                for (i = 0; i < response.results.length; i++){
+                    //Movie title
+                    var movieTitle = response.results[i].title;
+                    console.log("Movie Title: " + movieTitle);
+                    //If the media is a TvShow, the title changes to name
+                    //var tvShowName = response.results[0].name;
+                    //image url
+                    var image = "https://image.tmdb.org/t/p/w154" + response.results[i].poster_path;
+                    document.getElementById("pictureSpan").innerHTML += '<img src="'+ image +'" />';
+                    //Online Id
+                    var onlineID = response.results[i].id;
+                    console.log("Online ID:" + onlineID);
+                    //image url
+                    var image = "https://image.tmdb.org/t/p/w154" + response.results[i].poster_path;
+                    //Overview
+                    var overview = response.results[i].overview;
+                    console.log("Overview:" + overview);
+                    //Release date
+                    var releaseDate = response.results[i].release_date;
+                    console.log("Release date: " + releaseDate);
+                }
+            });
+        */
 
-        for (i = 0; i < response.results.length; i++){
-            //Movie title
-            var movieTitle = response.results[i].title;
-            console.log("Movie Title: " + movieTitle);
-            //If the media is a TvShow, the title changes to name
-            //var tvShowName = response.results[0].name;
-            //image url
-            var image = "https://image.tmdb.org/t/p/w154" + response.results[i].poster_path;
-            document.getElementById("pictureSpan").innerHTML += '<img src="'+ image +'" />';
-            //Online Id
-            var onlineID = response.results[i].id;
-            console.log("Online ID:" + onlineID);
-            //image url
-            var image = "https://image.tmdb.org/t/p/w154" + response.results[i].poster_path;
-            //Overview
-            var overview = response.results[i].overview;
-            console.log("Overview:" + overview);
-            //Release date
-            var releaseDate = response.results[i].release_date;
-            console.log("Release date: " + releaseDate);
-        }
     });
-
-
 });
