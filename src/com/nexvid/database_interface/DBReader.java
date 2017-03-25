@@ -3,6 +3,10 @@ package com.nexvid.database_interface;
 import com.nexvid.inventory_manager.*;
 import com.nexvid.accounts.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.*;
+
 
 /**
  * This class reads data from the database using SELECT queries
@@ -15,9 +19,34 @@ public class DBReader
 	 * Retrieves an account from the database
 	 * @param account_ID the account's ID number
 	 * @return the Account object or NULL
+	 * @throws SQLException if an error occurs
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	public Account getAccountQuery(int account_ID) 
+	public static Account getAccountQuery(int account_ID) throws SQLException, FileNotFoundException, IOException 
 	{
+		//Creates a Database object to establish a connection
+		DatabaseConnector db = new DatabaseConnector();
+		Connection myConn = db.getConnection();
+		
+		// Creates a prepared statement query
+		//PreparedStatement myStmt = myConn.prepareStatement("SELECT * from Account WHERE `account_ID` = ?");
+		CallableStatement myStmt = myConn.prepareCall("{call get_account_info(?)}");
+		myStmt.setInt(1, account_ID); //uses the prepared statement
+		
+		//Execute the query to the database
+		ResultSet myRs = myStmt.executeQuery();
+		
+		while (myRs.next()) {
+			
+			//Account myAccount = ();
+			
+			System.out.println(myRs.getString("account_ID") + ", " + myRs.getString("first_name") + ", " + myRs.getString("last_name") +
+					", " + myRs.getString("city"));
+			
+		}
+		System.out.println(db.endConnection(myConn)); //Closes the connection to the database
+		
 		return null;
 	}
 	
@@ -45,9 +74,26 @@ public class DBReader
 	 * Retrieves all the copies associated with a media
 	 * @param media_ID the media's ID number
 	 * @return a list of media copies
+	 * @throws SQLException if there is an error
 	 */
-	public MediaCopy[] getMediaCopiesQuery(int media_ID)
+	public MediaCopy[] getMediaCopiesQuery(int media_ID) throws SQLException
 	{
+		DatabaseConnector db = null;
+		
+		Statement myStmt = db.getConnection().createStatement();
+		
+		ResultSet myRs = myStmt.executeQuery("SELECT * FROM MediaCopy WHERE `media_ID` = media_ID");
+		
+		
+		
+		while (myRs.next()) {
+			
+			
+			System.out.println(myRs.getString("account_ID") + ", " + myRs.getString("first_name") + ", " + myRs.getString("last_name") +
+					", " + myRs.getString("city"));
+			
+		}
+		
 		return null;
 	}
 	
