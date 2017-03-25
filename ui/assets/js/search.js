@@ -59,7 +59,7 @@ $("#button1").click(function() {
 
             document.getElementById("resultList").innerHTML +=
                 '<li class = "result"><h4 >' + movieTitle + '</h4> <img src = "' + image + '" / ><p> ' +
-                description + ' < /p> </li > ';
+                overview + ' < /p> </li > ';
         }
     });
 
