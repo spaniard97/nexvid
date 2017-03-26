@@ -1,7 +1,9 @@
-.container {
+#container {
     display: flex;
     display: -webkit-flex;
     height: 100px;
+    justify-content: center;
+    margin-top: 10%;
 }
 
 label {

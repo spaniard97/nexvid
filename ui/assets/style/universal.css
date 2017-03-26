@@ -1,3 +1,33 @@
 #title {
     float: left;
+    margin-top: 15px;
+    margin-left: 5px;
+}
+
+header {
+    display: flex;
+    display: -webkit-flex;
+    margin: 0;
+    height: 70px;
+    background-color: #778699;
+    width: 100%;
+}
+
+#loginLink {
+    font-size: large;
+    height: 32px;
+    align-self: center;
+}
+
+#headerRight {
+    align-self: center;
+    -webkit-align-self: center;
+    float: right;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #333333;
 }
