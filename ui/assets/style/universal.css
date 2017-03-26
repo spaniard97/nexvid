@@ -13,18 +13,21 @@ header {
     width: 100%;
 }
 
-#loginLink {
-    font-size: large;
-    height: 32px;
-    align-self: center;
-}
-
 #headerRight {
     align-self: center;
     -webkit-align-self: center;
     float: right;
     margin-left: auto;
     margin-right: 20px;
+    margin-top: 15px;
+}
+
+#loginLink {
+    font-size: large;
+    height: 32px;
+    align-self: center;
+    margin-right: 10px;
+    margin-top: 10px;
 }
 
 a {

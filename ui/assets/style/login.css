@@ -3,7 +3,7 @@
     display: -webkit-flex;
     height: 100px;
     justify-content: center;
-    margin-top: 10%;
+    margin-top: 1%;
 }
 
 label {
@@ -22,6 +22,11 @@ input {
 button {
     display: inline-block;
     align-self: flex-end;
-    float: left;
+    float: right;
     clear: left;
+    margin-top: 10px;
+}
+
+h2 {
+    text-align: center;
 }

@@ -58,7 +58,7 @@ $("#button1").click(function() {
             console.log("Release date: " + releaseDate);
 
             document.getElementById("resultList").innerHTML +=
-                '<li action="movie.html?=" method="get" class = "result"><img class="resultImage" src= "' + image + '" / > <div class="restultsRight"><h2 class = "resultHeader">' + movieTitle + '</h2><p class="resultDescrip" > ' + overview + ' </p > </div></li > ';
+                '<li class = "result"><img class="resultImage" src= "' + image + '" / > <div class="restultsRight"><h2 class = "resultHeader">' + movieTitle + '</h2><p class="resultDescrip" > ' + overview + ' </p > </div></li > ';
         }
     });
 
