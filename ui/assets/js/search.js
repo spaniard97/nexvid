@@ -2,7 +2,6 @@
  * Created by Samuel on 16/03/17.
  */
 
-//import "searchResults" as SR;
 
 $("#button1").click(function() {
     var title = $("#searchBar").val();
