@@ -25,27 +25,45 @@ public class DBReader
 	 */
 	public static Account getAccountQuery(int account_ID) throws SQLException, FileNotFoundException, IOException 
 	{
-		//Creates a Database object to establish a connection
-		DatabaseConnector db = new DatabaseConnector();
-		Connection myConn = db.getConnection();
-		
-		// Creates a prepared statement query
-		//PreparedStatement myStmt = myConn.prepareStatement("SELECT * from Account WHERE `account_ID` = ?");
-		CallableStatement myStmt = myConn.prepareCall("{call get_account_info(?)}");
-		myStmt.setInt(1, account_ID); //uses the prepared statement
-		
-		//Execute the query to the database
-		ResultSet myRs = myStmt.executeQuery();
-		
-		while (myRs.next()) {
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		ResultSet myRs = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
 			
-			//Account myAccount = ();
+			// Creates a prepared statement query
+			//PreparedStatement myStmt = myConn.prepareStatement("SELECT * from Account WHERE `account_ID` = ?");
+			myStmt = myConn.prepareCall("{call get_account_info(?)}");
 			
-			System.out.println(myRs.getString("account_ID") + ", " + myRs.getString("first_name") + ", " + myRs.getString("last_name") +
-					", " + myRs.getString("city"));
+			//Sets the parameter for the prepared statement.  
+			myStmt.setInt(1, account_ID);
 			
+			//Execute the query to the database
+			myRs = myStmt.executeQuery();
+			
+			//Temporary until we get the classes all completed and can create objects to pass the info
+			while (myRs.next()) {
+				
+				//Account myAccount = new Account();
+				
+				System.out.println(myRs.getString("account_ID") + ", " + myRs.getString("first_name") + ", " + myRs.getString("last_name") +
+						", " + myRs.getString("city"));
+				
+			}
 		}
-		System.out.println(db.endConnection(myConn)); //Closes the connection to the database
+		finally{
+			if (myRs != null) {
+				myRs.close();
+			}
+			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			System.out.println(db.endConnection(myConn)); //Closes the connection to the database
+		}
 		
 		return null;
 	}
@@ -54,9 +72,46 @@ public class DBReader
 	 * Retrieves a sub-account from the database
 	 * @param sub_ID the sub-account's ID number
 	 * @return the SubAccount object or NULL
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 */
-	public SubAccount getSubAccountQuery(int sub_ID) 
+	public static SubAccount getSubAccountQuery(int sub_ID) throws FileNotFoundException, IOException, SQLException 
 	{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		ResultSet myRs = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call get_subAccount_info(?)}");
+			
+			//Sets the parameter for the prepared statement.
+			myStmt.setInt(1, sub_ID);
+			
+			//Execute the query to the database
+			myRs = myStmt.executeQuery();
+			
+			//Temporary until we get the classes all completed and can create objects to pass the info
+			while(myRs.next()){
+				System.out.println(myRs.getString("sub_ID") + ", " + myRs.getString("d_o_b") + ", " + myRs.getString("first_name") + 
+						", " + myRs.getString("last_name") + ", " + myRs.getString("active") + ", " + myRs.getString("account_ID"));
+			}
+		}
+		finally{
+			if (myRs != null) {
+				myRs.close();
+			}
+			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			System.out.println(db.endConnection(myConn)); //Closes the connection
+		}
 		return null;
 	}
 	
@@ -64,9 +119,47 @@ public class DBReader
 	 * Retrieves a media from the database
 	 * @param online_ID the media's online ID number
 	 * @return the Media object or NULL
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 */
-	public Media getMediaQuery(int online_ID) 
+	public static Media getMediaQuery(int online_ID) throws FileNotFoundException, IOException, SQLException 
 	{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		ResultSet myRs = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call get_media_info(?)}");
+			
+			//Sets the parameter for the prepared statement.
+			myStmt.setInt(1, online_ID);
+			
+			//Execute the query to the database
+			myRs = myStmt.executeQuery();
+			
+			//Temporary until we get the classes all completed and can create objects to pass the info
+			while(myRs.next()){
+				System.out.println(myRs.getString("media_ID") + ", " + myRs.getString("title") + ", " + myRs.getString("times_rented") + 
+						", " + myRs.getString("online_ID") + ", " + myRs.getString("type") + ", " + myRs.getString("price_ID") + ", " + 
+						myRs.getString("format_ID"));
+			}
+		}
+		finally{
+			if (myRs != null) {
+				myRs.close();
+			}
+			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			System.out.println(db.endConnection(myConn)); //Closes the connection
+		}
 		return null;
 	}
 	
@@ -75,25 +168,45 @@ public class DBReader
 	 * @param media_ID the media's ID number
 	 * @return a list of media copies
 	 * @throws SQLException if there is an error
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	public MediaCopy[] getMediaCopiesQuery(int media_ID) throws SQLException
+	public static MediaCopy[] getMediaCopiesQuery(int media_ID) throws SQLException, FileNotFoundException, IOException
 	{
 		DatabaseConnector db = null;
-		
-		Statement myStmt = db.getConnection().createStatement();
-		
-		ResultSet myRs = myStmt.executeQuery("SELECT * FROM MediaCopy WHERE `media_ID` = media_ID");
-		
-		
-		
-		while (myRs.next()) {
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		ResultSet myRs = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
 			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call get_mediaCopies_info(?)}");
 			
-			System.out.println(myRs.getString("account_ID") + ", " + myRs.getString("first_name") + ", " + myRs.getString("last_name") +
-					", " + myRs.getString("city"));
+			//Sets the parameter for the prepared statement.
+			myStmt.setInt(1, media_ID);
 			
+			//Execute the query to the database
+			myRs = myStmt.executeQuery();
+			
+			//Temporary until we get the classes all completed and can create objects to pass the info
+			while(myRs.next()){
+				System.out.println(myRs.getString("copy_ID") + ", " + myRs.getString("rental_status") + ", " + myRs.getString("reservation_status") + 
+						", " + myRs.getString("state") + ", " + myRs.getString("active") + ", " + myRs.getString("media_ID"));
+			}
 		}
-		
+		finally{
+			if (myRs != null) {
+				myRs.close();
+			}
+			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			System.out.println(db.endConnection(myConn)); //Closes the connection
+		}
 		return null;
 	}
 	
@@ -101,9 +214,47 @@ public class DBReader
 	 * Retrieves a media copy from the database
 	 * @param copy_ID the media copy's ID number
 	 * @return the MediaCopy object or NULL
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 */
-	public MediaCopy getMediaCopy(int copy_ID) 
+	public static MediaCopy getMediaCopyQuery(int copy_ID) throws FileNotFoundException, IOException, SQLException 
 	{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		ResultSet myRs = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call get_mediaCopy_info(?)}");
+			
+			//Sets the parameter for the prepared statement.
+			myStmt.setInt(1, copy_ID);
+			
+			//Execute the query to the database
+			myRs = myStmt.executeQuery();
+			
+			//Temporary until we get the classes all completed and can create objects to pass the info
+			while(myRs.next()){
+				System.out.println(myRs.getString("copy_ID") + ", " + myRs.getString("rental_status") + ", " + myRs.getString("reservation_status") + 
+						", " + myRs.getString("state") + ", " + myRs.getString("active") + ", " + myRs.getString("media_ID"));
+				DBReader.getMediaQuery(myRs.getInt("media_ID"));
+			}
+		}
+		finally{
+			if (myRs != null) {
+				myRs.close();
+			}
+			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			System.out.println(db.endConnection(myConn)); //Closes the connection
+		}
 		return null;
 	}
 	

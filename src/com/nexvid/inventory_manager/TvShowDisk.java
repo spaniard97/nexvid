@@ -23,7 +23,7 @@ public class TvShowDisk extends MediaCopy{
 	 */
 	public TvShowDisk(int id, String mediaTitle, int timesRented,
 			int mediaOnlineID, String mediaType, PriceTier mediaPrice,
-			String mediaFormat, int copyId, boolean rented, boolean reserved,
+			Format mediaFormat, int copyId, boolean rented, boolean reserved,
 			String copyStatus, boolean active) {
 		super(id, mediaTitle, timesRented, mediaOnlineID, mediaType, mediaPrice,
 				mediaFormat, copyId, rented, reserved, copyStatus, active);
@@ -50,7 +50,7 @@ public class TvShowDisk extends MediaCopy{
 	 */
 	public TvShowDisk(int id, String mediaTitle, int timesRented,
 			int mediaOnlineID, String mediaType, PriceTier mediaPrice,
-			String mediaFormat, int copyId, boolean rented, boolean reserved,
+			Format mediaFormat, int copyId, boolean rented, boolean reserved,
 			String copyStatus, boolean active, int numberOfTheSeason, int episodesInDisk, int numberOfTheDisk){
 		super(id, mediaTitle, timesRented, mediaOnlineID, mediaType, mediaPrice,
 				mediaFormat, copyId, rented, reserved, copyStatus, active);

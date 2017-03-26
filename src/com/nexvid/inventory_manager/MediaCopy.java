@@ -18,7 +18,7 @@ public class MediaCopy extends Media{
 	 * @param mediaFormat The format of the media
 	 */
 	public MediaCopy(int id, String mediaTitle, int timesRented, int mediaOnlineID,
-			String mediaType, PriceTier mediaPrice, String mediaFormat) {
+			String mediaType, PriceTier mediaPrice, Format mediaFormat) {
 		super(id, mediaTitle, timesRented, mediaOnlineID, mediaType, mediaPrice,
 				mediaFormat);
 		// TODO Auto-generated constructor stub
@@ -40,7 +40,7 @@ public class MediaCopy extends Media{
 	 * @param active True if movie copy is active
 	 */
 	public MediaCopy(int id, String mediaTitle, int timesRented, int mediaOnlineID,
-			String mediaType, PriceTier mediaPrice, String mediaFormat, int copyId, 
+			String mediaType, PriceTier mediaPrice, Format mediaFormat, int copyId, 
 			boolean rented, boolean reserved, String copyStatus, boolean active){
 		super(id, mediaTitle, timesRented, mediaOnlineID, mediaType, mediaPrice,
 				mediaFormat);

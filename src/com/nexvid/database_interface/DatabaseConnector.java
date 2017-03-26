@@ -27,74 +27,50 @@ public class DatabaseConnector {
 		this.dbUrl = props.getProperty("dburl");
 	}
 	
-	/*public static void main(String args[]) throws SQLException{
-		
-		Connection myConn = null;
-		Statement myStmt = null;
-		ResultSet myRs = null;
-		
-		try {
-			// 1. Get a connection to database
-			myConn = DriverManager.getConnection("jdbc:mysql://nexvid.perazil.com:3306/NexVid2?useSSL=false", "java" , "nexvid2301");
-			
-			System.out.println("Database connection successful!\n");
-			
-			// 2. Create a statement
-			myStmt = myConn.createStatement();
-			
-			// 3. Execute SQL query
-			myRs = myStmt.executeQuery("SELECT * FROM Account WHERE `city` = 'Vancouver'");
-			
-			System.out.println(myRs.findColumn("account_ID"));
-
-			// 4. Process the result set
-			while (myRs.next()) {
-				System.out.println(myRs.getString("account_ID") + ", " + myRs.getString("first_name") + ", " + myRs.getString("last_name") +
-						", " + myRs.getString("city"));
-				
-			}
-			
-		}
-		catch (Exception exc) {
-			exc.printStackTrace();
-		}
-		finally {
-			if (myRs != null) {
-				myRs.close();
-			}
-			
-			if (myStmt != null) {
-				myStmt.close();
-			}
-			
-			if (myConn != null) {
-				myConn.close();
-			}
-		}
-
-		
-	}*/
-	
+	/**
+	 * Gets the database user
+	 * @return the database user
+	 */
 	public String getUser() {
 		return user;
 	}
-
+	
+	/**
+	 * Sets the user
+	 * @param user the database user
+	 */
 	public void setUser(String user) {
 		this.user = user;
 	}
 
+	/**
+	 * Gets the database password for the user
+	 * @return the database user password
+	 */
 	public String getPassword() {
 		return password;
 	}
 
+	/**
+	 * Sets the password
+	 * @param password
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
+	/**
+	 * Gets the database url
+	 * @return the database url
+	 */
 	public String getDbUrl() {
 		return dbUrl;
 	}
 
+	/**
+	 * Sets the database url
+	 * @param dbUrl the database url
+	 */
 	public void setDbUrl(String dbUrl) {
 		this.dbUrl = dbUrl;
 	}
@@ -135,6 +111,8 @@ public class DatabaseConnector {
 		}
 		return true;
 	}
+	
+	//I am not sure if the sendQuery() method is needed or will be used.
 	
 	/**
 	 * Sends a query to the database 
