@@ -2,7 +2,6 @@
  * Created by Samuel on 16/03/17.
  */
 
-//import "searchResults" as SR;
 
 $("#button1").click(function() {
     var title = $("#searchBar").val();
@@ -58,8 +57,7 @@ $("#button1").click(function() {
             console.log("Release date: " + releaseDate);
 
             document.getElementById("resultList").innerHTML +=
-                '<li class = "result"><h4 >' + movieTitle + '</h4> <img src = "' + image + '" / ><p> ' +
-                overview + ' < /p> </li > ';
+                '<li class = "result"><img class="resultImage" src= "' + image + '" / > <div class="restultsRight"><h2 class = "resultHeader">' + movieTitle + '</h2><p class="resultDescrip" > ' + overview + ' </p > </div></li > ';
         }
     });
 
