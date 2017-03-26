@@ -19,8 +19,7 @@ public class InventoryManager {
 	 * @param media the media to add copies
 	 * @param numberOfCopies the number of copies to be added
 	 */
-	public void addMediaCopies(Media media, int numberOfCopies)
-	{
+	public void addMediaCopies(Media media, int numberOfCopies){
 		
 	}
 	
@@ -31,15 +30,13 @@ public class InventoryManager {
 	 * @precondition the media must exist
 	 * @postcondition the number of copies is returned as an integer
 	 */
-	public int getMediaCopies(Media media)
-	{
+	public int getMediaCopies(Media media){
 		return 0;
 	}
 	
 	/**
 	 * Create a Movie type MediaCopy object to be added to the inventory.
 	 * @param JSONFromWebpage The media in JSON requested by manager to be added
-	 * @return 
 	 * @precondition The Movie type MediaCopy must not exist
 	 * @postcondition The Movie type MediaCopy object is created
 	 */
@@ -51,8 +48,7 @@ public class InventoryManager {
 		int notRented = 0;
 		String mediaType = "";
 		PriceTier moviePrice = null;
-		Format movieFormat = null;	
-		
+		Format movieFormat = null;		
 	}
 	
 	/**

@@ -1,15 +1,9 @@
 package com.nexvid.accounts;
 
-/** The Account class is the basis for all customer and employee accounts. It is constructed using the information supplied by either the employee or the customer.
- * 
- * @author Brian Chan
- * @since 03/26/2017
- * @version 1.0.0.2
- *
- */
+
 public class Account 
 {
-	protected String accountID;
+	protected int accountID;
 	protected String firstName;
 	protected String lastName;
     protected String phoneNumber;
@@ -44,7 +38,7 @@ public class Account
      * @param status The account status
      * @param password The account password
      */
-	public Account(String accountID, String firstName, String lastName, String phoneNumber, String province,
+	public Account(int accountID, String firstName, String lastName, String phoneNumber, String province,
 			String city, String postalCode, String country, String streetName, int streetNumber, 
 			String accountType, String status, String password)
 	{
@@ -85,7 +79,7 @@ public class Account
 	 * @param passPhrase The account holder's pass phrase
 	 * @param subAccount The account holder's sub account information
 	 */
-    public Account(String accountID, String firstName, String lastName, String phoneNumber, String email, 
+    public Account(int accountID, String firstName, String lastName, String phoneNumber, String email, 
     		String province, String city, String postalCode, String country, String streetName, int apartmentNumber, 
     		int streetNumber, String accountType, String status, String password, String passPhrase, 
     		SubAccount subAccount) 
@@ -116,7 +110,7 @@ public class Account
 	 */
 	public String getFirstName()
 	{
-	    return this.firstName;
+	    return null;
 	}
     
 	/**
@@ -125,7 +119,7 @@ public class Account
 	 */
 	public void setLastName(String lastName)
 	{
-		this.lastName = lastName;
+
 	}
 	
 	/**
@@ -134,7 +128,7 @@ public class Account
 	 */
 	public String getLastName()
 	{
-	    return this.lastName;
+	    return null;
 	}
 	
 	/**
@@ -143,23 +137,23 @@ public class Account
 	 */
 	public void setFirstName(String firstName)
 	{
-		this.firstName = firstName;
+
 	}
 	
 	/**
 	 * Gets the account ID.
 	 * @return The accountID
 	 */
-	public String getAccountID()
+	public int getAccountID()
 	{
-		return this.accountID;
+		return 0;
 	}
 	
 	/**
 	 * Sets the new account ID.
 	 * @param accountID The accountID to set
 	 */
-	public void setAccountID(String accountID)
+	public void setAccountID(int accountID)
 	{
 		this.accountID = accountID;
 	}
@@ -170,7 +164,7 @@ public class Account
 	 */
 	public String getPassword()
 	{
-		return this.password;
+		return null;
 	}
 	
 	/**
@@ -204,17 +198,15 @@ public class Account
      * Gets the account holder's street name.
      * @return The account holder's street name
      */
-    public String getStreetName()
-    {
-		return this.streetName;
+    public String getStreetName() {
+		return streetName;
 	}
     
     /**
      * Sets the account holder's street name.
      * @param streetName The account holder's street name
      */
-	public void setStreetName(String streetName)
-	{
+	public void setStreetName(String streetName) {
 		this.streetName = streetName;
 	}
 	
@@ -222,17 +214,15 @@ public class Account
 	 * Gets the account holder's apartment number.
 	 * @return The account holder's apartment number
 	 */
-	public int getAppartmentNumber()
-	{
-		return this.apartmentNumber;
+	public int getAppartmentNumber() {
+		return apartmentNumber;
 	}
 	
 	/**
 	 * Sets the account holder's apartmentNumber.
 	 * @param apartmentNumber
 	 */
-	public void setAppartmentNumber(int apartmentNumber)
-	{
+	public void setAppartmentNumber(int apartmentNumber) {
 		this.apartmentNumber = apartmentNumber;
 	}
 	
@@ -240,17 +230,15 @@ public class Account
 	 * Gets the account holder's street number.
 	 * @return The account holder's street number
 	 */
-	public int getStreetNumber()
-	{
-		return this.streetNumber;
+	public int getStreetNumber() {
+		return streetNumber;
 	}
 	
 	/**
 	 * Sets the account holder's street number.
 	 * @param streetNumber The account holder's street number
 	 */
-	public void setStreetNumber(int streetNumber)
-	{
+	public void setStreetNumber(int streetNumber) {
 		this.streetNumber = streetNumber;
 	}
 	
@@ -258,17 +246,15 @@ public class Account
 	 * Gets the account holder's city of residence.
 	 * @return The account holder's city of residence
 	 */
-	public String getCity()
-	{
-		return this.city;
+	public String getCity() {
+		return city;
 	}
 	
 	/**
 	 * Sets the account holder's city of residence.
 	 * @param city The account holder's city of residence
 	 */
-	public void setCity(String city)
-	{
+	public void setCity(String city) {
 		this.city = city;
 	}
 	
@@ -276,17 +262,15 @@ public class Account
 	 * Gets the account holder's province of residence.
 	 * @return The account holder's province of residence
 	 */
-	public String getProvince()
-	{
-		return this.province;
+	public String getProvince() {
+		return province;
 	}
 	
 	/**
 	 * Sets the account holder's province of residence
 	 * @param province
 	 */
-	public void setProvince(String province)
-	{
+	public void setProvince(String province) {
 		this.province = province;
 	}
 	
@@ -294,17 +278,15 @@ public class Account
 	 * Gets the account holder's country of residence.
 	 * @return The account holder's country of residence
 	 */
-	public String getCountry()
-	{
-		return this.country;
+	public String getCountry() {
+		return country;
 	}
 	
 	/**
 	 * Sets the account holder's country of residence
 	 * @param country The account holder's country of residence
 	 */
-	public void setCountry(String country)
-	{
+	public void setCountry(String country) {
 		this.country = country;
 	}
 	
@@ -314,7 +296,7 @@ public class Account
      */
     public String getPhoneNumber()
     {
-        return this.phoneNumber;
+        return phoneNumber;
     }
     
     /**
@@ -332,7 +314,7 @@ public class Account
      */
     public String getEmail()
     {
-        return this.email;
+        return email;
     }
     
     /**
@@ -350,7 +332,7 @@ public class Account
      */
     public String getStatus()
     {
-        return this.status;
+        return status;
     }
     
     /**
@@ -368,7 +350,7 @@ public class Account
      */
     public double getBalanceOwed()
     {
-        return this.balanceOwed;
+        return balanceOwed;
     }
     
     /**
@@ -386,7 +368,7 @@ public class Account
      */
     public String getPassPhrase()
     {
-        return this.passPhrase;
+        return passPhrase;
     }
     
     /**
@@ -405,7 +387,7 @@ public class Account
      */
     public SubAccount getSubAccount(SubAccount subAccount)
     {
-    	return this.subAccount;
+    	return subAccount;
     }
     /**
      * Sets the account holder's sub account information
@@ -417,13 +399,4 @@ public class Account
     	this.subAccount = subAccount;
     }
 	
-    public String getPostalCode()
-    {
-    	return this.postalCode;
-    }
-    
-    public void setPostalCode(String newPostalCode)
-    {
-    	this.postalCode = newPostalCode;
-    }
 }

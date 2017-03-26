@@ -17,7 +17,7 @@ public class MediaCopy extends Media{
 	 * @param mediaPrice The price to rent the media
 	 * @param mediaFormat The format of the media
 	 */
-	public MediaCopy(String id, String mediaTitle, int timesRented, int mediaOnlineID,
+	public MediaCopy(int id, String mediaTitle, int timesRented, int mediaOnlineID,
 			String mediaType, PriceTier mediaPrice, String mediaFormat) {
 		super(id, mediaTitle, timesRented, mediaOnlineID, mediaType, mediaPrice,
 				mediaFormat);
@@ -39,7 +39,7 @@ public class MediaCopy extends Media{
 	 * @param copyStatus The current status of the copy 
 	 * @param active True if movie copy is active
 	 */
-	public MediaCopy(String id, String mediaTitle, int timesRented, int mediaOnlineID,
+	public MediaCopy(int id, String mediaTitle, int timesRented, int mediaOnlineID,
 			String mediaType, PriceTier mediaPrice, String mediaFormat, int copyId, 
 			boolean rented, boolean reserved, String copyStatus, boolean active){
 		super(id, mediaTitle, timesRented, mediaOnlineID, mediaType, mediaPrice,

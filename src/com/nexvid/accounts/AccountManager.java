@@ -13,11 +13,6 @@ import com.nexvid.inventory_manager.*;
 public class AccountManager
 {
 	
-	public AccountManager()
-	{
-		//stub
-	}
-	
 	/**
      * Creates an Account with minimal information.
      * @param accountID The account ID
@@ -34,14 +29,11 @@ public class AccountManager
      * @param status The account status
      * @param password The account password
      */
-	public Account createAccount(String accountID, String firstName, String lastName, String phoneNumber, String province,
+	public Account createAccount(int accountID, String firstName, String lastName, String phoneNumber, String province,
 			String city, String postalCode, String country, String streetName, int streetNumber, 
 			String accountType, String status, String password)
 	{
-		Account temp = new Account(accountID, firstName, lastName, phoneNumber, province,
-				city, postalCode, country, streetName, streetNumber, 
-				accountType, status, password);
-		return temp;
+		return null;
 	}
 	
 	/**

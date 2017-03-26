@@ -1,7 +1,6 @@
 package com.nexvid.inventory_manager;
 
 import com.nexvid.accounts.*;
-import java.util.Date;
 
 /**
  * The Renter class is responsible for rent and return operations.
@@ -12,8 +11,6 @@ import java.util.Date;
  */
 public class Renter {
 	
-	public static final int SEVENDAYPERIOD = 7;
-	
 	/**
 	 * This method allows a customer to rent a specific media.
 	 * @param customerAccount the customer account
@@ -23,8 +20,7 @@ public class Renter {
 	 * @postcondition a Rental object is returned
 	 */
 	public Rental rentMedia(Account customerAccount, Media mediaRented){
-		Rental tempRent = new Rental(customerAccount, mediaRented, mediaRented.getMediaId(), new Date(), new Date(SEVENDAYPERIOD), true);
-		return tempRent;
+		return null;
 	}
 	
 	/**

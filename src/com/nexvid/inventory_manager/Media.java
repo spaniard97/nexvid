@@ -9,7 +9,7 @@ package com.nexvid.inventory_manager;
  */
 public class Media {
 	
-	protected String mediaId;
+	protected int mediaId;
 	protected String title;
 	protected int timesRented;
 	protected int onlineID;
@@ -29,7 +29,7 @@ public class Media {
 	 * @param mediaPrice The price to rent the media
 	 * @param mediaFormat The format of the media
 	 */
-	public Media(String id, String mediaTitle, int  timesRented, int mediaOnlineID, 
+	public Media(int id, String mediaTitle, int  timesRented,int mediaOnlineID, 
 			String mediaType, PriceTier mediaPrice, String mediaFormat){
 		this.mediaId = id;
 		this.title = mediaTitle;
@@ -44,7 +44,7 @@ public class Media {
 	 * Get the Id of a media.
 	 * @return The Id of the media
 	 */
-	public String getMediaId() {
+	public int getMediaId() {
 		return this.mediaId;
 	}
 
@@ -52,7 +52,7 @@ public class Media {
 	 * Set the Id of a media.
 	 * @param mediaId The Id of the media
 	 */
-	public void setMediaId(String mediaId) {
+	public void setMediaId(int mediaId) {
 		this.mediaId = mediaId;
 	}
 

@@ -6,7 +6,7 @@ package com.nexvid.inventory_manager;
  */
 public class Format {
 	
-	protected String formatID;
+	protected int formatID;
 	protected String type;
 	
 	/**
@@ -15,7 +15,7 @@ public class Format {
 	 * @param formatID the number that identifies the format
 	 * @param type the name of the format
 	 */
-	public Format(String formatID, String type){
+	public Format(int formatID, String type){
 		setFormatID(formatID);
 		setType(type);
 	}
@@ -24,7 +24,7 @@ public class Format {
 	 * Get the ID of the format
 	 * @return the ID of the format
 	 */
-	public String getFormatID() {
+	public int getFormatID() {
 		return formatID;
 	}
 
@@ -32,7 +32,7 @@ public class Format {
 	 * Set the ID of the format
 	 * @param formatID the ID of the format
 	 */
-	public void setFormatID(String formatID) {
+	public void setFormatID(int formatID) {
 		this.formatID = formatID;
 	}
 

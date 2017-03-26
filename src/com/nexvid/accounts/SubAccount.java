@@ -8,7 +8,7 @@ public class SubAccount
 	protected String firstName;
 	protected String lastName;
 	protected Date dateOfBirth;
-	protected boolean isActive;
+	protected boolean active;
     
 	/**
      * Constructs a SubAccount
@@ -24,7 +24,7 @@ public class SubAccount
     	this.firstName = firstName;
     	this.lastName = lastName;
     	this.dateOfBirth = dateOfBirth;
-    	this.isActive = active;
+    	this.active = active;
     }
 	
 	/**
@@ -33,7 +33,7 @@ public class SubAccount
 	 */
     public int getSubAccountID()
     {
-        return this.subAccountID;
+        return subAccountID;
     }
     
     /**
@@ -51,7 +51,7 @@ public class SubAccount
      */
     public String getFirstName()
     {
-        return this.firstName;
+        return firstName;
     }
     
     /**
@@ -69,7 +69,7 @@ public class SubAccount
      */
     public String getLastName()
     {
-        return this.lastName;
+        return lastName;
     }
     
     /**
@@ -87,7 +87,7 @@ public class SubAccount
      */
     public Date getDateOfBirth()
     {
-        return this.dateOfBirth;
+        return dateOfBirth;
     }
     
     /**
@@ -105,7 +105,7 @@ public class SubAccount
      */
     public boolean isActive()
     {
-        return isActive;
+        return active;
     }
 
     /**
@@ -114,7 +114,7 @@ public class SubAccount
      */
     public void setActive(boolean active)
     {
-        this.isActive = active;
+        this.active = active;
     }
      
 }
