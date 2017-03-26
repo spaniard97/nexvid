@@ -20,7 +20,10 @@ public class PriceTier {
 	 * @param price the dollar amount of the price tier
 	 */
 	public PriceTier(int priceID, int rentalPeriod, String priceTier, double price){
-		
+		this.priceID = priceID;
+		this.rentalPeriod = rentalPeriod;
+		this.priceTier = priceTier;
+		this.price = price;
 	}
 	
 	/**

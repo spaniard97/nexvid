@@ -30,14 +30,14 @@ public class Media {
 	 * @param mediaFormat The format of the media
 	 */
 	public Media(int id, String mediaTitle, int  timesRented,int mediaOnlineID, 
-			String mediaType, PriceTier mediaPrice, String mediaFormat){
+			String mediaType, PriceTier mediaPrice, Format mediaFormat){
 		this.mediaId = id;
 		this.title = mediaTitle;
 		this.timesRented = timesRented;
 		this.onlineID = mediaOnlineID;
 		this.type = mediaType;
 		this.price = mediaPrice;
-		this.format = new Format( id, mediaFormat);
+		this.format = mediaFormat;
 	}
 
 	/**
