@@ -1,0 +1,40 @@
+ #searchBar {
+     text-align: center;
+ }
+ 
+ #resultList {
+     list-style-type: none;
+ }
+ 
+ .result {
+     display: flex;
+     display: -webkit-flex;
+     height: auto;
+     margin-top: 10px;
+ }
+ 
+ .resultImage {
+     align-self: flex-end;
+     float: left;
+ }
+ 
+ .resultHeader {
+     clear: left;
+     display: inline-block;
+     float: left;
+     margin-left: 10px;
+ }
+ 
+ .resultRight {
+     margin-left: 40px;
+     width: 400px;
+ }
+ 
+ .resultDescrip {
+     display: inline-block;
+     margin-left: 20px;
+     margin-top: -10px;
+     clear: left;
+     float: left;
+     width: 800px;
+ }

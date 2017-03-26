@@ -1,6 +1,13 @@
 package com.nexvid.database_interface;
 
 import com.nexvid.inventory_manager.*;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import com.nexvid.accounts.*;
 
 /**
@@ -33,10 +40,43 @@ public class DBAdder
 	/**
 	 * Adds a new media to the database
 	 * @param media a new Media object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 * @precondition the media does not already exist
 	 * @postcondition a media is added to the database
 	 */
-	public void addNewMediaQuery(Media media){
+	public static void addNewMediaQuery(Media media) throws FileNotFoundException, IOException, SQLException{		
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call insert_media(?,?,?,?,?,?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setString(1, media.getTitle());
+			myStmt.setInt(2, media.getTimesRented());
+			myStmt.setInt(3, media.getOnlineID());
+			myStmt.setString(4, media.getType());
+			myStmt.setInt(5, media.getPrice().getPriceID());
+			myStmt.setInt(6, media.getFormat().getFormatID());
+			
+			System.out.println("Was the media successfulling inserted: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+		
 		
 	}
 	
