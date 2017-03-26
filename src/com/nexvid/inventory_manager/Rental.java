@@ -37,7 +37,7 @@ public class Rental {
 	 * @param dayDueRental Day the media rental is due 
 	 * @param active True if rental is still active
 	 */
-	public Rental(Account customerAccount, Media selectedMedia, int id, Date dayRented, 
+	public Rental(Account customerAccount, Media selectedMedia, String id, Date dayRented, 
 			Date dayDueRental, boolean active){
 	}
 

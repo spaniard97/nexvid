@@ -10,7 +10,7 @@ public class SysAdminAccountManager extends ManagerAccountManager{
      */
     public Account addManager(Account manager)
     {
-	return manager;
+    	return manager;
     }
     
     /**
@@ -22,7 +22,7 @@ public class SysAdminAccountManager extends ManagerAccountManager{
      */
     public boolean deactivateManager(Account manager)
     {
-	return false;
+    	return false;
     }
     
 }

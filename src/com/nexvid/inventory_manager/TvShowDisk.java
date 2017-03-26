@@ -21,7 +21,7 @@ public class TvShowDisk extends MediaCopy{
 	 * @param copyStatus The current status of the copy 
 	 * @param active True if TvShow copy is active
 	 */
-	public TvShowDisk(int id, String mediaTitle, int timesRented,
+	public TvShowDisk(String id, String mediaTitle, int timesRented,
 			int mediaOnlineID, String mediaType, PriceTier mediaPrice,
 			String mediaFormat, int copyId, boolean rented, boolean reserved,
 			String copyStatus, boolean active) {
@@ -48,7 +48,7 @@ public class TvShowDisk extends MediaCopy{
 	 * @param episodesInDisk How many episodes are in the disk
 	 * @param numberOfTheDisk Number of the disk in that season
 	 */
-	public TvShowDisk(int id, String mediaTitle, int timesRented,
+	public TvShowDisk(String id, String mediaTitle, int timesRented,
 			int mediaOnlineID, String mediaType, PriceTier mediaPrice,
 			String mediaFormat, int copyId, boolean rented, boolean reserved,
 			String copyStatus, boolean active, int numberOfTheSeason, int episodesInDisk, int numberOfTheDisk){
