@@ -41,19 +41,22 @@ $(document).ready(function(){
     
     
             for (i = 0; i < response.results.length; i++) {
-                //Movie title
-                var movieTitle = response.results[i].title;
-                console.log("Movie Title: " + movieTitle);
-                //If the media is a TvShow, the title changes to name
-                //var tvShowName = response.results[0].name;
+                //Checks if the media is a movie or a TvShow and get the title of the media (TvShow and Movies have different names in the JSON object)
+				if(media == "movie"){
+					//Movie title
+					var mediaTitle = response.results[i].title;
+					console.log("Movie Title: " + mediaTitle);
+				}
+				else{
+					//If the media is a TvShow, the title changes to name
+					mediaTitle = response.results[i].name;
+				}
                 //image url
                 var image = "https://image.tmdb.org/t/p/w154" + response.results[i].poster_path;
                 // document.getElementById("resultList").innerHTML += '<img src="' + image + '" />';
                 //Online Id
                 var onlineID = response.results[i].id;
                 console.log("Online ID:" + onlineID);
-                //image url
-                var image = "https://image.tmdb.org/t/p/w154" + response.results[i].poster_path;
                 //Overview
                 var overview = response.results[i].overview;
                 console.log("Overview:" + overview);
@@ -62,7 +65,7 @@ $(document).ready(function(){
                 console.log("Release date: " + releaseDate);
     
                 document.getElementById("resultList").innerHTML +=
-                    '<li class = "result"><img class="resultImage" src= "' + image + '" / > <div class="restultsRight"><h2 class = "resultHeader">' + movieTitle + '</h2><p class="resultDescrip" > ' + overview + ' </p > </div></li > ';
+                    '<li class = "result"><img class="resultImage" src= "' + image + '" / > <div class="restultsRight"><h2 class = "resultHeader">' + mediaTitle + '</h2><p class="resultDescrip" > ' + overview + ' </p > </div></li > ';
             }
         });
     
