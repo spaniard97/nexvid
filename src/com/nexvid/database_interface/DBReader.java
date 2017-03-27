@@ -293,10 +293,52 @@ public class DBReader
 	 * @param email an email address 
 	 * @param password a password
 	 * @return True if a match is found, False if no match is found
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 */
-	public boolean loginQuery(String email, String password) 
+	public static Account loginQuery(String email, String password) throws FileNotFoundException, IOException, SQLException 
 	{
-		return true;
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		ResultSet myRs = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call login(?, ?)}");
+			
+			//Sets the parameter for the prepared statement.  
+			myStmt.setString(1, email);
+			myStmt.setString(2, password);
+			
+			//Execute the query to the database
+			myRs = myStmt.executeQuery();
+						
+			//Temporary until we get the classes all completed and can create objects to pass the info
+			while (myRs.next()) {
+				
+				//Account myAccount = new Account();
+				
+				System.out.println(myRs.getString("account_ID") + ", " + myRs.getString("email") + ", " + myRs.getString("password"));
+				
+			}
+		}
+		finally{
+			if (myRs != null) {
+				myRs.close();
+			}
+			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			System.out.println(db.endConnection(myConn)); //Closes the connection to the database
+		}
+
+		return null;
 	}
 	
 	/**

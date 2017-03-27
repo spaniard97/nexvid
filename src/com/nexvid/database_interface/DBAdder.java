@@ -145,20 +145,75 @@ public class DBAdder
 	/**
 	 * Adds a new format to the database
 	 * @param format a new Format
+	 * @throws SQLException 
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 * @precondition the format does not already exist
 	 * @postcondition a new format is added to the database
 	 */
-	public void addNewFormatQuery(Format format){
-		
+	public static void addNewFormatQuery(Format format) throws SQLException, FileNotFoundException, IOException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call insert_format(?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setString(1, format.getType());
+			
+			System.out.println("Was the format successfulling inserted: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
 	}
 	
 	/**
 	 * Adds a new price tier to the database
 	 * @param pricetier
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 * @precondition the price tier does not already exist
 	 * @postcondition the new price tier is added to the database
 	 */
-	public void addNewPriceTier(PriceTier pricetier){
-		
+	public static void addNewPriceTier(PriceTier priceTier) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call insert_price_tier(?, ?, ?}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setInt(1, priceTier.getRentalPeriod());
+			myStmt.setString(2, priceTier.getPriceTier());
+			myStmt.setDouble(3, priceTier.getPrice());
+			
+			System.out.println("Was the price tier successfulling inserted: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+
 	}
 }
