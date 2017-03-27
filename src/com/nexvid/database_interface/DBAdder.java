@@ -83,10 +83,41 @@ public class DBAdder
 	/**
 	 * Adds a media copy to the database
 	 * @param mediaCopy a new MediaCopy object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 * @postcondition a media copy is added to the database
 	 */
-	public void addMediaCopyQuery(MediaCopy mediaCopy){
-		
+	public static void addMediaCopyQuery(MediaCopy mediaCopy) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call insert_mediaCopy(?,?,?,?,?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setBoolean(1, mediaCopy.isRented());
+			myStmt.setBoolean(2, mediaCopy.isReserved());
+			myStmt.setString(3, mediaCopy.getState());
+			myStmt.setBoolean(4, mediaCopy.isActive);
+			myStmt.setInt(5, mediaCopy.getMediaId());
+			
+			System.out.println("Was the media copy successfulling inserted: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+
 	}
 	
 	/**
