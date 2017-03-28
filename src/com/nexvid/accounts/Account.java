@@ -9,7 +9,7 @@ package com.nexvid.accounts;
  */
 public class Account 
 {
-	protected String accountID;
+	protected int accountID;
 	protected String firstName;
 	protected String lastName;
     protected String phoneNumber;
@@ -44,7 +44,7 @@ public class Account
      * @param status The account status
      * @param password The account password
      */
-	public Account(String accountID, String firstName, String lastName, String phoneNumber, String province,
+	public Account(int accountID, String firstName, String lastName, String phoneNumber, String province,
 			String city, String postalCode, String country, String streetName, int streetNumber, 
 			String accountType, String status, String password)
 	{
@@ -64,7 +64,6 @@ public class Account
 		this.password = password;
 	}
 	
-	
 	/**
 	 * Creates an Account with all information.
 	 * @param accountID The account ID
@@ -83,9 +82,52 @@ public class Account
      * @param status The account status
      * @param password The account password
 	 * @param passPhrase The account holder's pass phrase
+	 */
+    public Account(int accountID, String firstName, String lastName, String phoneNumber, String email, 
+    		String province, String city, String postalCode, String country, String streetName, int apartmentNumber, 
+    		int streetNumber, String accountType, String status, double balance, String password, String passPhrase) 
+    {
+    	this.accountID = accountID;
+    	this.firstName = firstName;
+    	this.lastName = lastName;
+    	this.phoneNumber = phoneNumber;
+    	this.email = email;
+    	this.province = province;
+    	this.city = city;
+    	this.postalCode = postalCode;
+    	this.country = country;
+		this.streetName = streetName;
+		this.apartmentNumber = apartmentNumber;
+		this.streetNumber = streetNumber;
+		this.accountType = accountType;
+		this.status = status;
+		this.balanceOwed = balance;//0.00;
+		this.password = password;
+		this.passPhrase = passPhrase;
+	}
+
+	
+	/**
+	 * Creates an Account with all information and a sub account.
+	 * @param accountID The account ID
+     * @param firstName The account holder's first name
+     * @param lastName The account holder's last name
+     * @param phoneNumber The account holder's phone number
+	 * @param email The account holder's email
+	 * @param province The account holder's province of residence
+     * @param city The account holder's city of residence
+     * @param postalCode The account holder's postal code
+     * @param country The account holder's country of residence
+     * @param streetName The account holder's street name
+	 * @param apartmentNumber The account holder's apartment number
+	 * @param streetNumber The account holder's street number
+     * @param accountType The account holder's account type
+     * @param status The account status
+     * @param password The account password
+	 * @param passPhrase The account holder's pass phrase
 	 * @param subAccount The account holder's sub account information
 	 */
-    public Account(String accountID, String firstName, String lastName, String phoneNumber, String email, 
+    public Account(int accountID, String firstName, String lastName, String phoneNumber, String email, 
     		String province, String city, String postalCode, String country, String streetName, int apartmentNumber, 
     		int streetNumber, String accountType, String status, String password, String passPhrase, 
     		SubAccount subAccount) 
@@ -150,7 +192,7 @@ public class Account
 	 * Gets the account ID.
 	 * @return The accountID
 	 */
-	public String getAccountID()
+	public int getAccountID()
 	{
 		return this.accountID;
 	}
@@ -159,7 +201,7 @@ public class Account
 	 * Sets the new account ID.
 	 * @param accountID The accountID to set
 	 */
-	public void setAccountID(String accountID)
+	public void setAccountID(int accountID)
 	{
 		this.accountID = accountID;
 	}

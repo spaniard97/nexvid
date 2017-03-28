@@ -34,7 +34,7 @@ public class AccountManager
      * @param status The account status
      * @param password The account password
      */
-	public Account createAccount(String accountID, String firstName, String lastName, String phoneNumber, String province,
+	public Account createAccount(int accountID, String firstName, String lastName, String phoneNumber, String province,
 			String city, String postalCode, String country, String streetName, int streetNumber, 
 			String accountType, String status, String password)
 	{
@@ -80,7 +80,7 @@ public class AccountManager
 	 * @precondition  AccountID must be an integer and password must be a String
 	 * @postcondition returns true or false depending on input
 	 */
-	public boolean login(int AccountID, String password)
+	public boolean login(int accountID, String password)
 	{
 		return false;
 	}
