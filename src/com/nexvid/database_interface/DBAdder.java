@@ -20,11 +20,53 @@ public class DBAdder
 	/**
 	 * Adds an account to the database
 	 * @param account a new Account object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 * @precondition the account does not already exist
 	 * @postcondition an account is added to the database
 	 */
-	public void addNewAccountQuery(Account account){
-		
+	public static void addNewAccountQuery(Account account) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call insert_account(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setString(1, account.getFirstName());
+			myStmt.setString(2, account.getLastName());
+			myStmt.setString(3, account.getPhoneNumber());
+			myStmt.setString(4, account.getEmail());
+			myStmt.setString(5, account.getProvince());
+			myStmt.setString(6, account.getCity());
+			myStmt.setString(7, account.getPostalCode());
+			myStmt.setString(8, account.getCountry());
+			myStmt.setString(9, account.getStreetName());
+			myStmt.setInt(10, account.getAppartmentNumber());
+			myStmt.setInt(11, account.getStreetNumber());
+			myStmt.setString(12, account.getAccountType());
+			myStmt.setString(13, account.getStatus());
+			myStmt.setDouble(14, account.getBalanceOwed());
+			myStmt.setString(15, account.getPassword());
+			myStmt.setString(16, account.getPassPhrase());
+			
+			System.out.println("Was the media successfulling inserted: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+
 	}
 		
 	/**

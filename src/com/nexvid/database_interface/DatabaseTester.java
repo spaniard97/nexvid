@@ -3,7 +3,10 @@ package com.nexvid.database_interface;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+
+import com.nexvid.accounts.Account;
 import com.nexvid.inventory_manager.*;
+import java.math.*;
 
 public class DatabaseTester {
 
@@ -47,10 +50,15 @@ public class DatabaseTester {
 			Format myFormat = new Format(0, "VHS");
 			DBAdder.addNewFormatQuery(myFormat);*/
 			
-			System.out.println("\naddNewPriceTier Query:");
-			double price = 4.00;
-			PriceTier myPrice = new PriceTier(0, 10, "Classics", price);
-			DBAdder.addNewPriceTier(myPrice);
+			/*System.out.println("\naddNewPriceTier Query:");
+			double thePrice = 3.99;
+			PriceTier myPrice = new PriceTier(0, 10, "Classics", thePrice);
+			DBAdder.addNewPriceTier(myPrice);*/
+			
+			System.out.println("\naddNewAccount Query:");
+			Account myAccount = new Account(0, "Becca", "Low", "6042258898", "becca@hotmail.com", "BC", "North Vancouver", "V5G8U7", 
+					"Canada", "Hoskins Rd", 0, 4717, "Registered Customer", "Active", 3.52, "carrot", "rice");
+			DBAdder.addNewAccountQuery(myAccount);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
