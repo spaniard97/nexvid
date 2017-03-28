@@ -1,13 +1,14 @@
 package com.nexvid.inventory_manager;
 
 import java.util.Date;
+import java.util.Calendar;
 import com.nexvid.accounts.*;
 
 /**
  * The Rental class is responsible for creating Rental objects.
- * @author Samuel Pimenta
+ * @author Samuel Pimenta, Brian
  * @since 03/19/2017
- * @version 1.0.0.0
+ * @version 1.0.0.2
  *
  */
 public class Rental {
@@ -18,6 +19,7 @@ public class Rental {
 	public Date dateRented;
 	public Date dateDue;
 	public boolean isActive;
+	private static final int RENTAL_PERIOD = 7;
 	
 	
 	
@@ -37,8 +39,17 @@ public class Rental {
 	 * @param dayDueRental Day the media rental is due 
 	 * @param active True if rental is still active
 	 */
-	public Rental(Account customerAccount, Media selectedMedia, int id, Date dayRented, 
-			Date dayDueRental, boolean active){
+	public Rental(Account customerAccount, Media selectedMedia, int id, Calendar dayRented, 
+			Calendar dayDueRental, boolean active)
+	{
+		Calendar temp = dayRented;
+		this.account = customerAccount;
+		this.media = selectedMedia;
+		this.rentalID = id;
+		this.dateRented = dayRented.getTime();
+		temp.add(Calendar.DAY_OF_MONTH, RENTAL_PERIOD);
+		this.dateDue = temp.getTime();
+		this.isActive = true;
 	}
 
 	/**
@@ -117,7 +128,8 @@ public class Rental {
 	 * Set the date a media is due.
 	 * @param dateDue The date the media is due
 	 */
-	public void setDateDue(Date dateDue) {
+	public void setDateDue(Date dateDue)
+	{
 		this.dateDue = dateDue;
 	}
 
@@ -126,7 +138,8 @@ public class Rental {
 	 * @return True if the media is active
 	 * @return False if the media is active
 	 */
-	public boolean isActive() {
+	public boolean isActive()
+	{
 		return isActive;
 	}
 
@@ -134,7 +147,8 @@ public class Rental {
 	 * Set a media to active or inactive.
 	 * @param isActive True if the media is active
 	 */
-	public void setActive(boolean isActive) {
+	public void setActive(boolean isActive)
+	{
 		this.isActive = isActive;
 	}
 
