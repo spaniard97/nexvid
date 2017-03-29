@@ -6,7 +6,7 @@ import com.nexvid.accounts.*;
 
 /**
  * The Rental class is responsible for creating Rental objects.
- * @author Samuel Pimenta, Brian
+ * @author Samuel Pimenta, Brian Chan
  * @since 03/19/2017
  * @version 1.0.0.2
  *
@@ -36,11 +36,9 @@ public class Rental {
 	 * @param selectedMedia The media selected by the customer
 	 * @param id The rental id
 	 * @param dayRented Day the media was rented
-	 * @param dayDueRental Day the media rental is due 
 	 * @param active True if rental is still active
 	 */
-	public Rental(Account customerAccount, Media selectedMedia, int id, Calendar dayRented, 
-			Calendar dayDueRental, boolean active)
+	public Rental(Account customerAccount, Media selectedMedia, int id, Calendar dayRented, boolean active)
 	{
 		Calendar temp = dayRented;
 		this.account = customerAccount;
@@ -49,7 +47,7 @@ public class Rental {
 		this.dateRented = dayRented.getTime();
 		temp.add(Calendar.DAY_OF_MONTH, RENTAL_PERIOD);
 		this.dateDue = temp.getTime();
-		this.isActive = true;
+		this.isActive = active;
 	}
 
 	/**

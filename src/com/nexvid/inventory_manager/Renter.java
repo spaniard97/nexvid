@@ -1,15 +1,19 @@
 package com.nexvid.inventory_manager;
 
+import java.util.Calendar;
+
 import com.nexvid.accounts.*;
 
 /**
  * The Renter class is responsible for rent and return operations.
- * @author Samuel Pimenta
+ * @author Samuel Pimenta, Brian Chan
  * @since 03/19/2017
- * @version 1.0.0.0
+ * @version 1.0.0.2
  *
  */
 public class Renter {
+	
+	private Calendar today;
 	
 	/**
 	 * This method allows a customer to rent a specific media.
@@ -19,8 +23,10 @@ public class Renter {
 	 * @precondition the media and customer account must exist
 	 * @postcondition a Rental object is returned
 	 */
-	public Rental rentMedia(Account customerAccount, Media mediaRented){
-		return null;
+	public Rental rentMedia(Account customerAccount, Media mediaRented)
+	{
+		Rental temp = new Rental(customerAccount, mediaRented, mediaRented.getMediaId(), today, true);
+		return temp;
 	}
 	
 	/**
@@ -31,8 +37,9 @@ public class Renter {
 	 * @precondition the media must be rented by the customer
 	 * @postcondition  a Rental object is returned
 	 */
-	public Rental returnMedia(Account customerAccount, Media mediaReturned){
-		return null;
+	public Rental returnMedia(Account customerAccount, Media mediaReturned)
+	{
+		Rental returning = new Rental(customerAccount, mediaReturned, mediaReturned.getMediaId(), today, false);
+		return returning;
 	}
-
 }
