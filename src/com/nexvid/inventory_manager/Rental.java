@@ -21,7 +21,7 @@ public class Rental {
 	public boolean isActive;
 	private static final int RENTAL_PERIOD = 7;
 	
-	
+	//This class needs to be discussed - JC
 	
 	/**
 	 * The default constructor for the Rental class.

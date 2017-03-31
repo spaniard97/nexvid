@@ -12,6 +12,13 @@ public class PriceTier {
 	protected double price;
 	
 	/**
+	 * Default Constructor
+	 */
+	public PriceTier(){
+		
+	}
+	
+	/**
 	 * Creates a PriceTier object
 	 * 
 	 * @param priceID the number that identifies the price tier 

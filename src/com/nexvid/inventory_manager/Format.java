@@ -9,6 +9,11 @@ public class Format {
 	protected int formatID;
 	protected String type;
 	
+	public Format(){
+		//this.formatID = 0;
+		//this.type = null;
+	}
+	
 	/**
 	 * Create a Format object
 	 * 
@@ -16,8 +21,8 @@ public class Format {
 	 * @param type the name of the format
 	 */
 	public Format(int formatID, String type){
-		setFormatID(formatID);
-		setType(type);
+		this.formatID = formatID;
+		this.type = type;
 	}
 	
 	/**

@@ -1,10 +1,11 @@
 package com.nexvid.accounts;
 
-/** The Account class is the basis for all customer and employee accounts. It is constructed using the information supplied by either the employee or the customer.
+/** The Account class is the basis for all customer and employee accounts. 
+ * It is constructed using the information supplied by either the employee or the customer.
  * 
- * @author Brian Chan
+ * @author Brian Chan, Juan Carlos Pinillos
  * @since 03/26/2017
- * @version 1.0.0.2
+ * @version 1.0.0.3
  *
  */
 public class Account 
@@ -26,8 +27,12 @@ public class Account
     protected double balanceOwed;
 	protected String password;
 	protected String passPhrase;
-	protected SubAccount subAccount;
+	//protected SubAccount subAccount;
     
+	public Account(){
+		
+	}
+	
     /**
      * Creates an Account with minimal information.
      * @param accountID The account ID
@@ -129,8 +134,8 @@ public class Account
 	 */
     public Account(int accountID, String firstName, String lastName, String phoneNumber, String email, 
     		String province, String city, String postalCode, String country, String streetName, int apartmentNumber, 
-    		int streetNumber, String accountType, String status, String password, String passPhrase, 
-    		SubAccount subAccount) 
+    		int streetNumber, String accountType, String status, String password, String passPhrase/*, 
+    		SubAccount subAccount*/) 
     {
     	this.accountID = accountID;
     	this.firstName = firstName;
@@ -149,7 +154,7 @@ public class Account
 		this.balanceOwed = 0;
 		this.password = password;
 		this.passPhrase = passPhrase;
-		this.subAccount = subAccount;
+		//this.subAccount = subAccount;
 	}
     
     /**
@@ -445,25 +450,33 @@ public class Account
      * @param subAccount The account holder's sub account
      * @return The sub account information
      */
-    public SubAccount getSubAccount(SubAccount subAccount)
+   /* public SubAccount getSubAccount(SubAccount subAccount)
     {
     	return this.subAccount;
-    }
+    }*/
+    
     /**
      * Sets the account holder's sub account information
      * @param subAccount The account holder's sub account to be set
      */
-    
-    public void setSubAccount(SubAccount subAccount)
+    /*public void setSubAccount(SubAccount subAccount)
     {
     	this.subAccount = subAccount;
-    }
+    }*/
 	
+    /**
+     * Gets the account holder's postal code
+     * @return the account holder's postal code
+     */
     public String getPostalCode()
     {
     	return this.postalCode;
     }
     
+    /**
+     * Sets the account holder's postal code
+     * @param newPostalCode The account holder's postal code
+     */
     public void setPostalCode(String newPostalCode)
     {
     	this.postalCode = newPostalCode;
