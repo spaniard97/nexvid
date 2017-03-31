@@ -55,10 +55,10 @@ public class DatabaseTester {
 			PriceTier myPrice = new PriceTier(0, 10, "Classics", thePrice);
 			DBAdder.addNewPriceTier(myPrice);*/
 			
-			System.out.println("\naddNewAccount Query:");
+			/*System.out.println("\naddNewAccount Query:");
 			Account myAccount = new Account(0, "Becca", "Low", "6042258898", "becca@hotmail.com", "BC", "North Vancouver", "V5G8U7", 
 					"Canada", "Hoskins Rd", 0, 4717, "Registered Customer", "Active", 3.52, "carrot", "rice");
-			DBAdder.addNewAccountQuery(myAccount);
+			DBAdder.addNewAccountQuery(myAccount);*/
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
