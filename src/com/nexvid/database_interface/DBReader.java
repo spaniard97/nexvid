@@ -29,7 +29,7 @@ public class DBReader
 		Connection myConn = null;
 		CallableStatement myStmt = null;
 		ResultSet myRs = null;
-		Account account = new Account(account_ID, null, null, null, null, null, null, null, null, account_ID, null, null, null);
+		Account account = new Account(0, null, null, null, null, null, null, null, null, null, 0, 0, null, null, 0.00, null, null);
 		try{
 			//Creates a Database object to establish a connection
 			db = new DatabaseConnector();
