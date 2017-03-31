@@ -17,6 +17,12 @@ public class Media {
 	protected PriceTier price;
 	protected Format format;
 	
+	/**
+	 * Default constructor
+	 */
+	public Media(){
+		
+	}
 	
 	/**
 	 * Creates a Media object.

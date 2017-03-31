@@ -8,6 +8,13 @@ public class MediaCopy extends Media{
 	public boolean isActive;
 	
 	/**
+	 * Default constructor
+	 */
+	public MediaCopy(){
+		
+	}
+	
+	/**
 	 * Creates a default Movie copy.
 	 * @param id The number that identifies the media
 	 * @param mediaTitle The title of the media
@@ -55,7 +62,7 @@ public class MediaCopy extends Media{
 	 * Get a media's copy Id number.
 	 * @return The media's copy Id number
 	 */
-	public int mediaCopyId() {
+	public int getMediaCopyId() {
 		return mediaCopyId;
 	}
 	
@@ -63,7 +70,7 @@ public class MediaCopy extends Media{
 	 * Set a media's copy Id number.
 	 * @param mediaCopyId The media's copy Id number
 	 */
-	public void mediaCopyId(int mediaCopyId) {
+	public void setMediaCopyId(int mediaCopyId) {
 		this.mediaCopyId = mediaCopyId;
 	}
 

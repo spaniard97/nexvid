@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 import com.nexvid.accounts.Account;
 import com.nexvid.inventory_manager.*;
-import java.math.*;
 
 public class DatabaseTester {
 
@@ -17,7 +16,7 @@ public class DatabaseTester {
 			DBReader.getAccountQuery(100000004);
 			
 			System.out.println("\nSubAccount Query:");
-			DBReader.getSubAccountQuery(3);
+			DBReader.getSubAccountQuery(2);
 			
 			System.out.println("\nMedia Query:");
 			DBReader.getMediaQuery(2);

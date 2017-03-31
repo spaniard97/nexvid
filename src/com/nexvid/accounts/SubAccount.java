@@ -9,22 +9,26 @@ public class SubAccount
 	protected String lastName;
 	protected Date dateOfBirth;
 	protected boolean isActive;
+	protected int accountID;
     
 	/**
      * Constructs a SubAccount
-     * @param account_ID the parent account ID
-     * @param first_name the sub account holder's first name
-     * @param last_name the sub account holder's last name
-     * @param d_o_b the sub account holder date of birth
+     * @param subAccountID the sub account ID
+     * @param firstname the sub account holder's first name
+     * @param lastname the sub account holder's last name
+     * @param dateOfBirth the sub account holder date of birth
      * @param active the sub account status
+     * @param accountID the sub account's parent's account ID
      */
-    public SubAccount(int subAccountID, String firstName, String lastName, Date dateOfBirth, boolean active)
+    public SubAccount(int subAccountID, Date dateOfBirth, String firstName, String lastName, boolean active, int accountID)
     {
     	this.subAccountID = subAccountID;
     	this.firstName = firstName;
     	this.lastName = lastName;
     	this.dateOfBirth = dateOfBirth;
     	this.isActive = active;
+    	this.accountID = accountID;
+    	
     }
 	
 	/**
@@ -40,7 +44,7 @@ public class SubAccount
      * Sets the sub account ID.
      * @param account_ID The sub account ID to be set
      */
-    public void setAccountID(int subAccountID)
+    public void setSubAccountID(int subAccountID)
     {
         this.subAccountID = subAccountID;
     }
@@ -116,5 +120,21 @@ public class SubAccount
     {
         this.isActive = active;
     }
-     
+    
+    /**
+     * Gets the parent's account ID
+     * @return the parent's account ID
+     */
+	public int getAccountID() {
+		return this.accountID;
+	}
+	
+	/**
+	 * Sets the accountID to the parent's account ID
+	 * @param accountID the parent's accountID
+	 */
+	public void setAccountID(int accountID){
+		this.accountID = accountID;
+	}
+
 }

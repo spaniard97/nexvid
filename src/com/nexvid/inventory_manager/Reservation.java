@@ -12,11 +12,15 @@ import com.nexvid.accounts.*;
  */
 public class Reservation {
 	
-	public int reservationId;
-	public Date reservationDate;
-	public boolean isReservationActive;
-	public Account customerAccount;
-	public Media media;
+	protected int reservationId;
+	protected Date reservationDate;
+	protected boolean isReservationActive;
+	protected Account customerAccount;
+	protected Media media;
+	
+	public Reservation(){
+		
+	}
 	
 	/**
 	 * Creates a reservation object.
