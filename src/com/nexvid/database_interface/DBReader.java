@@ -29,6 +29,7 @@ public class DBReader
 		Connection myConn = null;
 		CallableStatement myStmt = null;
 		ResultSet myRs = null;
+		Account account = new Account(account_ID, null, null, null, null, null, null, null, null, account_ID, null, null, null);
 		try{
 			//Creates a Database object to establish a connection
 			db = new DatabaseConnector();
@@ -48,9 +49,29 @@ public class DBReader
 			while (myRs.next()) {
 				
 				//Account myAccount = new Account();
+				account.setAccountID(myRs.getInt("account_ID"));
+				account.setFirstName(myRs.getString("first_name"));
+				account.setLastName(myRs.getString("last_name"));
+				account.setPhoneNumber(myRs.getString("phone"));
+				account.setEmail(myRs.getString("email"));
+				account.setProvince(myRs.getString("province"));
+				account.setCity(myRs.getString("city"));
+				account.setPostalCode(myRs.getString("postal_code"));
+				account.setCountry(myRs.getString("country"));
+				account.setStreetName(myRs.getString("street_name"));
+				account.setAppartmentNumber(myRs.getInt("apt_number"));
+				account.setStreetNumber(myRs.getInt("street_number"));
+				account.setAccountType(myRs.getString("type"));
+				account.setStatus(myRs.getString("status"));
+				account.setBalanceOwed(myRs.getDouble("balance"));
+				account.setPassword(myRs.getString("password"));
+				account.setPassPhrase(myRs.getString("passphrase"));
 				
-				System.out.println(myRs.getString("account_ID") + ", " + myRs.getString("first_name") + ", " + myRs.getString("last_name") +
-						", " + myRs.getString("city"));
+				
+				
+				
+				System.out.println(account.getAccountID() + ", " + account.getFirstName() + ", " + account.getLastName() +
+						", " + account.getPhoneNumber() + ", " + account.getEmail());
 				
 			}
 		}
@@ -65,7 +86,7 @@ public class DBReader
 			System.out.println(db.endConnection(myConn)); //Closes the connection to the database
 		}
 		
-		return null;
+		return account;
 	}
 	
 	/**
