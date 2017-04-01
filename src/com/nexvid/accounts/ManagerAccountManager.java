@@ -1,5 +1,12 @@
 package com.nexvid.accounts;
 
+/** The ManagerAccountManager manages Manager Accounts
+ * 
+ * @author Brian Chan
+ * @since 01/04/2017
+ * @version 1.0.0.2
+ *
+ */
 public class ManagerAccountManager extends EmployeeAccountManager {
 
 	/**
@@ -12,7 +19,8 @@ public class ManagerAccountManager extends EmployeeAccountManager {
 			String city, String postalCode, String country, String streetName, int streetNumber, 
 			String accountType, String status, String password)
     {
-	return null;
+		return new Account(accountID,firstName,lastName,phoneNumber,province,
+				city,postalCode,country,streetName,streetNumber,accountType,status,password);
     }
     
     /**
@@ -24,7 +32,8 @@ public class ManagerAccountManager extends EmployeeAccountManager {
      */
     public boolean deactivateEmployee(Account employee)
     {
-	return false;
+    	employee.setStatus("Deactivated");
+    	return true;
     }
     
 }

@@ -1,5 +1,12 @@
 package com.nexvid.accounts;
 
+/**The SysAdminAccountManager manages the accounts of type System Administrator
+ * 
+ * @author Brian Chan
+ * @since 04/01/2017
+ * @version 1.0.0.2
+ *
+ */
 public class SysAdminAccountManager extends ManagerAccountManager{
 
 	/**
@@ -22,7 +29,8 @@ public class SysAdminAccountManager extends ManagerAccountManager{
      */
     public boolean deactivateManager(Account manager)
     {
-    	return false;
+    	manager.setStatus("Deactivated");
+    	return true;
     }
     
 }

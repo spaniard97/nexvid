@@ -48,7 +48,7 @@ public class DBAdder
 			myStmt.setString(7, account.getPostalCode());
 			myStmt.setString(8, account.getCountry());
 			myStmt.setString(9, account.getStreetName());
-			myStmt.setInt(10, account.getAppartmentNumber());
+			myStmt.setInt(10, account.getApartmentNumber());
 			myStmt.setInt(11, account.getStreetNumber());
 			myStmt.setString(12, account.getAccountType());
 			myStmt.setString(13, account.getStatus());

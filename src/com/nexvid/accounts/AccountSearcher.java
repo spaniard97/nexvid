@@ -5,7 +5,7 @@ package com.nexvid.accounts;
  * exist in the database. It is contacted by the AccountManager class
  * @author Brian Chan
  * @since 03/18/2017
- * @version 1.0.0.0
+ * @version 1.0.0.2
  *
  */
 public class AccountSearcher
@@ -27,6 +27,6 @@ public class AccountSearcher
 	 */
 	public Account searchByID(int AccountID)
 	{
-		return null;
+		return null; //TODO: Database fetch
 	}
 }

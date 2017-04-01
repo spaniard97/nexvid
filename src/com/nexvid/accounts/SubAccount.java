@@ -2,6 +2,13 @@ package com.nexvid.accounts;
 
 import java.util.Date;
 
+/**The subaccount class holds the subaccount's information
+ * 
+ * @author Brian Chan
+ * @since 04/01/2017
+ * @version 1.0.0.2
+ *
+ */
 public class SubAccount
 {
 	protected int subAccountID;

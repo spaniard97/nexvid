@@ -1,8 +1,14 @@
 package com.nexvid.accounts;
-
+/**The EmployeeAccountManager manages Employee Accounts
+ *  * 
+ * @author Brian Chan
+ * @since 04/01/2017
+ * @version 1.0.0.2
+ *
+ */
 public class EmployeeAccountManager extends AccountManager
 {
-/*
+
     // Guarantees that class can only be instantiated once
     protected static EmployeeAccountManager instance;
 
@@ -10,6 +16,7 @@ public class EmployeeAccountManager extends AccountManager
     {
     }
 
+    /*
     // static block initialization for exception handling
     static
     {
@@ -21,12 +28,23 @@ public class EmployeeAccountManager extends AccountManager
 	    throw new RuntimeException("Exception occured in creating singleton instance");
 	}
     }
-
-    public static EmployeeAccountManager getInstance(){
+*/
+    public static EmployeeAccountManager getInstance()
+    {
+    	if(instance== null)
+    	{
+    		try
+    		{
+    		    instance = new EmployeeAccountManager();
+    		} catch (Exception e)
+    		{
+    		    throw new RuntimeException("Exception occured in creating singleton instance");
+    		}
+    	}
         return instance;
     }
     // end singleton guarantee
-*/
+
     
     /**
      * The employee's method for creating new accounts, with only the required information.

@@ -4,19 +4,15 @@ import java.util.List;
 import com.nexvid.inventory_manager.*;
 
 /**
- * The AccountMAnager class is responsible for all account based actions
+ * The AccountManager class is responsible for all account based actions
  * @author Brian Chan
  * @since 03/18/2017
- * @version 1.0.0.0
+ * @version 1.0.0.2
  *
  */
 public class AccountManager
 {
 	
-	public AccountManager()
-	{
-		//stub
-	}
 	
 	/**
      * Creates an Account with minimal information.
@@ -38,10 +34,9 @@ public class AccountManager
 			String city, String postalCode, String country, String streetName, int streetNumber, 
 			String accountType, String status, String password)
 	{
-		Account temp = new Account(accountID, firstName, lastName, phoneNumber, province,
+		return new Account(accountID, firstName, lastName, phoneNumber, province,
 				city, postalCode, country, streetName, streetNumber, 
 				accountType, status, password);
-		return temp;
 	}
 	
 	/**
@@ -68,7 +63,10 @@ public class AccountManager
     		int apartmentNumber, int streetNumber, String accountType, String status, String password, 
     		String passPhrase) 
     {
-    	return null;
+    	return new Account(accountID,firstName,lastName,phoneNumber,
+    			email,province,city,postalCode,country,streetName,apartmentNumber,
+    			streetNumber,accountType,status,password,passPhrase);
+    	
     }
 	
 	/** The login method will allow a user to log in to the system
@@ -82,7 +80,8 @@ public class AccountManager
 	 */
 	public boolean login(int accountID, String password)
 	{
-		return false;
+		// TODO: get account info from Database
+		return false;//stub
 	}
 	
 	/**
@@ -90,6 +89,7 @@ public class AccountManager
 	 */
 	public void logout()
 	{
+		// TODO: logout
 	}
 	
 	/** Allows the user to change the current password of their account
@@ -103,7 +103,13 @@ public class AccountManager
 	 */
 	public void setPassword(Account userAccount, String oldPassword, String newPassword, String confirmPassword)
 	{
-		
+		if(userAccount.getPassword().equals(oldPassword))
+		{
+			if(newPassword.equals(confirmPassword))
+			{
+				userAccount.setPassword(newPassword);
+			}
+		}
 	}
 	
 	/** Allows the user to see their current balance
@@ -115,7 +121,7 @@ public class AccountManager
 	 */
 	public double getAccountBalance(Account customerAccount)
 	{
-		return 0;
+		return customerAccount.getBalanceOwed();
 	}
 	
 	/** Allows the user to view their current rentals in a list form
@@ -127,7 +133,7 @@ public class AccountManager
 	 */
 	public List<Rental> getAccountRentals(Account customerAccount)
 	{
-		return null;
+		return null; //TODO: database?
 	}
 	
 	/** Returns account information
@@ -139,7 +145,7 @@ public class AccountManager
 	 */
 	public String getAccountInformation(Account customerAccount)
 	{
-		return null;
+		return customerAccount.toString();
 	}
 	
 	/** A subaccount is added to the main user's account
@@ -150,7 +156,7 @@ public class AccountManager
 	 */
 	public void addSubAccount(Account customerAccount)
 	{
-		
+		//TODO: no SubAccount info
 	}
 	
 	/** Retrieves SubAccount information for the customer to view
@@ -160,7 +166,7 @@ public class AccountManager
 	 */
 	public String getSubAccountInformation(Account customerAccount)
 	{
-		return null;
+		return null; //TODO: implement this when Account.getSubAccount() is implemented
 	}
 	
 	/** Retrieves a list of the customer's reservations
@@ -172,6 +178,6 @@ public class AccountManager
 	 */
 	public List<Reservation> getAccountReservations(Account customerAccount)
 	{
-		return null;
+		return null; //TODO: database? 
 	}
 }

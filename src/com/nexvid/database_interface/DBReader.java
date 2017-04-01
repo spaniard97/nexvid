@@ -58,7 +58,7 @@ public class DBReader
 				account.setPostalCode(myRs.getString("postal_code"));
 				account.setCountry(myRs.getString("country"));
 				account.setStreetName(myRs.getString("street_name"));
-				account.setAppartmentNumber(myRs.getInt("apt_number"));
+				account.setApartmentNumber(myRs.getInt("apt_number"));
 				account.setStreetNumber(myRs.getInt("street_number"));
 				account.setAccountType(myRs.getString("type"));
 				account.setStatus(myRs.getString("status"));
@@ -403,7 +403,7 @@ public class DBReader
 				account.setPostalCode(myRs.getString("postal_code"));
 				account.setCountry(myRs.getString("country"));
 				account.setStreetName(myRs.getString("street_name"));
-				account.setAppartmentNumber(myRs.getInt("apt_number"));
+				account.setApartmentNumber(myRs.getInt("apt_number"));
 				account.setStreetNumber(myRs.getInt("street_number"));
 				account.setAccountType(myRs.getString("type"));
 				account.setStatus(myRs.getString("status"));

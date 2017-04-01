@@ -5,7 +5,7 @@ package com.nexvid.accounts;
  * 
  * @author Brian Chan, Juan Carlos Pinillos
  * @since 03/26/2017
- * @version 1.0.0.3
+ * @version 1.0.0.6
  *
  */
 public class Account 
@@ -28,9 +28,13 @@ public class Account
 	protected String password;
 	protected String passPhrase;
 	//protected SubAccount subAccount;
+	private static final String DELIMITER=", ";
     
+	/**
+	 * Creates an Account with empty info
+	 */
 	public Account(){
-		
+		//all fields are defined null as default
 	}
 	
     /**
@@ -242,9 +246,9 @@ public class Account
      * Sets the account type.
      * @param type The account type
      */
-    public void setAccountType(String type)
+    public void setAccountType(String accountType)
     {
-    	this.accountType = type;
+    	this.accountType = accountType;
     }
 	
     /**
@@ -269,7 +273,7 @@ public class Account
 	 * Gets the account holder's apartment number.
 	 * @return The account holder's apartment number
 	 */
-	public int getAppartmentNumber()
+	public int getApartmentNumber()
 	{
 		return this.apartmentNumber;
 	}
@@ -278,7 +282,7 @@ public class Account
 	 * Sets the account holder's apartmentNumber.
 	 * @param apartmentNumber
 	 */
-	public void setAppartmentNumber(int apartmentNumber)
+	public void setApartmentNumber(int apartmentNumber)
 	{
 		this.apartmentNumber = apartmentNumber;
 	}
@@ -481,4 +485,21 @@ public class Account
     {
     	this.postalCode = newPostalCode;
     }
+    
+    /**
+     * Overrides the super.toString()
+     * 
+     * Formats the Account's information into a String and returns it
+     */
+    public String toString()
+    {
+    	return ""+this.accountID+DELIMITER+this.firstName+DELIMITER+
+    			this.lastName+DELIMITER+this.phoneNumber+DELIMITER+
+    			this.email+DELIMITER+this.province+DELIMITER+this.city+
+    			DELIMITER+this.postalCode+DELIMITER+this.country+DELIMITER+
+    			this.streetName+DELIMITER+this.apartmentNumber+DELIMITER+
+    			this.streetNumber+DELIMITER+this.accountType+DELIMITER+
+    			this.status+DELIMITER+this.balanceOwed;
+    }
+    
 }

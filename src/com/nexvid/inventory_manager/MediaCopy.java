@@ -1,5 +1,12 @@
 package com.nexvid.inventory_manager;
 
+/**The MediaCopy class acts as a copy of a media object
+ * 
+ * @author Brian Chan
+ * @since 04/01/2017
+ * @version 1.0.0.2
+ *
+ */
 public class MediaCopy extends Media{
 	public int mediaCopyId;
 	public boolean isRented;

@@ -20,6 +20,7 @@ public class Rental {
 	public Date dateDue;
 	public boolean isActive;
 	private static final int RENTAL_PERIOD = 7;
+	private static final int NEW_RENTAL_PERIOD = 3;
 	
 	//This class needs to be discussed - JC
 	
@@ -40,6 +41,7 @@ public class Rental {
 	 */
 	public Rental(Account customerAccount, Media selectedMedia, int id, Calendar dayRented, boolean active)
 	{
+		//Need a new rental for new items
 		Calendar temp = dayRented;
 		this.account = customerAccount;
 		this.media = selectedMedia;
