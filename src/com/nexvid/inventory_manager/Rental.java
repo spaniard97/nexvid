@@ -13,12 +13,12 @@ import com.nexvid.accounts.*;
  */
 public class Rental {
 	
-	public Account account;
-	public Media media;
 	public int rentalID;
 	public Date dateRented;
 	public Date dateDue;
 	public boolean isActive;
+	public Account account;
+	public MediaCopy mediaCopy;
 	private static final int RENTAL_PERIOD = 7;
 	
 	//This class needs to be discussed - JC
@@ -38,11 +38,11 @@ public class Rental {
 	 * @param dayRented Day the media was rented
 	 * @param active True if rental is still active
 	 */
-	public Rental(Account customerAccount, Media selectedMedia, int id, Calendar dayRented, boolean active)
+	public Rental(Account customerAccount, MediaCopy selectedMedia, int id, Calendar dayRented, boolean active)
 	{
 		Calendar temp = dayRented;
 		this.account = customerAccount;
-		this.media = selectedMedia;
+		this.mediaCopy = selectedMedia;
 		this.rentalID = id;
 		this.dateRented = dayRented.getTime();
 		temp.add(Calendar.DAY_OF_MONTH, RENTAL_PERIOD);
@@ -70,16 +70,16 @@ public class Rental {
 	 * Get a Media class object.
 	 * @return The media object
 	 */
-	public Media getMedia() {
-		return media;
+	public MediaCopy getMediaCopy() {
+		return mediaCopy;
 	}
 
 	/**
 	 * Set a Media class object.
 	 * @param media The media object
 	 */
-	public void setMedia(Media media) {
-		this.media = media;
+	public void setMediaCopy(MediaCopy mediaCopy) {
+		this.mediaCopy = mediaCopy;
 	}
 	
 	/**

@@ -10,8 +10,8 @@ import java.sql.*;
 
 /**
  * This class reads data from the database using SELECT queries
- * @author Russell Hanson
  * @author Juan Carlos Pinillos
+ * @author Russell Hanson
  */
 public class DBReader 
 {
@@ -22,6 +22,8 @@ public class DBReader
 	 * @throws SQLException if an error occurs
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
+	 * @precondition an integer greater than 0 for the account id
+	 * @postcondition an account object with either the account information for a found account or with null values.
 	 */
 	public static Account getAccountQuery(int accountID) throws SQLException, FileNotFoundException, IOException 
 	{
@@ -29,7 +31,7 @@ public class DBReader
 		Connection myConn = null;
 		CallableStatement myStmt = null;
 		ResultSet myRs = null;
-		Account account = new Account(0, null, null, null, null, null, null, null, null, null, 0, 0, null, null, 0.00, null, null);
+		Account account = new Account();
 		try{
 			//Creates a Database object to establish a connection
 			db = new DatabaseConnector();
@@ -65,7 +67,8 @@ public class DBReader
 				account.setBalanceOwed(myRs.getDouble("balance"));
 				account.setPassword(myRs.getString("password"));
 				account.setPassPhrase(myRs.getString("passphrase"));
-								
+				
+				//For Testing.  Comment out later.
 				System.out.println(account.getAccountID() + ", " + account.getFirstName() + ", " + account.getLastName() +
 						", " + account.getPhoneNumber() + ", " + account.getEmail());
 				
@@ -92,6 +95,8 @@ public class DBReader
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 * @throws SQLException 
+	 * @precondition an integer greater than 0 for the sub id
+	 * @postcondition a sub account object with either the sub account information for a found sub account or with null values.
 	 */
 	public static SubAccount getSubAccountQuery(int subID) throws FileNotFoundException, IOException, SQLException 
 	{
@@ -99,7 +104,8 @@ public class DBReader
 		Connection myConn = null;
 		CallableStatement myStmt = null;
 		ResultSet myRs = null;
-		SubAccount subAccount = new SubAccount(0, null, null, null, false, 0);
+		SubAccount subAccount = new SubAccount();
+		int accountID;
 		try{
 			//Creates a Database object to establish a connection
 			db = new DatabaseConnector();
@@ -122,10 +128,12 @@ public class DBReader
 				subAccount.setFirstName(myRs.getString("first_name"));
 				subAccount.setLastName(myRs.getString("last_name"));
 				subAccount.setActive(myRs.getBoolean("active"));
-				subAccount.setAccountID(myRs.getInt("account_ID"));				
+				accountID = myRs.getInt("account_ID");
+				subAccount.setAccountID(DBReader.getAccountQuery(accountID));				
 				
+				//For Testing.  Comment out later.
 				System.out.println(subAccount.getSubAccountID() + ", " + subAccount.getDateOfBirth() + ", " + subAccount.getFirstName() + ", " + subAccount.getLastName() + 
-						", " + subAccount.isActive() + ", " + subAccount.getAccountID());
+						", " + subAccount.isActive() + ", " + subAccount.getAccount());
 			}
 		}
 		finally{
@@ -148,6 +156,8 @@ public class DBReader
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 * @throws SQLException 
+	 * @precondition an integer greater than 0 for the online id
+	 * @postcondition a media object with either the media information for a found media or with null values.
 	 */
 	public static Media getMediaQuery(int onlineID) throws FileNotFoundException, IOException, SQLException 
 	{
@@ -155,8 +165,8 @@ public class DBReader
 		Connection myConn = null;
 		CallableStatement myStmt = null;
 		ResultSet myRs = null;
-		Media media = new Media(0, null, 0, 0, null, null, null);
-		PriceTier price = new PriceTier(0, 0, null, 0.00);
+		Media media = new Media();
+		PriceTier price = new PriceTier();
 		Format format = new Format();
 		
 		try{
@@ -186,8 +196,7 @@ public class DBReader
 				format.setFormatID(myRs.getInt("format_ID"));
 				media.setFormat(format);
 				
-				
-				
+				//For Testing.  Comment out later.
 				System.out.println(media.getMediaId() + ", " + media.getTitle() + ", " + media.getTimesRented() + 
 						", " + media.getOnlineID() + ", " + media.getType() + ", " + media.getPrice().getPriceID() + ", " + 
 						media.getFormat().getFormatID());
@@ -213,6 +222,8 @@ public class DBReader
 	 * @throws SQLException if there is an error
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
+	 * @precondition an integer greater than 0 for the media id
+	 * @postcondition an array of media copy objects with either the copies information for a found copy or with null values.
 	 */
 	public static MediaCopy[] getMediaCopiesQuery(int mediaID) throws SQLException, FileNotFoundException, IOException
 	{
@@ -238,6 +249,7 @@ public class DBReader
 			//Execute the query to the database
 			myRs = myStmt.executeQuery();
 			
+			//Gets the total number of rows from the result set
 			totalRows = getNumberOfRows(myRs);
 			
 			//Creates an array of MediaCopy with the size of total rows from the result set
@@ -254,6 +266,7 @@ public class DBReader
 				mediaCopies[row].setActive(myRs.getBoolean("active"));
 				mediaCopies[row].setMediaId(myRs.getInt("media_ID"));
 				
+				//For Testing.  Comment out later.
 				System.out.println(mediaCopies[row].getMediaCopyId() + ", " + mediaCopies[row].isRented() + ", " + mediaCopies[row].isReserved() + 
 						", " + mediaCopies[row].getState() + ", " + mediaCopies[row].isActive() + ", " + mediaCopies[row].getMediaId());
 				row++;
@@ -279,6 +292,8 @@ public class DBReader
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 * @throws SQLException 
+	 * @precondition an integer greater than 0 for the copy id
+	 * @postcondition a media copy object with either the media copy information for a found media copy or with null values.
 	 */
 	public static MediaCopy getMediaCopyQuery(int copyID) throws FileNotFoundException, IOException, SQLException 
 	{
@@ -293,7 +308,7 @@ public class DBReader
 			myConn = db.getConnection();
 			
 			// Creates a prepared statement query
-			myStmt = myConn.prepareCall("{call get_mediaCopies_info(?)}");
+			myStmt = myConn.prepareCall("{call get_mediaCopy_info(?)}");
 			
 			//Sets the parameter for the prepared statement.
 			myStmt.setInt(1, copyID);
@@ -311,6 +326,7 @@ public class DBReader
 				mediaCopy.setActive(myRs.getBoolean("active"));
 				mediaCopy.setMediaId(myRs.getInt("media_ID"));
 				
+				//For Testing.  Comment out later.
 				System.out.println(mediaCopy.getMediaCopyId() + ", " + mediaCopy.isRented() + ", " + mediaCopy.isReserved() + 
 						", " + mediaCopy.getState() + ", " + mediaCopy.isActive() + ", " + mediaCopy.getMediaId());
 			}
@@ -342,20 +358,126 @@ public class DBReader
 	 * Retrieves a rental from the database
 	 * @param rental_ID the rental's ID number
 	 * @return the Rental object or NULL
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
+	 * @precondition an integer greater than 0 for the rental id
+	 * @postcondition a rental object with either the rental information for a found rental or with null values.
 	 */
-	public Rental getRentalQuery(int rentalID) 
+	public static Rental getRentalQuery(int rentalID) throws FileNotFoundException, IOException, SQLException 
 	{
-		return null;
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		ResultSet myRs = null;
+		Rental rental = new Rental();
+		int accountID;
+		int copyID;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call get_rental_info(?)}");
+			
+			//Sets the parameter for the prepared statement.
+			myStmt.setInt(1, rentalID);
+			
+			//Execute the query to the database
+			myRs = myStmt.executeQuery();
+			
+			//Loops through the result set and sets all the properties to the corresponding object variables
+			while(myRs.next()){
+				
+				rental.setRentalID(myRs.getInt("rental_ID"));
+				rental.setDateRented(myRs.getDate("date_rented"));
+				rental.setDateDue(myRs.getDate("date_due"));
+				rental.setActive(myRs.getBoolean("active"));
+				accountID = myRs.getInt("account_ID");
+				rental.setAccount(DBReader.getAccountQuery(accountID));
+				copyID = myRs.getInt("copy_ID");
+				rental.setMediaCopy(DBReader.getMediaCopyQuery(copyID));
+				
+				//For Testing.  Comment out later.
+				System.out.println(rental.getRentalID() + ", " + rental.getDateRented() + ", " + rental.getDateDue() + 
+						", " + rental.isActive() + ", " + rental.getAccount().getAccountID() + ", " + rental.getMediaCopy().getMediaCopyId());
+			}
+		}
+		finally{
+			if (myRs != null) {
+				myRs.close();
+			}
+			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			System.out.println(db.endConnection(myConn)); //Closes the connection
+		}
+		return rental;
+
 	}
 	
 	/**
 	 * Retrieves a reservation from the database
 	 * @param reservation_ID the reservation's ID number
 	 * @return the Reservation object or NULL
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
+	 * @precondition an integer greater than 0 for the reservation id
+	 * @postcondition a reservation object with either the reservation information for a found reservation or with null values.
 	 */
-	public Reservation getReservationQuery(int reservationID) 
+	public static Reservation getReservationQuery(int reservationID) throws FileNotFoundException, IOException, SQLException 
 	{
-		return null;
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		ResultSet myRs = null;
+		Reservation reservation = new Reservation();
+		int accountID;
+		int copyID;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call get_reservation_info(?)}");
+			
+			//Sets the parameter for the prepared statement.
+			myStmt.setInt(1, reservationID);
+			
+			//Execute the query to the database
+			myRs = myStmt.executeQuery();
+			
+			//Loops through the result set and sets all the properties to the corresponding object variables
+			while(myRs.next()){
+				
+				reservation.setReservationId(myRs.getInt("reservation_ID"));
+				reservation.setReservationDate(myRs.getDate("reservation_date"));
+				reservation.setReservationActive(myRs.getBoolean("active"));
+				accountID = myRs.getInt("account_ID");
+				reservation.setCustomerAccount(DBReader.getAccountQuery(accountID));
+				copyID = myRs.getInt("copy_ID");
+				reservation.setMediaCopy(DBReader.getMediaCopyQuery(copyID));
+				
+				//For Testing.  Comment out later.
+				System.out.println(reservation.getReservationId() + ", " + reservation.getReservationDate() + ", " + reservation.isReservationActive() + 
+						", " + reservation.getCustomerAccount().getAccountID() + ", " + reservation.getMediaCopy().getMediaCopyId());
+			}
+		}
+		finally{
+			if (myRs != null) {
+				myRs.close();
+			}
+			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			System.out.println(db.endConnection(myConn)); //Closes the connection
+		}
+		return reservation;
 	}
 	
 	/**
@@ -366,6 +488,8 @@ public class DBReader
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 * @throws SQLException 
+	 * @precondition an email string and a password string
+	 * @postcondition an account object with either the account information for a found account or with null values.
 	 */
 	public static Account loginQuery(String email, String password) throws FileNotFoundException, IOException, SQLException 
 	{
@@ -410,7 +534,8 @@ public class DBReader
 				account.setBalanceOwed(myRs.getDouble("balance"));
 				account.setPassword(myRs.getString("password"));
 				account.setPassPhrase(myRs.getString("passphrase"));
-								
+				
+				//For Testing.  Comment out later.
 				System.out.println(account.getAccountID() + ", " + account.getFirstName() + ", " + account.getLastName() +
 						", " + account.getPhoneNumber() + ", " + account.getEmail());
 				
@@ -427,24 +552,143 @@ public class DBReader
 			System.out.println(db.endConnection(myConn)); //Closes the connection to the database
 		}
 
-		return null;
+		return account;
 	}
+	
+	/**
+	 * Retrieves information about a format from the database
+	 * @param formatID the format's id
+	 * @return the format
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
+	 * @precondition an integer greater than 0 for the format id
+	 * @postcondition a format object with either the format information for a found format or with null values.
+	 */
+	public static Format getFormat(int formatID) throws FileNotFoundException, IOException, SQLException{
+		
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		ResultSet myRs = null;
+		Format format = new Format();
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call get_format_info(?)}");
+			
+			//Sets the parameter for the prepared statement.  
+			myStmt.setInt(1, formatID);
+			
+			//Execute the query to the database
+			myRs = myStmt.executeQuery();
+						
+			//Loops through the result set and sets all the properties to the corresponding object variables
+			while (myRs.next()) {
+				
+				format.setFormatID(myRs.getInt("format_ID"));
+				format.setType(myRs.getString("type"));
+				
+				//For Testing.  Comment out later.
+				System.out.println(format.getFormatID() + ", " + format.getType());
+				
+			}
+		}
+		finally{
+			if (myRs != null) {
+				myRs.close();
+			}
+			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			System.out.println(db.endConnection(myConn)); //Closes the connection to the database
+		}
+
+		return format;
+	}
+	
+	/**
+	 * Retrieves information about a price tier from the database
+	 * @param priceID the price tier's id
+	 * @return the price tier object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
+	 * @precondition an integer greater than 0 for the priceID
+	 * @postcondition a price tier object with either the price tier information for a found price tier or with null values.
+	 */
+	public static PriceTier getPriceTier(int priceID) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		ResultSet myRs = null;
+		PriceTier priceTier = new PriceTier();
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call get_priceTier_info(?)}");
+			
+			//Sets the parameter for the prepared statement.  
+			myStmt.setInt(1, priceID);
+			
+			//Execute the query to the database
+			myRs = myStmt.executeQuery();
+						
+			//Loops through the result set and sets all the properties to the corresponding object variables
+			while (myRs.next()) {
+				
+				priceTier.setPriceID(myRs.getInt("price_ID"));
+				priceTier.setRentalPeriod(myRs.getInt("rental_period"));
+				priceTier.setPriceTier(myRs.getString("price_tier"));
+				priceTier.setPrice(myRs.getDouble("price"));
+				
+				
+				//For Testing.  Comment out later.
+				System.out.println(priceTier.getPriceID() + ", " + priceTier.getRentalPeriod() + ", " + priceTier.getPriceTier() + ", " + 
+						priceTier.getPrice());
+				
+			}
+		}
+		finally{
+			if (myRs != null) {
+				myRs.close();
+			}
+			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			System.out.println(db.endConnection(myConn)); //Closes the connection to the database
+		}
+
+		return priceTier;
+	}
+
 	
 	/**
 	 * Retrieves the ID of the last record added to the database.
 	 * This is used to get IDs when a record is added since the database auto increments the IDs.
 	 * @return The ID of the last record added.
+
 	 */
 	public int getLastIdAddedQuery()
 	{
 		return 0;
 	}
-	
+		
 	/**
 	 * Gets the number of rows in a ResultSet
 	 * @param myRs a result set from a query
 	 * @return the total number of rows in a result set
 	 * @throws SQLException
+	 * @precondition a valid Result set
+	 * @postcondition an integer equal to or greater than 0
 	 */
 	public static int getNumberOfRows(ResultSet myRs) throws SQLException{
 		int totalRows = 0;

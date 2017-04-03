@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 
 import com.nexvid.accounts.*;
@@ -72,10 +73,41 @@ public class DBAdder
 	/**
 	 * Adds a new sub account to the database
 	 * @param subAccont a new SubAccount object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 * @precondition the sub-account does not already exist
 	 * @postcondition a sub-account is added to the database
 	 */
-	public void addNewSubAccountQuery(SubAccount subAccount){
+	public static void addNewSubAccountQuery(SubAccount subAccount) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call insert_subAccount(?,?,?,?,?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setDate(1, (Date) subAccount.getDateOfBirth());
+			myStmt.setString(2, subAccount.getFirstName());
+			myStmt.setString(3, subAccount.getLastName());
+			myStmt.setBoolean(4, subAccount.isActive());
+			myStmt.setInt(5, subAccount.getAccount().getAccountID());
+			
+			System.out.println("Was the media successfulling inserted: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
 
 	}
 	

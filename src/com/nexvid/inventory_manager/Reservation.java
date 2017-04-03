@@ -5,7 +5,7 @@ import com.nexvid.accounts.*;
 
 /**
  * The Reservation class is responsible for creating reservation objects.
- * @author Samuel Pimenta
+ * @author Samuel Pimenta, Juan Carlos Pinillos
  * @since 03/20/2013
  * @version 1.0.0.0
  *
@@ -16,8 +16,11 @@ public class Reservation {
 	protected Date reservationDate;
 	protected boolean isReservationActive;
 	protected Account customerAccount;
-	protected Media media;
+	protected MediaCopy mediaCopy;
 	
+	/**
+	 * Default constructor
+	 */
 	public Reservation(){
 		
 	}
@@ -25,13 +28,13 @@ public class Reservation {
 	/**
 	 * Creates a reservation object.
 	 * @param id the reservation Id
-	 * @param Datereserved The date the media was reserved
+	 * @param dateReserved The date the media was reserved
 	 * @param isActive True if reservation is active
-	 * @param customerId The customer account number
-	 * @param mediaToBeReserved The media to be reserved
+	 * @param account The customer account for the account number
+	 * @param mediaCopy The media copy to be reserved
 	 */
-	public Reservation(int id, Date Datereserved, boolean isActive, Account customerId,
-			Media mediaToBeReserved){
+	public Reservation(int id, Date dateReserved, boolean isActive, Account account,
+			MediaCopy mediaCopy){
 	}
 
 	/**
@@ -100,19 +103,19 @@ public class Reservation {
 	}
 
 	/**
-	 * Get a media object.
-	 * @return The media object
+	 * Get a media copy object.
+	 * @return The media copy object
 	 */
-	public Media getMedia() {
-		return media;
+	public MediaCopy getMediaCopy() {
+		return this.mediaCopy;
 	}
 
 	/**
-	 * Set a media object.
-	 * @param mediaId The media object
+	 * Set a media copy object.
+	 * @param mediaCopy The media object
 	 */
-	public void setMediaId(Media media) {
-		this.media = media;
+	public void setMediaCopy(MediaCopy mediaCopy) {
+		this.mediaCopy = mediaCopy;
 	}
 	
 }
