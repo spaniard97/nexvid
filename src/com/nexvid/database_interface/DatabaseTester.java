@@ -2,14 +2,18 @@ package com.nexvid.database_interface;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.SQLException;
 
-import com.nexvid.accounts.Account;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.nexvid.accounts.*;
 import com.nexvid.inventory_manager.*;
 
 public class DatabaseTester {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		// TODO Auto-generated method stub
 		try {
 			System.out.println("Account Query:");
@@ -29,6 +33,18 @@ public class DatabaseTester {
 			
 			System.out.println("\nloginQuery:");
 			DBReader.loginQuery("allender@hotmail.com", "alender1");
+			
+			System.out.println("\nRental Query:");
+			DBReader.getRentalQuery(1);
+			
+			System.out.println("\nReservation Query:");
+			DBReader.getReservationQuery(1);
+			
+			System.out.println("\nFormat Query:");
+			DBReader.getFormat(2);
+			
+			System.out.println("\nPriceTier Query:");
+			DBReader.getPriceTier(3);
 			
 			
 			/*Uncomment to execute.  But change Media object as to not duplicate values
@@ -58,6 +74,14 @@ public class DatabaseTester {
 			Account myAccount = new Account(0, "Becca", "Low", "6042258898", "becca@hotmail.com", "BC", "North Vancouver", "V5G8U7", 
 					"Canada", "Hoskins Rd", 0, 4717, "Registered Customer", "Active", 3.52, "carrot", "rice");
 			DBAdder.addNewAccountQuery(myAccount);*/
+			
+			Account myAccount = DBReader.getAccountQuery(100000017);
+			Date myDate = new SimpleDateFormat("yyyy-mm-dd").parse("2000-08-22");
+			java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+			SubAccount mySub = new SubAccount(0, sqlDate, "Kimmy", "Low", true, myAccount);
+			System.out.println("\naddNewSubAccount Query:");
+			DBAdder.addNewSubAccountQuery(mySub);
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -23,7 +23,7 @@ public class Renter {
 	 * @precondition the media and customer account must exist
 	 * @postcondition a Rental object is returned
 	 */
-	public Rental rentMedia(Account customerAccount, Media mediaRented)
+	public Rental rentMedia(Account customerAccount, MediaCopy mediaRented)
 	{
 		Rental temp = new Rental(customerAccount, mediaRented, mediaRented.getMediaId(), today, true);
 		return temp;
@@ -37,7 +37,7 @@ public class Renter {
 	 * @precondition the media must be rented by the customer
 	 * @postcondition  a Rental object is returned
 	 */
-	public Rental returnMedia(Account customerAccount, Media mediaReturned)
+	public Rental returnMedia(Account customerAccount, MediaCopy mediaReturned)
 	{
 		Rental returning = new Rental(customerAccount, mediaReturned, mediaReturned.getMediaId(), today, false);
 		return returning;
