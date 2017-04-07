@@ -57,7 +57,7 @@ public class DBAdder
 			myStmt.setString(15, account.getPassword());
 			myStmt.setString(16, account.getPassPhrase());
 			
-			System.out.println("Was the media successfulling inserted: " + myStmt.executeUpdate());
+			System.out.println("Was the Account successfulling inserted: " + myStmt.executeUpdate());
 		}
 		finally{			
 			if (myStmt != null) {
@@ -67,7 +67,6 @@ public class DBAdder
 				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
 			}
 		}
-
 	}
 		
 	/**
@@ -98,7 +97,7 @@ public class DBAdder
 			myStmt.setBoolean(4, subAccount.isActive());
 			myStmt.setInt(5, subAccount.getAccount().getAccountID());
 			
-			System.out.println("Was the media successfulling inserted: " + myStmt.executeUpdate());
+			System.out.println("Was the Sub Account successfulling inserted: " + myStmt.executeUpdate());
 		}
 		finally{			
 			if (myStmt != null) {
@@ -178,7 +177,7 @@ public class DBAdder
 			myStmt.setBoolean(1, mediaCopy.isRented());
 			myStmt.setBoolean(2, mediaCopy.isReserved());
 			myStmt.setString(3, mediaCopy.getState());
-			myStmt.setBoolean(4, mediaCopy.isActive);
+			myStmt.setBoolean(4, mediaCopy.isActive());
 			myStmt.setInt(5, mediaCopy.getMediaId());
 			
 			System.out.println("Was the media copy successfulling inserted: " + myStmt.executeUpdate());
@@ -197,23 +196,85 @@ public class DBAdder
 	/**
 	 * Adds a new rental to the database
 	 * @param rental a new Rental object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 * @precondition an account matching the account_ID exists in the database
 	 * @precondition a media copy matching the copy_ID exists in the database
 	 * @postcondition a rental is added to the database
 	 */
-	public void addNewRentalQuery(Rental rental) {
-		
+	public static void addNewRentalQuery(Rental rental) throws FileNotFoundException, IOException, SQLException {
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call insert_rental(?,?,?,?,?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setDate(1, rental.getDateRented());
+			myStmt.setDate(2, rental.getDateDue());
+			myStmt.setBoolean(3, rental.isActive());
+			myStmt.setInt(4, rental.getAccount().getAccountID());
+			myStmt.setInt(5, rental.getMediaCopy().getMediaCopyId());
+
+			
+			System.out.println("Was the rental successfulling inserted: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+
 	}
 	
 	/**
 	 * Adds a reservation to the database
 	 * @param reservation a new Reservation object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 * @precondition an account matching the account_ID exists in the database
 	 * @precondition a media copy matching the copy_ID exists in the database
 	 * @postcondition a reservation is added to the database
 	 */
-	public void addNewReservationQuery(Reservation reservation) {
-		
+	public static void addNewReservationQuery(Reservation reservation) throws FileNotFoundException, IOException, SQLException {
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call insert_reservation(?,?,?,?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setDate(1, reservation.getReservationDate());
+			myStmt.setBoolean(2, reservation.isReservationActive());
+			myStmt.setInt(3, reservation.getCustomerAccount().getAccountID());
+			myStmt.setInt(4, reservation.getMediaCopy().getMediaCopyId());
+			
+			System.out.println("Was the Reservation successfulling inserted: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+
 	}
 	
 	/**

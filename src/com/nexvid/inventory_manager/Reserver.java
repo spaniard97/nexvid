@@ -1,5 +1,7 @@
 package com.nexvid.inventory_manager;
 
+import java.util.Calendar;
+
 import com.nexvid.accounts.*;
 
 /**
@@ -20,8 +22,9 @@ public class Reserver {
 	 * @precondition the media and customer account must exist
 	 * @postcondition returns true or false depending on the success of the reserve operation
 	 */
-	public boolean reserveMedia(Account customerAccount, Media mediaToBeReserved){
-		return false;
+	public static Reservation reserveMedia(Account customerAccount, MediaCopy mediaToBeReserved){
+		Reservation temp = new Reservation(0, Calendar.getInstance(), true, customerAccount, mediaToBeReserved);
+		return temp;
 	}
 	
 	/**

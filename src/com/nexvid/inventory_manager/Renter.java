@@ -13,7 +13,7 @@ import com.nexvid.accounts.*;
  */
 public class Renter {
 	
-	private Calendar today;
+	private static Calendar today;
 	
 	/**
 	 * This method allows a customer to rent a specific media.
@@ -23,9 +23,9 @@ public class Renter {
 	 * @precondition the media and customer account must exist
 	 * @postcondition a Rental object is returned
 	 */
-	public Rental rentMedia(Account customerAccount, MediaCopy mediaRented)
+	public static Rental rentMedia(Account customerAccount, MediaCopy mediaRented)
 	{
-		Rental temp = new Rental(customerAccount, mediaRented, mediaRented.getMediaId(), today, true);
+		Rental temp = new Rental(customerAccount, mediaRented, 0, Calendar.getInstance(), true);
 		return temp;
 	}
 	
@@ -37,9 +37,9 @@ public class Renter {
 	 * @precondition the media must be rented by the customer
 	 * @postcondition  a Rental object is returned
 	 */
-	public Rental returnMedia(Account customerAccount, MediaCopy mediaReturned)
+	public static Rental returnMedia(Account customerAccount, MediaCopy mediaReturned)
 	{
-		Rental returning = new Rental(customerAccount, mediaReturned, mediaReturned.getMediaId(), today, false);
+		Rental returning = new Rental(customerAccount, mediaReturned, 0, today, false);
 		return returning;
 	}
 }
