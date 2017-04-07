@@ -63,7 +63,7 @@ public class MediaCopy extends Media{
 	 * @return The media's copy Id number
 	 */
 	public int getMediaCopyId() {
-		return mediaCopyId;
+		return this.mediaCopyId;
 	}
 	
 	/**

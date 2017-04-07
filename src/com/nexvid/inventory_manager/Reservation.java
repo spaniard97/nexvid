@@ -1,5 +1,6 @@
 package com.nexvid.inventory_manager;
 
+import java.util.Calendar;
 import java.util.Date;
 import com.nexvid.accounts.*;
 
@@ -13,7 +14,7 @@ import com.nexvid.accounts.*;
 public class Reservation {
 	
 	protected int reservationId;
-	protected Date reservationDate;
+	protected java.sql.Date reservationDate;
 	protected boolean isReservationActive;
 	protected Account customerAccount;
 	protected MediaCopy mediaCopy;
@@ -33,8 +34,14 @@ public class Reservation {
 	 * @param account The customer account for the account number
 	 * @param mediaCopy The media copy to be reserved
 	 */
-	public Reservation(int id, Date dateReserved, boolean isActive, Account account,
+	public Reservation(int id, Calendar dateReserved, boolean isActive, Account account,
 			MediaCopy mediaCopy){
+		this.reservationId = id;
+		Date myDate = dateReserved.getTime();
+		this.reservationDate = new java.sql.Date(myDate.getTime());
+		this.isReservationActive = isActive;
+		this.customerAccount = account;
+		this.mediaCopy = mediaCopy;
 	}
 
 	/**
@@ -57,7 +64,7 @@ public class Reservation {
 	 * Get a reservation's date.
 	 * @return The reservation's date
 	 */
-	public Date getReservationDate() {
+	public java.sql.Date getReservationDate() {
 		return reservationDate;
 	}
 
@@ -66,7 +73,7 @@ public class Reservation {
 	 * @param reservationDate The reservation's date
 	 */
 	public void setReservationDate(Date reservationDate) {
-		this.reservationDate = reservationDate;
+		this.reservationDate = new java.sql.Date(reservationDate.getTime());
 	}
 
 	/**

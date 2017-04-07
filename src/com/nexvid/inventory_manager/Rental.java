@@ -14,8 +14,8 @@ import com.nexvid.accounts.*;
 public class Rental {
 	
 	public int rentalID;
-	public Date dateRented;
-	public Date dateDue;
+	public java.sql.Date dateRented;
+	public java.sql.Date dateDue;
 	public boolean isActive;
 	public Account account;
 	public MediaCopy mediaCopy;
@@ -44,9 +44,11 @@ public class Rental {
 		this.account = customerAccount;
 		this.mediaCopy = selectedMedia;
 		this.rentalID = id;
-		this.dateRented = dayRented.getTime();
+		Date myDate = temp.getTime();
+		this.dateRented = new java.sql.Date(myDate.getTime());
 		temp.add(Calendar.DAY_OF_MONTH, RENTAL_PERIOD);
-		this.dateDue = temp.getTime();
+		myDate = temp.getTime();
+		this.dateDue = new java.sql.Date(myDate.getTime());
 		this.isActive = active;
 	}
 
@@ -102,7 +104,7 @@ public class Rental {
 	 * Get the date a media is rented.
 	 * @return The date the media is rented
 	 */
-	public Date getDateRented() {
+	public java.sql.Date getDateRented() {
 		return dateRented;
 	}
 
@@ -111,14 +113,14 @@ public class Rental {
 	 * @param dateRented The date the media is rented
 	 */
 	public void setDateRented(Date dateRented) {
-		this.dateRented = dateRented;
+		this.dateRented = new java.sql.Date(dateRented.getTime());
 	}
 
 	/**
 	 * Get the date a media is due.
 	 * @return The date the media is due
 	 */
-	public Date getDateDue() {
+	public java.sql.Date getDateDue() {
 		return dateDue;
 	}
 
@@ -128,7 +130,7 @@ public class Rental {
 	 */
 	public void setDateDue(Date dateDue)
 	{
-		this.dateDue = dateDue;
+		this.dateDue = new java.sql.Date(dateDue.getTime());
 	}
 
 	/**
