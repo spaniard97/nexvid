@@ -78,7 +78,7 @@ public class DatabaseTester {
 			Account myAccount = DBReader.getAccountQuery(100000017);
 			Date myDate = new SimpleDateFormat("yyyy-mm-dd").parse("2000-08-22");
 			java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
-			SubAccount mySub = new SubAccount(0, sqlDate, "Kimmy", "Low", true, myAccount);
+			SubAccount mySub = new SubAccount(0, sqlDate, "Jenny", "Low", true, myAccount);
 			System.out.println("\naddNewSubAccount Query:");
 			DBAdder.addNewSubAccountQuery(mySub);
 			
