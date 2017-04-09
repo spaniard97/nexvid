@@ -52,7 +52,7 @@ public class DBWriter {
 			myStmt.setString(8, account.getPostalCode());
 			myStmt.setString(9, account.getCountry());
 			myStmt.setString(10, account.getStreetName());
-			checkNull(myStmt, 11, account.getAppartmentNumber());
+			checkNull(myStmt, 11, account.getApartmentNumber());
 			myStmt.setInt(12, account.getStreetNumber());
 			myStmt.setString(13, account.getAccountType());
 			myStmt.setString(14, account.getStatus());

@@ -112,7 +112,7 @@ public class DatabaseTester {
 			myAccount.setLastName("Johnson");
 			myAccount.setPhoneNumber("6047778585");
 			myAccount.setEmail("jeff@hotmail.com");
-			myAccount.setAppartmentNumber(12);
+			myAccount.setApartmentNumber(12);
 			myAccount.setPassPhrase("my phrases");
 			
 			System.out.println("\nsetAccount Query:");
