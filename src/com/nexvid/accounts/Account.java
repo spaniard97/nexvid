@@ -5,7 +5,7 @@ package com.nexvid.accounts;
  * 
  * @author Brian Chan, Juan Carlos Pinillos
  * @since 03/26/2017
- * @version 1.0.0.6
+ * @version 1.0.1.8
  *
  */
 public class Account 
@@ -27,7 +27,7 @@ public class Account
     protected double balanceOwed;
 	protected String password;
 	protected String passPhrase;
-	//protected SubAccount subAccount;
+	protected SubAccount subAccount;
 	private static final String DELIMITER=", ";
     
 	/**
@@ -138,8 +138,8 @@ public class Account
 	 */
     public Account(int accountID, String firstName, String lastName, String phoneNumber, String email, 
     		String province, String city, String postalCode, String country, String streetName, int apartmentNumber, 
-    		int streetNumber, String accountType, String status, String password, String passPhrase/*, 
-    		SubAccount subAccount*/) 
+    		int streetNumber, String accountType, String status, String password, String passPhrase, 
+    		SubAccount subAccount) 
     {
     	this.accountID = accountID;
     	this.firstName = firstName;
@@ -463,10 +463,10 @@ public class Account
      * Sets the account holder's sub account information
      * @param subAccount The account holder's sub account to be set
      */
-    /*public void setSubAccount(SubAccount subAccount)
+    public void setSubAccount(SubAccount subAccount)
     {
     	this.subAccount = subAccount;
-    }*/
+    }
 	
     /**
      * Gets the account holder's postal code

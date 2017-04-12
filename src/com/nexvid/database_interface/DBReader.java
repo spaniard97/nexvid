@@ -9,7 +9,7 @@ import java.sql.*;
 
 
 /**
- * This class reads data from the database using SELECT queriess
+ * This class reads data from the database using SELECT queries
  * @author Juan Carlos Pinillos
  * @author Russell Hanson
  */

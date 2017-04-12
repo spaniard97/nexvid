@@ -1,19 +1,25 @@
 package com.nexvid.accounts;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
+
+import com.nexvid.database_interface.DBAdder;
+import com.nexvid.database_interface.DBReader;
+import com.nexvid.database_interface.DBWriter;
 import com.nexvid.inventory_manager.*;
 
 /**
  * The AccountManager class is responsible for all account based actions
  * @author Brian Chan
  * @since 03/18/2017
- * @version 1.0.0.2
+ * @version 1.0.1.4
  *
  */
 public class AccountManager
 {
-	
-	
+		
 	/**
      * Creates an Account with minimal information.
      * @param accountID The account ID
@@ -61,11 +67,29 @@ public class AccountManager
     public Account createAccount(int accountID, String firstName, String lastName, String phoneNumber, 
     		String email, String province, String city, String postalCode, String country, String streetName, 
     		int apartmentNumber, int streetNumber, String accountType, String status, String password, 
-    		String passPhrase) 
+    		String passPhrase, SubAccount subAccount) 
     {
-    	return new Account(accountID,firstName,lastName,phoneNumber,
+    	
+    	Account temp = new Account(accountID,firstName,lastName,phoneNumber,
     			email,province,city,postalCode,country,streetName,apartmentNumber,
-    			streetNumber,accountType,status,password,passPhrase);
+    			streetNumber,accountType,status,password,passPhrase, subAccount);
+    	try
+    	{
+			DBAdder.addNewAccountQuery(temp);
+		}
+    	catch (FileNotFoundException e)
+    	{
+			System.out.print("Error: Account could not be created. Please check database status");
+		}
+    	catch (IOException e)
+    	{
+			System.out.print("Error: Account could not be created. Please check database status");
+		}
+    	catch (SQLException e)
+    	{
+			System.out.print("Error: Account could not be created. Please check inputs or database status");
+		}
+    	return temp;
     	
     }
 	
@@ -78,10 +102,35 @@ public class AccountManager
 	 * @precondition  AccountID must be an integer and password must be a String
 	 * @postcondition returns true or false depending on input
 	 */
-	public boolean login(int accountID, String password)
+	public boolean login(String Email, String password)
 	{
-		// TODO: get account info from Database
-		return false;//stub
+		Account temp = null;
+		try
+		{
+			temp = DBReader.loginQuery(Email, password);
+		}
+		catch (FileNotFoundException e) {
+			System.out.print("Error: Could not log in. Please try again later");
+		}
+		catch (IOException e) 
+		{
+			System.out.print("Error: Could not log in. Please try again later");
+		} 
+		catch (SQLException e) 
+		{
+			System.out.print("Error: Could not log in. Wrong email or password");
+		}
+		finally
+		{
+			if(temp.getEmail().equals(Email))
+			{
+				if(temp.getPassword().equals(password))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -109,6 +158,23 @@ public class AccountManager
 			{
 				userAccount.setPassword(newPassword);
 			}
+		}
+		
+		try
+		{
+			DBWriter.setAccountQuery(userAccount);
+		}
+		catch (FileNotFoundException e)
+		{
+			System.out.print("Error: Could not change password.");
+		} 
+		catch (IOException e) 
+		{
+			System.out.print("Error: Could not change password.");
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Error: Could not change password.");
 		}
 	}
 	

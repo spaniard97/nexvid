@@ -1,9 +1,16 @@
 package com.nexvid.accounts;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
+
+import com.nexvid.database_interface.DBWriter;
+
 /**The EmployeeAccountManager manages Employee Accounts
  *  * 
  * @author Brian Chan
  * @since 04/01/2017
- * @version 1.0.0.2
+ * @version 1.0.1.2
  *
  */
 public class EmployeeAccountManager extends AccountManager
@@ -65,9 +72,13 @@ public class EmployeeAccountManager extends AccountManager
      * @precondition The account must not exist
      * @postcondition the account has been added
      */
-    public Account addCustomer(Account account)
+    public Account addCustomer(int accountID, String firstName, String lastName, String phoneNumber, 
+    		String email, String province, String city, String postalCode, String country, String streetName, 
+    		int apartmentNumber, int streetNumber, String accountType, String status, String password, 
+    		String passPhrase, SubAccount subAccount)
     {
-    	return account;
+    	Account newAccount = super.createAccount(accountID, firstName, lastName, phoneNumber, email, province, city, postalCode, country, streetName, apartmentNumber, streetNumber, accountType, status, password, passPhrase, subAccount);
+    	return newAccount;
     }
     
     /**
@@ -80,7 +91,31 @@ public class EmployeeAccountManager extends AccountManager
      */
     public boolean deactivateCustomerAccount(Account account)
     {
-	return false;
+    	account.setStatus("Deactive");
+    	if(account.getStatus().equals("Deactive"))
+    	{
+    		try
+    		{
+				DBWriter.setAccountQuery(account);
+			}
+    		catch (FileNotFoundException e)
+    		{
+				System.out.print("Error: Could not deactivate account");
+			}
+    		catch (IOException e)
+    		{
+    			System.out.print("Error: Could not deactivate account");
+			}
+    		catch (SQLException e)
+    		{
+    			System.out.print("Error: Could not deactivate account");
+			}
+    		return true;
+    	}
+    	else
+    	{
+    		return false;
+    	}
     }
     
     /**
@@ -92,7 +127,31 @@ public class EmployeeAccountManager extends AccountManager
      */
     public Account suspendAccount(Account account)
     {
-	return account;
+    	account.setStatus("Suspended");
+    	if(account.getStatus().equals("Suspended"))
+    	{
+    		try
+    		{
+				DBWriter.setAccountQuery(account);
+			}
+    		catch (FileNotFoundException e)
+    		{
+				System.out.print("Error: Could not suspend account");
+			}
+    		catch (IOException e)
+    		{
+    			System.out.print("Error: Could not suspend account");
+			}
+    		catch (SQLException e)
+    		{
+    			System.out.print("Error: Could not suspend account");
+			}
+    		return account;
+    	}
+    	else
+    	{
+    		return account;
+    	}
     }
     
     /**
@@ -105,7 +164,24 @@ public class EmployeeAccountManager extends AccountManager
      */
     public Account addFine(double fine, Account account) 
     {
-	return account;
+    	account.setBalanceOwed(fine);
+    	try
+		{
+			DBWriter.setAccountQuery(account);
+		}
+		catch (FileNotFoundException e)
+		{
+			System.out.print("Error: Could not add fine");
+		}
+		catch (IOException e)
+		{
+			System.out.print("Error: Could not add fine");
+		}
+		catch (SQLException e)
+		{
+			System.out.print("Error: Could not add fine");
+		}
+		return account;
     }
     
     /**
@@ -118,7 +194,28 @@ public class EmployeeAccountManager extends AccountManager
      */
     public Account reduceFine(double fine, Account account)
     {
-	return account;
+    	if(fine > account.getBalanceOwed())
+    	{
+    		account.setBalanceOwed(0);
+    	}
+    	account.setBalanceOwed(account.getBalanceOwed() - fine);
+       	try
+		{
+			DBWriter.setAccountQuery(account);
+		}
+		catch (FileNotFoundException e)
+		{
+			System.out.print("Error: Could not add fine");
+		}
+		catch (IOException e)
+		{
+			System.out.print("Error: Could not add fine");
+		}
+		catch (SQLException e)
+		{
+			System.out.print("Error: Could not add fine");
+		}
+		return account;
     }
 
 
