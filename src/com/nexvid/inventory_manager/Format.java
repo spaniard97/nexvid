@@ -33,7 +33,7 @@ public class Format {
 	public Format(int formatID, String type){
 		this.formatID = formatID;
 		this.type = type;
-		try
+		/*try
 		{
 			DBAdder.addNewFormatQuery(this);
 		}
@@ -48,7 +48,7 @@ public class Format {
 		catch (IOException e)
 		{
 			System.out.print("Error: Could not add new format");
-		}
+		}*/
 	}
 	
 	/**

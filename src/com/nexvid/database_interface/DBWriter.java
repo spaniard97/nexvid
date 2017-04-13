@@ -223,13 +223,13 @@ public class DBWriter {
 			myConn = db.getConnection();
 			
 			// Creates a prepared statement query
-			myStmt = myConn.prepareCall("{call update_price_tier_info(?,?,?,?}");
+			myStmt = myConn.prepareCall("{call update_price_tier_info(?,?,?}");
 			
 			//Fills in the query with the corresponding parameters
 			myStmt.setInt(1, priceTier.getPriceID());
 			myStmt.setInt(2, priceTier.getRentalPeriod());
 			myStmt.setString(3, priceTier.getPriceTier());
-			myStmt.setDouble(4, priceTier.getPrice());
+			//myStmt.setDouble(4, priceTier.getPrice());
 			
 			System.out.println("Was the price tier successfulling updated: " + myStmt.executeUpdate());
 		}
@@ -248,33 +248,125 @@ public class DBWriter {
 	 * Receives a Format object that already exists in the database, then writes to the database.
 	 * This is used to modify the record.
 	 * @param format a Format object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 * @precondition a format matching a format record that exists in the database by format_ID
 	 * @postcondition the matching format is modified in the database 
 	 */
-	public void setFormatQuery(Format format){
-		
+	public static void setFormatQuery(Format format) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call update_format_info(?,?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setInt(1, format.getFormatID());
+			myStmt.setString(2, format.getType());
+			
+			System.out.println("Was the format successfulling updated: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+
 	}
 	
 	/**
 	 * Receives a Rental object that already exists in the database, then writes to the database.
 	 * This is used to modify the record. 
 	 * @param rental a Rental object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 * @precondition a rental matching a rental record that exists in the database by rental_ID
 	 * @postcondition the matching rental is modified in the database 
 	 */
-	public void setRentalQuery(Rental rental){
-		
+	public static void setRentalQuery(Rental rental) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call update_rental_info(?,?,?,?,?,?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setInt(1, rental.getRentalID());
+			myStmt.setDate(2, rental.getDateRented());
+			myStmt.setDate(3, rental.getDateDue());
+			myStmt.setBoolean(4, rental.isActive());
+			myStmt.setInt(5, rental.getAccount().getAccountID());
+			myStmt.setInt(6, rental.getMediaCopy().getMediaCopyId());
+
+			
+			System.out.println("Was the rental successfulling updated: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+
 	}
 	
 	/**
 	 * Receives a Reservation object that already exists in the database, then writes to the database.
 	 * This is used to modify the record. 
 	 * @param reservation a Reservation Object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 * @precondition a reservation matching a reservation record that exists in the database by reservation_ID
 	 * @postcondition the matching reservation is modified in the database 
 	 */
-	public void setReservation(Reservation reservation){
-		
+	public static void setReservation(Reservation reservation) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call update_reservation_info(?,?,?,?,?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setInt(1, reservation.getReservationId());
+			myStmt.setDate(2, reservation.getReservationDate());
+			myStmt.setBoolean(3, reservation.isReservationActive());
+			myStmt.setInt(4, reservation.getCustomerAccount().getAccountID());
+			myStmt.setInt(5, reservation.getMediaCopy().getMediaCopyId());
+			
+			System.out.println("Was the Reservation successfulling updated: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+
 	}
 	
 	/**

@@ -47,7 +47,7 @@ public class SubAccount
     	this.dateOfBirth = dateOfBirth;
     	this.isActive = active;
     	this.account = account;
-    	try
+    	/*try
     	{
 			DBAdder.addNewSubAccountQuery(this);
 		}
@@ -62,7 +62,7 @@ public class SubAccount
     	catch (SQLException e)
     	{
     		System.out.print("Error: Could not add sub account");
-		}
+		}*/
     }
 	
 	/**
