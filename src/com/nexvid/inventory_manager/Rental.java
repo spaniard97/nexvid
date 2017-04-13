@@ -22,12 +22,12 @@ public class Rental {
 	private static final int RENTAL_PERIOD = 7;
 	private static final int NEW_RENTAL_PERIOD = 3;
 	
-	//This class needs to be discussed - JC
 	
 	/**
 	 * The default constructor for the Rental class.
 	 */
-	public Rental(){
+	public Rental()
+	{
 		
 	}
 	
@@ -38,20 +38,37 @@ public class Rental {
 	 * @param id The rental id
 	 * @param dayRented Day the media was rented
 	 * @param active True if rental is still active
+	 * @param isNew True if the rented media is a new release
 	 */
-	public Rental(Account customerAccount, MediaCopy selectedMedia, int id, Calendar dayRented, boolean active)
+	public Rental(Account customerAccount, MediaCopy selectedMedia, int id, Calendar dayRented, boolean active, boolean isNew)
 	{
-		//Need a new rental for new items
-		Calendar temp = dayRented;
-		this.account = customerAccount;
-		this.mediaCopy = selectedMedia;
-		this.rentalID = id;
-		Date myDate = temp.getTime();
-		this.dateRented = new java.sql.Date(myDate.getTime());
-		temp.add(Calendar.DAY_OF_MONTH, RENTAL_PERIOD);
-		myDate = temp.getTime();
-		this.dateDue = new java.sql.Date(myDate.getTime());
-		this.isActive = active;
+		if(isNew)
+		{
+			Calendar temp = dayRented;
+			this.account = customerAccount;
+			this.mediaCopy = selectedMedia;
+			this.rentalID = id;
+			Date myDate = temp.getTime();
+			this.dateRented = new java.sql.Date(myDate.getTime());
+			temp.add(Calendar.DAY_OF_MONTH, NEW_RENTAL_PERIOD);
+			myDate = temp.getTime();
+			this.dateDue = new java.sql.Date(myDate.getTime());
+			this.isActive = active;
+		}
+		else
+		{
+			Calendar temp = dayRented;
+			this.account = customerAccount;
+			this.mediaCopy = selectedMedia;
+			this.rentalID = id;
+			Date myDate = temp.getTime();
+			this.dateRented = new java.sql.Date(myDate.getTime());
+			temp.add(Calendar.DAY_OF_MONTH, RENTAL_PERIOD);
+			myDate = temp.getTime();
+			this.dateDue = new java.sql.Date(myDate.getTime());
+			this.isActive = active;
+		}
+		
 	}
 
 	/**

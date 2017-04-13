@@ -47,22 +47,6 @@ public class SubAccount
     	this.dateOfBirth = dateOfBirth;
     	this.isActive = active;
     	this.account = account;
-    	/*try
-    	{
-			DBAdder.addNewSubAccountQuery(this);
-		}
-    	catch (FileNotFoundException e)
-    	{
-			System.out.print("Error: Could not add sub account");
-		}
-    	catch (IOException e)
-    	{
-    		System.out.print("Error: Could not add sub account");
-		}
-    	catch (SQLException e)
-    	{
-    		System.out.print("Error: Could not add sub account");
-		}*/
     }
 	
 	/**
@@ -160,7 +144,7 @@ public class SubAccount
      * @return the parent's account ID
      */
 	public Account getAccount() {
-		return this.account;
+		return account;
 	}
 	
 	/**
@@ -170,5 +154,6 @@ public class SubAccount
 	public void setAccountID(Account account){
 		this.account = account;
 	}
+
 
 }

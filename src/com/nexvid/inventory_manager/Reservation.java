@@ -22,7 +22,8 @@ public class Reservation {
 	/**
 	 * Default constructor
 	 */
-	public Reservation(){
+	public Reservation()
+	{
 		
 	}
 	

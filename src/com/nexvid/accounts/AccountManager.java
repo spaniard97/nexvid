@@ -2,6 +2,7 @@ package com.nexvid.accounts;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -199,7 +200,7 @@ public class AccountManager
 	 */
 	public List<Rental> getAccountRentals(Account customerAccount)
 	{
-		return null; //TODO: database?
+		return null;
 	}
 	
 	/** Returns account information
@@ -220,9 +221,25 @@ public class AccountManager
 	 * @precondition The customer's account object must exist
 	 * @postcondition The subaccount is created
 	 */
-	public void addSubAccount(Account customerAccount)
+	public void addSubAccount(int subAccountNumber, Date DOB, String firstName, String lastName, Boolean active, Account customerAccount)
 	{
-		//TODO: no SubAccount info
+		SubAccount temp = new SubAccount(subAccountNumber, DOB, firstName, lastName, active, customerAccount);
+		try
+		{
+			DBAdder.addNewSubAccountQuery(temp);
+		}
+		catch (FileNotFoundException e)
+		{
+			System.out.print("Error: Could not create subaccount.");
+		}
+		catch (IOException e)
+		{
+			System.out.print("Error: Could not create subaccount.");
+		}
+		catch (SQLException e)
+		{
+			System.out.print("Error: Could not create subaccount.");
+		}
 	}
 	
 	/** Retrieves SubAccount information for the customer to view
@@ -232,7 +249,9 @@ public class AccountManager
 	 */
 	public String getSubAccountInformation(Account customerAccount)
 	{
-		return null; //TODO: implement this when Account.getSubAccount() is implemented
+		//TODO LOW PRIORITY
+		//return null as current progress is not high priority
+		return null;
 	}
 	
 	/** Retrieves a list of the customer's reservations

@@ -1,5 +1,10 @@
 package com.nexvid.inventory_manager;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
+import com.nexvid.database_interface.DBReader;
+
 /**
  * The MediaSercher class is responsible for searching medias in our database.
  * @author Samuel Pimenta
@@ -16,7 +21,17 @@ public class MediaSearcher {
 	 * @precondition the onlineId must exist
 	 * @postcondition A media object is returned
 	 */
-	public Media searchMedia(int onlineId){
+	public Media searchMedia(int onlineId)
+	{
+		Media searchedMedia;
+		try
+		{
+			searchedMedia = DBReader.getMediaQuery(onlineId);
+			return searchedMedia;
+		} catch (IOException | SQLException e)
+		{
+			System.out.print("Error: Could not search for a media.");
+		}
 		return null;
 	}
 }

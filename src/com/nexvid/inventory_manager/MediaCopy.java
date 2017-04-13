@@ -35,7 +35,6 @@ public class MediaCopy extends Media{
 			String mediaType, PriceTier mediaPrice, Format mediaFormat){
 		super(id, mediaTitle, timesRented, mediaOnlineID, mediaType, mediaPrice,
 				mediaFormat);
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**
