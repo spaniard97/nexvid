@@ -39,6 +39,8 @@ public class DatabaseTester {
 			Format mediaFormat = new Format(1, "Blu-ray");
 			Media myMedia = new Media(0, "John Wick", 0, 4, "Movie", mediaPrice, mediaFormat);
 			MediaCopy myCopy = new MediaCopy(4, "John Wick", 0, 4, "Movie", mediaPrice, mediaFormat, 4, false, false, "New", true);
+			Rental rental = Renter.rentMedia(myAccount, myCopy);
+			Reservation reserve = Reserver.reserveMedia(myAccount, myCopy);
 
 			
 			/******************************************************************************
@@ -104,11 +106,11 @@ public class DatabaseTester {
 			/*System.out.println("\naddNewSubAccount Query:");
 			DBAdder.addNewSubAccountQuery(mySub);*/
 			
-			/*Rental rental = Renter.rentMedia(myAccount, myCopy);
+			/*
 			System.out.println("\naddNewRental Query:");
 			DBAdder.addNewRentalQuery(rental);*/
 			
-			/*Reservation reserve = Reserver.reserveMedia(myAccount, myCopy);
+			/*
 			System.out.println("\naddNewReserve Query:");
 			DBAdder.addNewReservationQuery(reserve);*/
 			
@@ -144,10 +146,28 @@ public class DatabaseTester {
 			myCopy.setState("Good");
 			DBWriter.setMediaCopyQuery(myCopy);*/
 			
-			System.out.println("\nsetPriceTier Query: ");
+			/*System.out.println("\nsetPriceTier Query: ");
 			mediaPrice.setPrice(5);
 			mediaPrice.setRentalPeriod(3);
-			DBWriter.setPriceTierQuery(mediaPrice);
+			DBWriter.setPriceTierQuery(mediaPrice);*/
+			
+			/*System.out.println("\nsetFormat Query: ");
+			mediaFormat.setFormatID(3);
+			mediaFormat.setType("VHS-HD");
+			DBWriter.setFormatQuery(mediaFormat);*/
+			
+			/*System.out.println("\nsetRental Query: ");
+			rental.setDateRented(today);
+			rental.setDateDue(dateDue);
+			rental.setActive(false);
+			rental.setRentalID(4);
+			DBWriter.setRentalQuery(rental);*/
+			
+			System.out.println("\nsetReservation Query: ");
+			reserve.setReservationId(2);
+			reserve.setReservationDate(today);
+			reserve.setReservationActive(false);
+			DBWriter.setReservation(reserve);
 			
 			
 		} catch (SQLException e) {
