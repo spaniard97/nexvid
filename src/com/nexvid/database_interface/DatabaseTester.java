@@ -163,11 +163,40 @@ public class DatabaseTester {
 			rental.setRentalID(4);
 			DBWriter.setRentalQuery(rental);*/
 			
-			System.out.println("\nsetReservation Query: ");
+			/*System.out.println("\nsetReservation Query: ");
 			reserve.setReservationId(2);
 			reserve.setReservationDate(today);
 			reserve.setReservationActive(false);
-			DBWriter.setReservation(reserve);
+			DBWriter.setReservation(reserve);*/
+			
+			/*System.out.println("\ndeactivate Rental Query: ");
+			rental.setRentalID(1);
+			DBWriter.deactivate(rental);*/
+			
+			/*System.out.println("\ndeactivate Reservation Query: ");
+			reserve.setReservationId(1);
+			DBWriter.deactivate(reserve);*/
+			
+			/*System.out.println("\nchangeStatus Account Query: ");
+			Account myAccount2 = new Account();
+			myAccount2.setAccountID(100000004);
+			myAccount2.setStatus("Suspend");
+			DBWriter.changeStatus(myAccount2);*/
+					
+			myCopy.setMediaCopyId(7);
+			myCopy.setRented(false);
+			myCopy.setReserved(false);
+			myCopy.setState("Fair");
+			myCopy.setActive(false);
+			System.out.println("\nchangeState Media Copy Query: ");
+			DBWriter.changeState(myCopy);
+			System.out.println("\ndeactivate Media Copy Query: ");
+			DBWriter.deactivate(myCopy);
+			System.out.println("\nchangeRentStatus Media Copy Query: ");
+			DBWriter.changeRentStatus(myCopy);
+			System.out.println("\nchangeReserveStatus Media Copy Query: ");
+			DBWriter.changeReserveStatus(myCopy);
+
 			
 			
 		} catch (SQLException e) {

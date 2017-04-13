@@ -379,6 +379,270 @@ public class DBWriter {
 	public void setTVShowDisk(TvShowDisk tvShowDisk){
 		
 	}
+
+	/**
+	 * Receives a Account object that already exists in the database and changes the status.
+	 * This is used to modify the record. 
+	 * @param account a Account object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
+	 * @precondition an account matching a account record that exists in the database by account_ID
+	 * @postcondition the matching account has its status changed 
+	 */
+	public static void changeStatus(Account account) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call change_account_status(?,?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setInt(1, account.getAccountID());
+			myStmt.setString(2, account.getStatus());
+
+			System.out.println("Was the account status successfulling changed: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+	}
+	
+	/**
+	 * Receives a MediaCopy object that already exists in the database and changes its state.
+	 * This is used to modify the record. 
+	 * @param mediaCopy a MediaCopy object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
+	 * @precondition a mediaCopy matching a media copy record that exists in the database by copy_ID
+	 * @precondition the status must match one of the database predetermined states: "New", "Good", "Fair", "Damaged".
+	 * @postcondition the matching media copy has its status changed 
+	 */
+	public static void changeState(MediaCopy mediaCopy) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call change_mediaCopy_state(?,?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setInt(1, mediaCopy.getMediaCopyId());
+			myStmt.setString(2, mediaCopy.getState());
+
+			System.out.println("Was the media copy's state successfulling changed: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+	}
+
+	/**
+	 * Receives a MediaCopy object that already exists in the database and deactivates it.
+	 * This is used to modify the record. 
+	 * @param mediaCopy a MediaCopy object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
+	 * @precondition a mediaCopy matching a media copy record that exists in the database by copy_ID
+	 * @postcondition the matching media copy is deactivated 
+	 */
+	public static void deactivate(MediaCopy mediaCopy) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call deactivate_mediaCopy(?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setInt(1, mediaCopy.getMediaCopyId());
+
+			System.out.println("Was the media copy successfulling deactivated: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+	}
+	
+	/**
+	 * Receives a MediaCopy object that already exists in the database and changes the rental status.
+	 * This is used to modify the record. 
+	 * @param mediaCopy a MediaCopy object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
+	 * @precondition a mediaCopy matching a media copy record that exists in the database by copy_ID
+	 * @postcondition the matching media copy has its rental status changed
+	 */
+	public static void changeRentStatus(MediaCopy mediaCopy) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call change_mediaCopy_rental_status(?,?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setInt(1, mediaCopy.getMediaCopyId());
+			myStmt.setBoolean(2, mediaCopy.isRented());
+
+			System.out.println("Was the media copy's rental status successfulling changed: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+	}
+	
+	/**
+	 * Receives a MediaCopy object that already exists in the database and changes the reservation status.
+	 * This is used to modify the record. 
+	 * @param mediaCopy a MediaCopy object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
+	 * @precondition a mediaCopy matching a media copy record that exists in the database by copy_ID
+	 * @postcondition the matching media copy has its reservation status changed
+	 */
+	public static void changeReserveStatus(MediaCopy mediaCopy) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call change_mediaCopy_reservation_status(?,?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setInt(1, mediaCopy.getMediaCopyId());
+			myStmt.setBoolean(2, mediaCopy.isReserved());
+
+			System.out.println("Was the media copy's reservation status successfulling changed: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+	}
+
+	/**
+	 * Receives a Rental object that already exists in the database and deactivates it.
+	 * This is used to modify the record. 
+	 * @param rental a Rental object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
+	 * @precondition a rental matching a rental record that exists in the database by rental_ID
+	 * @postcondition the matching rental is deactivated 
+	 */
+	public static void deactivate(Rental rental) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call deactivate_rental(?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setInt(1, rental.getRentalID());
+
+			System.out.println("Was the rental successfulling deactivated: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+	}
+	
+	/**
+	 * Receives a Reservation object that already exists in the database and deactivates it.
+	 * This is used to modify the record. 
+	 * @param reservation a Reservation object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
+	 * @precondition a reservation matching a reservation record that exists in the database by reservation_ID
+	 * @postcondition the matching reservation is deactivated 
+	 */
+	public static void deactivate(Reservation reservation) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call deactivate_reservation(?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setInt(1, reservation.getReservationId());
+
+			System.out.println("Was the reservation successfulling deactivated: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+	}
 	
 	/**
 	 * Checks if a property should be inserted as NULL
