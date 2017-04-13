@@ -52,7 +52,7 @@ public class DBWriter {
 			myStmt.setString(8, account.getPostalCode());
 			myStmt.setString(9, account.getCountry());
 			myStmt.setString(10, account.getStreetName());
-			checkNull(myStmt, 11, account.getAppartmentNumber());
+			checkNull(myStmt, 11, account.getApartmentNumber());
 			myStmt.setInt(12, account.getStreetNumber());
 			myStmt.setString(13, account.getAccountType());
 			myStmt.setString(14, account.getStatus());
@@ -83,7 +83,7 @@ public class DBWriter {
 	 * @precondition a subAccount matching a subAccount record that exists in the database by sub_ID
 	 * @postcondition the matching subAccount is modified in the database 
 	 */
-	public void setSubAccountQuery(SubAccount subAccount) throws FileNotFoundException, IOException, SQLException{
+	public static void setSubAccountQuery(SubAccount subAccount) throws FileNotFoundException, IOException, SQLException{
 		DatabaseConnector db = null;
 		Connection myConn = null;
 		CallableStatement myStmt = null;
@@ -93,7 +93,7 @@ public class DBWriter {
 			myConn = db.getConnection();
 			
 			// Creates a prepared statement query
-			myStmt = myConn.prepareCall("{call insert_subAccount(?,?,?,?,?,?)}");
+			myStmt = myConn.prepareCall("{call update_subAccount_info(?,?,?,?,?,?)}");
 			
 			//Fills in the query with the corresponding parameters
 			myStmt.setInt(1, subAccount.getSubAccountID());
@@ -103,7 +103,7 @@ public class DBWriter {
 			myStmt.setBoolean(5, subAccount.isActive());
 			myStmt.setInt(6, subAccount.getAccount().getAccountID());
 			
-			System.out.println("Was the Sub Account successfulling inserted: " + myStmt.executeUpdate());
+			System.out.println("Was the Sub Account successfulling updated: " + myStmt.executeUpdate());
 		}
 		finally{			
 			if (myStmt != null) {
@@ -120,33 +120,128 @@ public class DBWriter {
 	 * Receives a Media object that already exists in the database, then writes to the database.
 	 * This is used to modify the record.
 	 * @param media a Media object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 * @precondition a media matching a media record that exists in the database by media_ID
 	 * @postcondition the matching media is modified in the database 
 	 */
-	public void setMediaQuery(Media media){
-		
+	public static void setMediaQuery(Media media) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call update_media_info(?,?,?,?,?,?,?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setInt(1, media.getMediaId());
+			myStmt.setString(2, media.getTitle());
+			myStmt.setInt(3, media.getTimesRented());
+			myStmt.setInt(4, media.getOnlineID());
+			myStmt.setString(5, media.getType());
+			myStmt.setInt(6, media.getPrice().getPriceID());
+			myStmt.setInt(7, media.getFormat().getFormatID());
+			
+			System.out.println("Was the media successfulling updated: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+
 	}
 	
 	/**
 	 * Receives a MediaCopy object that already exists in the database, then writes to the database.
 	 * This is used to modify the record.
 	 * @param mediaCopy a MediaCopy object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 * @precondition a mediaCopy matching a mediaCopy record that exists in the database by copy_ID
 	 * @postcondition the matching mediaCopy is modified in the database 
 	 */
-	public void setMediaCopyQuery(MediaCopy mediaCopy){
-		
+	public static void setMediaCopyQuery(MediaCopy mediaCopy) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call update_mediaCopy_info(?,?,?,?,?,?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setInt(1,  mediaCopy.getMediaCopyId());
+			myStmt.setBoolean(2, mediaCopy.isRented());
+			myStmt.setBoolean(3, mediaCopy.isReserved());
+			myStmt.setString(4, mediaCopy.getState());
+			myStmt.setBoolean(5, mediaCopy.isActive());
+			myStmt.setInt(6, mediaCopy.getMediaId());
+			
+			System.out.println("Was the media copy successfulling updated: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+
 	}
 	
 	/**
 	 * Receives a PriceTier object that already exists in the database, then writes to the database.
 	 * This is used to modify the record.
 	 * @param priceTier a PriceTier object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 * @precondition a priceTier matching a priceTier record that exists in the database by price_ID
 	 * @postcondition the matching priceTier is modified in the database 
 	 */
-	public void setPriceTierQuery(PriceTier priceTier){
-		
+	public static void setPriceTierQuery(PriceTier priceTier) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call update_price_tier_info(?,?,?,?}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setInt(1, priceTier.getPriceID());
+			myStmt.setInt(2, priceTier.getRentalPeriod());
+			myStmt.setString(3, priceTier.getPriceTier());
+			myStmt.setDouble(4, priceTier.getPrice());
+			
+			System.out.println("Was the price tier successfulling updated: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+
 	}
 	
 	/**

@@ -60,7 +60,7 @@ public class DBReader
 				account.setPostalCode(myRs.getString("postal_code"));
 				account.setCountry(myRs.getString("country"));
 				account.setStreetName(myRs.getString("street_name"));
-				account.setAppartmentNumber(myRs.getInt("apt_number"));
+				account.setApartmentNumber(myRs.getInt("apt_number"));
 				account.setStreetNumber(myRs.getInt("street_number"));
 				account.setAccountType(myRs.getString("type"));
 				account.setStatus(myRs.getString("status"));
@@ -69,8 +69,8 @@ public class DBReader
 				account.setPassPhrase(myRs.getString("passphrase"));
 				
 				//For Testing.  Comment out later.
-				System.out.println(account.getAccountID() + ", " + account.getFirstName() + ", " + account.getLastName() +
-						", " + account.getPhoneNumber() + ", " + account.getEmail());
+				/*System.out.println(account.getAccountID() + ", " + account.getFirstName() + ", " + account.getLastName() +
+						", " + account.getPhoneNumber() + ", " + account.getEmail());*/
 				
 			}
 		}
@@ -82,7 +82,7 @@ public class DBReader
 			if (myStmt != null) {
 				myStmt.close();
 			}
-			System.out.println(db.endConnection(myConn)); //Closes the connection to the database
+			db.endConnection(myConn); //Closes the connection to the database
 		}
 		
 		return account;
@@ -527,7 +527,7 @@ public class DBReader
 				account.setPostalCode(myRs.getString("postal_code"));
 				account.setCountry(myRs.getString("country"));
 				account.setStreetName(myRs.getString("street_name"));
-				account.setAppartmentNumber(myRs.getInt("apt_number"));
+				account.setApartmentNumber(myRs.getInt("apt_number"));
 				account.setStreetNumber(myRs.getInt("street_number"));
 				account.setAccountType(myRs.getString("type"));
 				account.setStatus(myRs.getString("status"));

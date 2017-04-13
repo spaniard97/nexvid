@@ -269,7 +269,7 @@ public class Account
 	 * Gets the account holder's apartment number.
 	 * @return The account holder's apartment number
 	 */
-	public int getAppartmentNumber()
+	public int getApartmentNumber()
 	{
 		return this.apartmentNumber;
 	}
@@ -278,7 +278,7 @@ public class Account
 	 * Sets the account holder's apartmentNumber.
 	 * @param apartmentNumber
 	 */
-	public void setAppartmentNumber(int apartmentNumber)
+	public void setApartmentNumber(int apartmentNumber)
 	{
 		this.apartmentNumber = apartmentNumber;
 	}
