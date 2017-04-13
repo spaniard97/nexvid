@@ -1,5 +1,12 @@
 package com.nexvid.inventory_manager;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
+
+import com.nexvid.database_interface.DBAdder;
+import com.nexvid.database_interface.DBWriter;
+
 /**
  * The Format class creates Format objects.
  * @author Juan Carlos Pinillos
@@ -9,9 +16,12 @@ public class Format {
 	protected int formatID;
 	protected String type;
 	
-	public Format(){
-		//this.formatID = 0;
-		//this.type = null;
+	/**The default constructor for the Format Class
+	 * 
+	 */
+	public Format()
+	{
+		
 	}
 	
 	/**
@@ -23,6 +33,22 @@ public class Format {
 	public Format(int formatID, String type){
 		this.formatID = formatID;
 		this.type = type;
+		try
+		{
+			DBAdder.addNewFormatQuery(this);
+		}
+		catch (FileNotFoundException e)
+		{
+			System.out.print("Error: Could not add new format");
+		}
+		catch (SQLException e)
+		{
+			System.out.print("Error: Could not add new format");
+		}
+		catch (IOException e)
+		{
+			System.out.print("Error: Could not add new format");
+		}
 	}
 	
 	/**
@@ -37,7 +63,8 @@ public class Format {
 	 * Set the ID of the format
 	 * @param formatID the ID of the format
 	 */
-	public void setFormatID(int formatID) {
+	public void setFormatID(int formatID)
+	{
 		this.formatID = formatID;
 	}
 
@@ -45,7 +72,8 @@ public class Format {
 	 * Get the type name of the format
 	 * @return the type name of the format
 	 */
-	public String getType() {
+	public String getType()
+	{
 		return type;
 	}
 

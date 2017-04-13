@@ -4,7 +4,7 @@ package com.nexvid.inventory_manager;
  * The InventoryManager is responsible for the management of the inventory.
  * @author Samuel Pimenta
  * @since 03/19/2017
- * @version 1.0.0.1
+ * @version 1.0.0.2
  * 
  */
 

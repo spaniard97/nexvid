@@ -1,7 +1,19 @@
 package com.nexvid.accounts;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 
+import com.nexvid.database_interface.DBAdder;
+
+/**The subaccount class holds the subaccount's information
+ * 
+ * @author Brian Chan
+ * @since 04/01/2017
+ * @version 1.0.1.2
+ *
+ */
 public class SubAccount
 {
 	protected int subAccountID;
@@ -35,7 +47,22 @@ public class SubAccount
     	this.dateOfBirth = dateOfBirth;
     	this.isActive = active;
     	this.account = account;
-    	
+    	try
+    	{
+			DBAdder.addNewSubAccountQuery(this);
+		}
+    	catch (FileNotFoundException e)
+    	{
+			System.out.print("Error: Could not add sub account");
+		}
+    	catch (IOException e)
+    	{
+    		System.out.print("Error: Could not add sub account");
+		}
+    	catch (SQLException e)
+    	{
+    		System.out.print("Error: Could not add sub account");
+		}
     }
 	
 	/**

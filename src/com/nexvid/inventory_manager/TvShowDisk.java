@@ -1,5 +1,12 @@
 package com.nexvid.inventory_manager;
 
+/**The TvShowDisk class is used to identify the diskID and the disk information
+ * 
+ * @author Brian Chan, 
+ * @since 04/01/2017
+ * @version 1.0.0.2
+ *
+ */
 public class TvShowDisk extends MediaCopy{
 	
 	public int seasonNumber;
