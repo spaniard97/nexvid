@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import com.nexvid.accounts.*;
 
@@ -37,27 +39,32 @@ public class DBAdder
 			myConn = db.getConnection();
 			
 			// Creates a prepared statement query
-			myStmt = myConn.prepareCall("{call insert_account(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+			myStmt = myConn.prepareCall("{call insert_account(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 			
 			//Fills in the query with the corresponding parameters
 			myStmt.setString(1, account.getFirstName());
 			myStmt.setString(2, account.getLastName());
 			myStmt.setString(3, account.getPhoneNumber());
-			myStmt.setString(4, account.getEmail());
+			checkNull(myStmt, 4, account.getEmail());
 			myStmt.setString(5, account.getProvince());
 			myStmt.setString(6, account.getCity());
 			myStmt.setString(7, account.getPostalCode());
 			myStmt.setString(8, account.getCountry());
 			myStmt.setString(9, account.getStreetName());
-			myStmt.setInt(10, account.getApartmentNumber());
+			checkNull(myStmt, 10, account.getApartmentNumber());
 			myStmt.setInt(11, account.getStreetNumber());
 			myStmt.setString(12, account.getAccountType());
 			myStmt.setString(13, account.getStatus());
 			myStmt.setDouble(14, account.getBalanceOwed());
 			myStmt.setString(15, account.getPassword());
 			myStmt.setString(16, account.getPassPhrase());
+			myStmt.registerOutParameter(17, Types.INTEGER);
+			checkNull(myStmt, 17, account.getAccountID());
 			
-			System.out.println("Was the Account successfulling inserted: " + myStmt.executeUpdate());
+			
+			System.out.println("Was the Account successfulling inserted: " + myStmt.execute());
+			int accountID = myStmt.getInt("the_id");
+			System.out.println("The returned account ID is: " + accountID);
 		}
 		finally{			
 			if (myStmt != null) {
@@ -351,4 +358,33 @@ public class DBAdder
 		}
 
 	}
+	
+	/**
+	 * Checks if a property should be inserted as NULL
+	 * @param myStmt the callable statement from a query
+	 * @param position the position of the property in the query
+	 * @param number the value of the property
+	 * @throws SQLException
+	 */
+	protected static void checkNull(CallableStatement myStmt, int position, int number) throws SQLException{
+		if(number == 0)
+			myStmt.setNull(position, Types.INTEGER);
+		else
+			myStmt.setInt(position, number);
+	}
+	
+	/**
+	 * Checks if a property should be inserted as NULL
+	 * @param myStmt the callable statement from a query
+	 * @param position the position of the property in the query
+	 * @param value the value of the property
+	 * @throws SQLException
+	 */
+	protected static void checkNull(CallableStatement myStmt, int position, String value) throws SQLException{
+		if(value == null)
+			myStmt.setNull(position, Types.VARCHAR);
+		else
+			myStmt.setString(position, value);
+	}
+
 }

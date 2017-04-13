@@ -17,29 +17,33 @@ public class DatabaseTester {
 	public static void main(String[] args) throws ParseException {
 		// TODO Auto-generated method stub
 		try {
-			
-			Account myAccount = DBReader.getAccountQuery(100000019);
-			PriceTier mediaPrice = new PriceTier(1, 2, "New Release", 5.75);
-			Format mediaFormat = new Format(1, "Blu-ray");
-			
-			MediaCopy myCopy = new MediaCopy(4, "John Wick", 0, 4, "Movie", mediaPrice, mediaFormat, 4, false, false, "New", true);
-			
+						
 			Date myDate = new SimpleDateFormat("yyyy-MM-dd").parse("2000-08-22");
 			java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
 			
 			//Gets current date
 			Date myDate2 = new Date();
 			java.sql.Date today = new java.sql.Date(myDate2.getTime());
-			System.out.println(today);
+			//System.out.println(today);
 			
 			//Gets current date plus 2 days
 			Calendar myCal = Calendar.getInstance();
 			myCal.add(Calendar.DATE, 2);
 			myDate2 = myCal.getTime();
 			java.sql.Date dateDue = new java.sql.Date(myDate2.getTime());
-			System.out.println(dateDue);
+			//System.out.println(dateDue);
 			
+			Account myAccount = DBReader.getAccountQuery(100000019);
+			SubAccount mySub = new SubAccount(0, sqlDate, "Jenny", "Low", true, myAccount);
+			PriceTier mediaPrice = new PriceTier(1, 2, "New Release", 5.75);
+			Format mediaFormat = new Format(1, "Blu-ray");
+			Media myMedia = new Media(0, "John Wick", 0, 4, "Movie", mediaPrice, mediaFormat);
+			MediaCopy myCopy = new MediaCopy(4, "John Wick", 0, 4, "Movie", mediaPrice, mediaFormat, 4, false, false, "New", true);
+
 			
+			/******************************************************************************
+			 * Reader Queries
+			 ******************************************************************************/
 			/*System.out.println("Account Query:");
 			DBReader.getAccountQuery(100000004);
 			
@@ -70,12 +74,13 @@ public class DatabaseTester {
 			System.out.println("\nPriceTier Query:");
 			DBReader.getPriceTier(3);*/
 			
-			
+			/*****************************************************************************
+			 * Adder Queries
+			 *****************************************************************************/
 			/*Uncomment to execute.  But change Media object as to not duplicate values
 			System.out.println("\naddNewMedia Query:");
 			PriceTier mediaPrice = new PriceTier(1, 2, "New Release", 5.75);
 			Format mediaFormat = new Format(1, "Blu-ray");
-			Media myMedia = new Media(0, "John Wick", 0, 4, "Movie", mediaPrice, mediaFormat);
 			DBAdder.addNewMediaQuery(myMedia);
 			
 
@@ -92,12 +97,11 @@ public class DatabaseTester {
 			DBAdder.addNewPriceTier(myPrice);*/
 			
 			/*System.out.println("\naddNewAccount Query:");
-			Account myAccount = new Account(0, "Becca", "Low", "6042258898", "becca@hotmail.com", "BC", "North Vancouver", "V5G8U7", 
-					"Canada", "Hoskins Rd", 0, 4717, "Registered Customer", "Active", 3.52, "carrot", "rice");
-			DBAdder.addNewAccountQuery(myAccount);*/
+			Account myAccount2 = new Account(0, "Hank", "Hill", "6042257787", "Hank@hotmail.com", "BC", "North Vancouver", "V5J8U7", 
+					"Canada", "Peters Rd", 0, 1212, "Registered Customer", "Active", 3.52, "carrot", "rice");
+			DBAdder.addNewAccountQuery(myAccount2);*/
 			
-			/*SubAccount mySub = new SubAccount(0, sqlDate, "Jenny", "Low", true, myAccount);
-			System.out.println("\naddNewSubAccount Query:");
+			/*System.out.println("\naddNewSubAccount Query:");
 			DBAdder.addNewSubAccountQuery(mySub);*/
 			
 			/*Rental rental = Renter.rentMedia(myAccount, myCopy);
@@ -108,15 +112,42 @@ public class DatabaseTester {
 			System.out.println("\naddNewReserve Query:");
 			DBAdder.addNewReservationQuery(reserve);*/
 			
+			/*****************************************************************************
+			 * Writer Queries
+			 *****************************************************************************/			
+			/*
+			System.out.println("\nsetAccount Query:");
 			myAccount.setFirstName("Jeff");
 			myAccount.setLastName("Johnson");
 			myAccount.setPhoneNumber("6047778585");
 			myAccount.setEmail("jeff@hotmail.com");
 			myAccount.setApartmentNumber(12);
 			myAccount.setPassPhrase("my phrases");
+			DBWriter.setAccountQuery(myAccount);*/
 			
-			System.out.println("\nsetAccount Query:");
-			DBWriter.setAccountQuery(myAccount);
+			/*System.out.println("\nsetMedia Query:");
+			Media myMedia2 = new Media(2, "The Godfather Part 2", 0, 2, "Movie", mediaPrice, mediaFormat);
+			myMedia2.setTitle("The Godfather 2");
+			DBWriter.setMediaQuery(myMedia2);*/
+			
+			/*System.out.println("\nsetSubAccount Query: ");
+			mySub.setSubAccountID(8);
+			mySub.setFirstName("Jennifer");
+			mySub.setActive(false);
+			mySub.setDateOfBirth(sqlDate);
+			DBWriter.setSubAccountQuery(mySub);*/
+			
+			/*System.out.println("\nsetMediaCopy");
+			myCopy.setMediaCopyId(8);
+			myCopy.setRented(true);
+			myCopy.setReserved(true);
+			myCopy.setState("Good");
+			DBWriter.setMediaCopyQuery(myCopy);*/
+			
+			System.out.println("\nsetPriceTier Query: ");
+			mediaPrice.setPrice(5);
+			mediaPrice.setRentalPeriod(3);
+			DBWriter.setPriceTierQuery(mediaPrice);
 			
 			
 		} catch (SQLException e) {
