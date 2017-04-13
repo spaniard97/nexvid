@@ -419,6 +419,43 @@ public class DBWriter {
 	}
 	
 	/**
+	 * Receives a SubAccount object that already exists in the database and deactivates it.
+	 * This is used to modify the record. 
+	 * @param subAccount a SubAccount object
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
+	 * @precondition a subAccount matching a sub account record that exists in the database by sub_ID
+	 * @postcondition the matching sub account is deactivated
+	 */
+	public static void deactivate(SubAccount subAccount) throws FileNotFoundException, IOException, SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call deactivate_subAccount(?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setInt(1, subAccount.getSubAccountID());
+
+			System.out.println("Was the sub account successfulling deactivated: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+	}
+
+	/**
 	 * Receives a MediaCopy object that already exists in the database and changes its state.
 	 * This is used to modify the record. 
 	 * @param mediaCopy a MediaCopy object
