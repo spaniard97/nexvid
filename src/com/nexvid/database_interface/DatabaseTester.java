@@ -183,7 +183,7 @@ public class DatabaseTester {
 			myAccount2.setStatus("Suspend");
 			DBWriter.changeStatus(myAccount2);*/
 					
-			myCopy.setMediaCopyId(7);
+			/*myCopy.setMediaCopyId(7);
 			myCopy.setRented(false);
 			myCopy.setReserved(false);
 			myCopy.setState("Fair");
@@ -195,7 +195,11 @@ public class DatabaseTester {
 			System.out.println("\nchangeRentStatus Media Copy Query: ");
 			DBWriter.changeRentStatus(myCopy);
 			System.out.println("\nchangeReserveStatus Media Copy Query: ");
-			DBWriter.changeReserveStatus(myCopy);
+			DBWriter.changeReserveStatus(myCopy);*/
+			
+			System.out.println("\ndeactivate Sub Account Query: ");
+			mySub.setSubAccountID(7);
+			DBWriter.deactivate(mySub);
 
 			
 			
