@@ -47,12 +47,12 @@ public class DatabaseTester {
 			 * Reader Queries
 			 ******************************************************************************/
 			/*System.out.println("Account Query:");
-			DBReader.getAccountQuery(100000004);
+			DBReader.getAccountQuery(100000004);*/
 			
-			System.out.println("\nSubAccount Query:");
-			DBReader.getSubAccountQuery(2);
+			/*System.out.println("\nSubAccount Query:");
+			DBReader.getSubAccountQuery(2);*/
 			
-			System.out.println("\nMedia Query:");
+			/*System.out.println("\nMedia Query:");
 			DBReader.getMediaQuery(2);
 			
 			System.out.println("\nMediaCopies Query:");
@@ -75,6 +75,9 @@ public class DatabaseTester {
 			
 			System.out.println("\nPriceTier Query:");
 			DBReader.getPriceTier(3);*/
+			
+			System.out.println("\ngetAccountReservations Query: ");
+			DBReader.getAccountReservationsQuery(myAccount.getAccountID());
 			
 			/*****************************************************************************
 			 * Adder Queries
@@ -99,8 +102,8 @@ public class DatabaseTester {
 			DBAdder.addNewPriceTier(myPrice);*/
 			
 			/*System.out.println("\naddNewAccount Query:");
-			Account myAccount2 = new Account(0, "Hank", "Hill", "6042257787", "Hank@hotmail.com", "BC", "North Vancouver", "V5J8U7", 
-					"Canada", "Peters Rd", 0, 1212, "Registered Customer", "Active", 3.52, "carrot", "rice");
+			Account myAccount2 = new Account(0, "Sam", "Works", "6042259587", "SamWorks6@hotmail.com", "BC", "North Vancouver", "V5J8U7", 
+					"Canada", "Definitely Rd", 0, 12, "Registered Customer", "Active", 0, "brazil", "cheap");
 			DBAdder.addNewAccountQuery(myAccount2);*/
 			
 			/*System.out.println("\naddNewSubAccount Query:");
@@ -110,9 +113,21 @@ public class DatabaseTester {
 			System.out.println("\naddNewRental Query:");
 			DBAdder.addNewRentalQuery(rental);*/
 			
-			/*
-			System.out.println("\naddNewReserve Query:");
+			/*System.out.println("\naddNewReserve Query:");
+			DBAdder.addNewReservationQuery(reserve);
+			myCopy.setMediaCopyId(8);
+			reserve.setMediaCopy(myCopy);
+			DBAdder.addNewReservationQuery(reserve);
+			myCopy.setMediaCopyId(6);
+			reserve.setMediaCopy(myCopy);
+			DBAdder.addNewReservationQuery(reserve);
+			myCopy.setMediaCopyId(1);
+			reserve.setMediaCopy(myCopy);
+			DBAdder.addNewReservationQuery(reserve);
+			myCopy.setMediaCopyId(2);
+			reserve.setMediaCopy(myCopy);
 			DBAdder.addNewReservationQuery(reserve);*/
+
 			
 			/*****************************************************************************
 			 * Writer Queries
@@ -197,9 +212,9 @@ public class DatabaseTester {
 			System.out.println("\nchangeReserveStatus Media Copy Query: ");
 			DBWriter.changeReserveStatus(myCopy);*/
 			
-			System.out.println("\ndeactivate Sub Account Query: ");
+			/*System.out.println("\ndeactivate Sub Account Query: ");
 			mySub.setSubAccountID(7);
-			DBWriter.deactivate(mySub);
+			DBWriter.deactivate(mySub);*/
 
 			
 			

@@ -25,7 +25,8 @@ public class Renter {
 	 */
 	public static Rental rentMedia(Account customerAccount, MediaCopy mediaRented)
 	{
-		Rental temp = new Rental(customerAccount, mediaRented, 0, Calendar.getInstance(), true);
+		today = Calendar.getInstance();
+		Rental temp = new Rental(customerAccount, mediaRented, 0, today, true);
 		return temp;
 	}
 	
@@ -39,6 +40,7 @@ public class Renter {
 	 */
 	public static Rental returnMedia(Account customerAccount, MediaCopy mediaReturned)
 	{
+		today = Calendar.getInstance();
 		Rental returning = new Rental(customerAccount, mediaReturned, 0, today, false);
 		return returning;
 	}

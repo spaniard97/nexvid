@@ -149,7 +149,7 @@ public class DBWriter {
 			
 			System.out.println("Was the media successfulling updated: " + myStmt.executeUpdate());
 		}
-		finally{			
+		finally{		
 			if (myStmt != null) {
 				myStmt.close();
 			}
@@ -157,7 +157,6 @@ public class DBWriter {
 				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
 			}
 		}
-
 	}
 	
 	/**

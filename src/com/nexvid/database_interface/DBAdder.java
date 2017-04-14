@@ -39,7 +39,7 @@ public class DBAdder
 			myConn = db.getConnection();
 			
 			// Creates a prepared statement query
-			myStmt = myConn.prepareCall("{call insert_account(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+			myStmt = myConn.prepareCall("{call insert_account(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 			
 			//Fills in the query with the corresponding parameters
 			myStmt.setString(1, account.getFirstName());
@@ -58,13 +58,13 @@ public class DBAdder
 			myStmt.setDouble(14, account.getBalanceOwed());
 			myStmt.setString(15, account.getPassword());
 			myStmt.setString(16, account.getPassPhrase());
-			myStmt.registerOutParameter(17, Types.INTEGER);
-			checkNull(myStmt, 17, account.getAccountID());
+			//myStmt.registerOutParameter(17, Types.INTEGER);
+			//checkNull(myStmt, 17, account.getAccountID());
 			
 			
-			System.out.println("Was the Account successfulling inserted: " + myStmt.execute());
-			int accountID = myStmt.getInt("the_id");
-			System.out.println("The returned account ID is: " + accountID);
+			System.out.println("Was the Account successfulling inserted: " + myStmt.executeUpdate());
+			//int accountID = myStmt.getInt("the_id");
+			//System.out.println("The returned account ID is: " + accountID);
 		}
 		finally{			
 			if (myStmt != null) {

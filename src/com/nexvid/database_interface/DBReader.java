@@ -129,11 +129,11 @@ public class DBReader
 				subAccount.setLastName(myRs.getString("last_name"));
 				subAccount.setActive(myRs.getBoolean("active"));
 				accountID = myRs.getInt("account_ID");
-				subAccount.setAccountID(DBReader.getAccountQuery(accountID));				
+				subAccount.setAccount(DBReader.getAccountQuery(accountID));			
 				
 				//For Testing.  Comment out later.
 				System.out.println(subAccount.getSubAccountID() + ", " + subAccount.getDateOfBirth() + ", " + subAccount.getFirstName() + ", " + subAccount.getLastName() + 
-						", " + subAccount.isActive() + ", " + subAccount.getAccount());
+						", " + subAccount.isActive() + ", " + subAccount.getAccount().getAccountID());
 			}
 		}
 		finally{
@@ -327,8 +327,8 @@ public class DBReader
 				mediaCopy.setMediaId(myRs.getInt("media_ID"));
 				
 				//For Testing.  Comment out later.
-				System.out.println(mediaCopy.getMediaCopyId() + ", " + mediaCopy.isRented() + ", " + mediaCopy.isReserved() + 
-						", " + mediaCopy.getState() + ", " + mediaCopy.isActive() + ", " + mediaCopy.getMediaId());
+				//System.out.println(mediaCopy.getMediaCopyId() + ", " + mediaCopy.isRented() + ", " + mediaCopy.isReserved() + 
+						//", " + mediaCopy.getState() + ", " + mediaCopy.isActive() + ", " + mediaCopy.getMediaId());
 			}
 		}
 		finally{
@@ -479,6 +479,77 @@ public class DBReader
 		}
 		return reservation;
 	}
+	
+	/**
+	 * Retrieves a reservation from the database
+	 * @param reservation_ID the reservation's ID number
+	 * @return the Reservation object or NULL
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
+	 * @precondition an integer greater than 0 for the reservation id
+	 * @postcondition a reservation object with either the reservation information for a found reservation or with null values.
+	 */
+	public static Reservation[] getAccountReservationsQuery(int accountID) throws FileNotFoundException, IOException, SQLException 
+	{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		ResultSet myRs = null;
+		Reservation[] reservation = null;
+		int totalRows;
+		int row = 0;
+		int copyID;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call get_account_reservations(?)}");
+			
+			//Sets the parameter for the prepared statement.
+			myStmt.setInt(1, accountID);
+			
+			//Execute the query to the database
+			myRs = myStmt.executeQuery();
+			
+			//Gets the total number of rows from the result set
+			totalRows = getNumberOfRows(myRs);
+			
+			//Creates an array of Reservation with the size of total rows from the result set
+			reservation = new Reservation[totalRows];
+			generateReservations(reservation);
+			
+			//Loops through the result set and sets all the properties to the corresponding object variables
+			while(myRs.next()){
+				
+				reservation[row].setReservationId(myRs.getInt("reservation_ID"));
+				reservation[row].setReservationDate(myRs.getDate("reservation_date"));
+				reservation[row].setReservationActive(myRs.getBoolean("active"));
+				reservation[row].setCustomerAccount(DBReader.getAccountQuery(accountID));
+				copyID = myRs.getInt("copy_ID");
+				reservation[row].setMediaCopy(DBReader.getMediaCopyQuery(copyID));
+				
+				//For Testing.  Comment out later.
+				System.out.println(reservation[row].getReservationId() + ", " + reservation[row].getReservationDate() + ", " + reservation[row].isReservationActive() + 
+						", " + reservation[row].getCustomerAccount().getAccountID() + ", " + reservation[row].getMediaCopy().getMediaCopyId());
+				row++;
+			}
+		}
+		finally{
+			if (myRs != null) {
+				myRs.close();
+			}
+			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			System.out.println(db.endConnection(myConn)); //Closes the connection
+		}
+		return reservation;
+	}
+
 	
 	/**
 	 * Checks if the given email and password match an account
@@ -719,4 +790,21 @@ public class DBReader
 		
 		return mediaCopies;
 	}
+	
+	/**
+	 * Fills an array of Reservation with default Reservation objects.
+	 * @param reservation an array of Reservation
+	 * @return the array of Reservation with default Reservation objects
+	 * @precondition the array must have a set size
+	 * @postcondition the array must be filled with default Reservation objects
+	 */
+	public static Reservation[] generateReservations(Reservation[] reservation){
+		
+		for(int i = 0; i < reservation.length; i++){
+			reservation[i] = new Reservation();
+		}
+		
+		return reservation;
+	}
+
 }
