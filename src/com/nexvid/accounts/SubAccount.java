@@ -151,7 +151,7 @@ public class SubAccount
 	 * Sets the accountID to the parent's account ID
 	 * @param accountID the parent's accountID
 	 */
-	public void setAccountID(Account account){
+	public void setAccount(Account account){
 		this.account = account;
 	}
 
