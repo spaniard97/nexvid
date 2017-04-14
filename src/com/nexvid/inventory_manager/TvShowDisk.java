@@ -67,6 +67,9 @@ public class TvShowDisk extends MediaCopy{
 			String copyStatus, boolean active, int numberOfTheSeason, int episodesInDisk, int numberOfTheDisk){
 		super(id, mediaTitle, timesRented, mediaOnlineID, mediaType, mediaPrice,
 				mediaFormat, copyId, rented, reserved, copyStatus, active);
+		this.seasonNumber = numberOfTheSeason;
+		this.numberOfEpisodes = episodesInDisk;
+		this.diskNumber = numberOfTheDisk;
 	}
 
 	/**

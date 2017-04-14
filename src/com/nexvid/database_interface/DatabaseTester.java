@@ -38,7 +38,10 @@ public class DatabaseTester {
 			PriceTier mediaPrice = new PriceTier(1, 2, "New Release", 5.75);
 			Format mediaFormat = new Format(1, "Blu-ray");
 			Media myMedia = new Media(0, "The Matrix 2", 0, 7, "Movie", mediaPrice, mediaFormat);
+			//Media myTvShow = new Media(0, "Workaholics", 0, 72, "TV Show", mediaPrice, mediaFormat);
 			MediaCopy myCopy = new MediaCopy(6, "The Matrix 2", 0, 0, "Movie", mediaPrice, mediaFormat, 4, false, false, "New", true);
+			//MediaCopy myTvShowCopy = new MediaCopy(0, "Workaholics", 0, 72, "TV Show", mediaPrice, mediaFormat, 0, false, false, "New", true);
+			TvShowDisk tvShow = new TvShowDisk(0, "Breaking Bad", 0, 1396, "TV Show", mediaPrice, mediaFormat, 0, false, false, "New", true, 1, 3, 1);
 			Rental rental = new Rental(myAccount, myCopy, 4, Calendar.getInstance(), true, true);
 			Reservation reserve = new Reservation(0, Calendar.getInstance(), true, myAccount, myCopy);
 			//Rental rental = Renter.rentMedia(myAccount, myCopy);
@@ -55,9 +58,12 @@ public class DatabaseTester {
 			DBReader.getSubAccountQuery(2);*/
 			
 			/*System.out.println("\nMedia Query:");
-			DBReader.getMediaQuery(2);
+			DBReader.getMediaQuery(157336);
 			
-			System.out.println("\nMediaCopies Query:");
+			System.out.println("\ngetMediaByMediaID Query: ");
+			DBReader.getMediaByMediaIDQuery(7);*/
+			
+			/*System.out.println("\nMediaCopies Query:");
 			DBReader.getMediaCopiesQuery(1);
 			
 			System.out.println("\nMediaCopy Query:");
@@ -101,10 +107,10 @@ public class DatabaseTester {
 			int copyID = DBAdder.addMediaCopyQuery(myCopy);
 			System.out.println("The returned ID is: " + copyID);*/
 			
-			System.out.println("\naddNewFormat Query:");
+			/*System.out.println("\naddNewFormat Query:");
 			Format myFormat = new Format(0, "Beta");
 			int formatID = DBAdder.addNewFormatQuery(myFormat);
-			System.out.println("The returned ID is: " + formatID);
+			System.out.println("The returned ID is: " + formatID);*/
 			
 			/*System.out.println("\naddNewPriceTier Query:");
 			double thePrice = 3.99;
@@ -116,13 +122,13 @@ public class DatabaseTester {
 					"Canada", "Definitely Rd", 0, 12, "Registered Customer", "Active", 0, "brazil", "cheap");
 			DBAdder.addNewAccountQuery(myAccount2);*/
 			
-			System.out.println("\naddNewSubAccount Query:");
+			/*System.out.println("\naddNewSubAccount Query:");
 			int subID = DBAdder.addNewSubAccountQuery(mySub);
 			System.out.println("The returned ID is: " + subID);
 			
 			System.out.println("\naddNewRental Query:");
 			int rentalID = DBAdder.addNewRentalQuery(rental);
-			System.out.println("The returned ID is: " + rentalID);
+			System.out.println("The returned ID is: " + rentalID);*/
 			/*myCopy.setMediaCopyId(8);
 			rental.setMediaCopy(myCopy);
 			DBAdder.addNewRentalQuery(rental);
@@ -133,9 +139,9 @@ public class DatabaseTester {
 			rental.setMediaCopy(myCopy);
 			DBAdder.addNewRentalQuery(rental);*/
 			
-			System.out.println("\naddNewReserve Query:");
+			/*System.out.println("\naddNewReserve Query:");
 			int reservationID = DBAdder.addNewReservationQuery(reserve);
-			System.out.println("The returned ID is: " + reservationID);
+			System.out.println("The returned ID is: " + reservationID);*/
 			/*myCopy.setMediaCopyId(8);
 			reserve.setMediaCopy(myCopy);
 			DBAdder.addNewReservationQuery(reserve);
@@ -148,7 +154,13 @@ public class DatabaseTester {
 			myCopy.setMediaCopyId(2);
 			reserve.setMediaCopy(myCopy);
 			DBAdder.addNewReservationQuery(reserve);*/
-
+			
+			System.out.println("\naddTvShowDiskQuery Query: ");
+			int mediaID = DBAdder.addNewMediaQuery(tvShow);
+			tvShow.setMediaId(mediaID);
+			int copyID = DBAdder.addMediaCopyQuery(tvShow);
+			tvShow.setMediaCopyId(copyID);			
+			DBAdder.addTvShowDiskQuery(tvShow);
 			
 			/*****************************************************************************
 			 * Writer Queries
