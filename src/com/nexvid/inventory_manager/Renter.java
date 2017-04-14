@@ -10,7 +10,7 @@ import com.nexvid.database_interface.DBWriter;
 
 /**
  * The Renter class is responsible for rent and return operations.
- * @author Samuel Pimenta, Brian Chan
+ * @author Samuel Pimenta, Brian Chan, Juan Carlos Pinillos
  * @since 03/19/2017
  * @version 1.0.0.2
  *
@@ -29,7 +29,8 @@ public class Renter {
 	 */
 	public static Rental rentMedia(Account customerAccount, MediaCopy mediaRented)
 	{
-		Rental temp = new Rental(customerAccount, mediaRented, 0,Calendar.getInstance(), mediaRented.isActive, mediaRented.getAcquiredStatus());
+		today = Calendar.getInstance();
+		Rental temp = new Rental(customerAccount, mediaRented, 0, today, mediaRented.isActive(), mediaRented.getAcquiredStatus());
 		mediaRented.setRented(true);
 		try
 		{
@@ -53,8 +54,9 @@ public class Renter {
 	 */
 	public static Rental returnMedia(Account customerAccount, MediaCopy mediaReturned)
 	{
-		Rental temp = new Rental(customerAccount, mediaReturned, 0, Calendar.getInstance(), mediaReturned.isActive, mediaReturned.getAcquiredStatus());
-		if(Calendar.getInstance().after(temp.dateDue))
+		today = Calendar.getInstance();
+		Rental temp = new Rental(customerAccount, mediaReturned, 0, today, mediaReturned.isActive(), mediaReturned.getAcquiredStatus());
+		if(Calendar.getInstance().after(temp.getDateDue()))
 		{
 			customerAccount.setBalanceOwed(customerAccount.getBalanceOwed() + 2.00); 
 		}

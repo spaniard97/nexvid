@@ -26,7 +26,8 @@ public class SysAdminAccountManager extends ManagerAccountManager{
 			String city, String postalCode, String country, String streetName, int streetNumber, 
 			String accountType, String status, String password)
     {
-    	Account manager = super.addEmployee(accountID, firstName, lastName, phoneNumber, province, city, postalCode, country, streetName, streetNumber, "Manager", status, password);
+    	Account manager = super.addEmployee(accountID, firstName, lastName, phoneNumber, province, city, postalCode, 
+    			country, streetName, streetNumber, "Manager", status, password);
     	try
     	{
 			DBAdder.addNewAccountQuery(manager);

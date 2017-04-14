@@ -6,6 +6,8 @@ import com.nexvid.accounts.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -428,19 +430,105 @@ public class DBReader
 	 * @precondition an integer greater than 0 for the reservation id
 	 * @postcondition a reservation object with either the reservation information for a found reservation or with null values.
 	 */
+	public static List<Rental> getAccountRentalsQuery(int accountID) throws FileNotFoundException, IOException, SQLException 
+	{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		ResultSet myRs = null;
+		Rental rental = null;
+		ArrayList<Rental> rentals = null;
+		//int totalRows;
+		int row = 0;
+		int copyID;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			rental = new Rental();
+			rentals = new ArrayList<Rental>();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call get_account_rentals(?)}");
+			
+			//Sets the parameter for the prepared statement.
+			myStmt.setInt(1, accountID);
+			
+			//Execute the query to the database
+			myRs = myStmt.executeQuery();
+			
+			//Gets the total number of rows from the result set
+			//totalRows = getNumberOfRows(myRs);
+			
+			//Creates an array of Reservation with the size of total rows from the result set
+			//rental = new Rental[totalRows];
+			//generateRentals(rental);
+			
+			//Loops through the result set and sets all the properties to the corresponding object variables
+			while(myRs.next()){
+				
+				/*rental[row].setRentalID(myRs.getInt("rental_ID"));
+				rental[row].setDateRented(myRs.getDate("date_rented"));
+				rental[row].setDateDue(myRs.getDate("date_due"));
+				rental[row].setActive(myRs.getBoolean("active"));
+				rental[row].setAccount(DBReader.getAccountQuery(accountID));
+				copyID = myRs.getInt("copy_ID");
+				rental[row].setMediaCopy(DBReader.getMediaCopyQuery(copyID));*/
+				
+				rental.setRentalID(myRs.getInt("rental_ID"));
+				rental.setDateRented(myRs.getDate("date_rented"));
+				rental.setDateDue(myRs.getDate("date_due"));
+				rental.setActive(myRs.getBoolean("active"));
+				rental.setAccount(DBReader.getAccountQuery(accountID));
+				copyID = myRs.getInt("copy_ID");
+				rental.setMediaCopy(DBReader.getMediaCopyQuery(copyID));
+				
+				rentals.add(rental);
+				
+				//For Testing.  Comment out later.
+				System.out.println(rentals.get(row).getRentalID() + ", " + rentals.get(row).getDateRented()+ ", "+ rentals.get(row).getDateDue() + ", " + 
+						rentals.get(row).isActive() + ", " + rentals.get(row).getAccount().getAccountID() + ", " + 
+						rentals.get(row).getMediaCopy().getMediaCopyId());
+				row++;
+			}
+		}
+		finally{
+			if (myRs != null) {
+				myRs.close();
+			}
+			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			System.out.println(db.endConnection(myConn)); //Closes the connection
+		}
+		return rentals;
+	}
+
+	/**
+	 * Retrieves a reservation from the database
+	 * @param reservation_ID the reservation's ID number
+	 * @return the Reservation object or NULL
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
+	 * @precondition an integer greater than 0 for the reservation id
+	 * @postcondition a reservation object with either the reservation information for a found reservation or with null values.
+	 */
 	public static Reservation getReservationQuery(int reservationID) throws FileNotFoundException, IOException, SQLException 
 	{
 		DatabaseConnector db = null;
 		Connection myConn = null;
 		CallableStatement myStmt = null;
 		ResultSet myRs = null;
-		Reservation reservation = new Reservation();
+		Reservation reservation = null;
 		int accountID;
 		int copyID;
 		try{
 			//Creates a Database object to establish a connection
 			db = new DatabaseConnector();
 			myConn = db.getConnection();
+			reservation = new Reservation();
 			
 			// Creates a prepared statement query
 			myStmt = myConn.prepareCall("{call get_reservation_info(?)}");
@@ -490,20 +578,23 @@ public class DBReader
 	 * @precondition an integer greater than 0 for the reservation id
 	 * @postcondition a reservation object with either the reservation information for a found reservation or with null values.
 	 */
-	public static Reservation[] getAccountReservationsQuery(int accountID) throws FileNotFoundException, IOException, SQLException 
+	public static List<Reservation> getAccountReservationsQuery(int accountID) throws FileNotFoundException, IOException, SQLException 
 	{
 		DatabaseConnector db = null;
 		Connection myConn = null;
 		CallableStatement myStmt = null;
 		ResultSet myRs = null;
-		Reservation[] reservation = null;
-		int totalRows;
+		Reservation reservation = null;
+		ArrayList<Reservation> reservations = null;
+		//int totalRows;
 		int row = 0;
 		int copyID;
 		try{
 			//Creates a Database object to establish a connection
 			db = new DatabaseConnector();
 			myConn = db.getConnection();
+			reservation = new Reservation();
+			reservations = new ArrayList<Reservation>();
 			
 			// Creates a prepared statement query
 			myStmt = myConn.prepareCall("{call get_account_reservations(?)}");
@@ -515,25 +606,34 @@ public class DBReader
 			myRs = myStmt.executeQuery();
 			
 			//Gets the total number of rows from the result set
-			totalRows = getNumberOfRows(myRs);
+			//totalRows = getNumberOfRows(myRs);
 			
 			//Creates an array of Reservation with the size of total rows from the result set
-			reservation = new Reservation[totalRows];
-			generateReservations(reservation);
+			//reservation = new Reservation[totalRows];
+			//generateReservations(reservation);
 			
 			//Loops through the result set and sets all the properties to the corresponding object variables
 			while(myRs.next()){
 				
-				reservation[row].setReservationId(myRs.getInt("reservation_ID"));
+				/*reservation[row].setReservationId(myRs.getInt("reservation_ID"));
 				reservation[row].setReservationDate(myRs.getDate("reservation_date"));
 				reservation[row].setReservationActive(myRs.getBoolean("active"));
 				reservation[row].setCustomerAccount(DBReader.getAccountQuery(accountID));
 				copyID = myRs.getInt("copy_ID");
-				reservation[row].setMediaCopy(DBReader.getMediaCopyQuery(copyID));
+				reservation[row].setMediaCopy(DBReader.getMediaCopyQuery(copyID));*/
+				
+				reservation.setReservationId(myRs.getInt("reservation_ID"));
+				reservation.setReservationDate(myRs.getDate("reservation_date"));
+				reservation.setReservationActive(myRs.getBoolean("active"));
+				reservation.setCustomerAccount(DBReader.getAccountQuery(accountID));
+				copyID = myRs.getInt("copy_ID");
+				reservation.setMediaCopy(DBReader.getMediaCopyQuery(copyID));
+				
+				reservations.add(reservation);
 				
 				//For Testing.  Comment out later.
-				System.out.println(reservation[row].getReservationId() + ", " + reservation[row].getReservationDate() + ", " + reservation[row].isReservationActive() + 
-						", " + reservation[row].getCustomerAccount().getAccountID() + ", " + reservation[row].getMediaCopy().getMediaCopyId());
+				System.out.println(reservations.get(row).getReservationId() + ", " + reservations.get(row).getReservationDate() + ", " + reservations.get(row).isReservationActive() + 
+						", " + reservations.get(row).getCustomerAccount().getAccountID() + ", " + reservations.get(row).getMediaCopy().getMediaCopyId());
 				row++;
 			}
 		}
@@ -547,7 +647,7 @@ public class DBReader
 			}
 			System.out.println(db.endConnection(myConn)); //Closes the connection
 		}
-		return reservation;
+		return reservations;
 	}
 
 	
@@ -791,6 +891,22 @@ public class DBReader
 		return mediaCopies;
 	}
 	
+	/**
+	 * Fills an array of Rental with default Rental objects.
+	 * @param rental an array of Rental
+	 * @return the array of Rental with default Rental objects
+	 * @precondition the array must have a set size
+	 * @postcondition the array must be filled with default Rental objects
+	 */
+	public static Rental[] generateRentals(Rental[] rental){
+		
+		for(int i = 0; i < rental.length; i++){
+			rental[i] = new Rental();
+		}
+		
+		return rental;
+	}
+
 	/**
 	 * Fills an array of Reservation with default Reservation objects.
 	 * @param reservation an array of Reservation

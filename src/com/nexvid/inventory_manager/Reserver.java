@@ -29,7 +29,7 @@ public class Reserver {
 	public static Reservation reserveMedia(Account customerAccount, MediaCopy mediaToBeReserved){
 		Reservation temp = new Reservation(0, Calendar.getInstance(), mediaToBeReserved.isActive, customerAccount, mediaToBeReserved);
 		temp.setReservationActive(true);
-		mediaToBeReserved.setReserved(true);		
+		/*mediaToBeReserved.setReserved(true);		
 		try
 		{
 			DBWriter.setReservation(temp);
@@ -38,7 +38,7 @@ public class Reserver {
 		catch (IOException | SQLException e)
 		{
 			System.out.print("Error: Could not make reservation.");
-		}
+		}*/
 		return null;
 	}
 	
@@ -54,7 +54,7 @@ public class Reserver {
 	public boolean cancelReservation(Account customerAccount, MediaCopy mediaReserved){
 		Reservation temp = new Reservation(0, Calendar.getInstance(), mediaReserved.isActive, customerAccount, mediaReserved);
 		temp.setReservationActive(false);
-		mediaReserved.setReserved(false);
+		/*mediaReserved.setReserved(false);
 		try
 		{
 			DBWriter.changeReserveStatus(mediaReserved);
@@ -63,7 +63,7 @@ public class Reserver {
 		catch (IOException | SQLException e)
 		{
 			System.out.print("Error: Could not cancel reservation");
-		}
+		}*/
 		return false;
 	}
 }

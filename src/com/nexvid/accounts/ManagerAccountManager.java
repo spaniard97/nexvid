@@ -5,10 +5,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import com.nexvid.database_interface.DBAdder;
+import com.nexvid.database_interface.DBWriter;
 
 /** The ManagerAccountManager manages Manager Accounts
  * 
- * @author Brian Chan
+ * @author Brian Chan, Juan Carlos Pinillos
  * @since 01/04/2017
  * @version 1.0.1.2
  *
@@ -25,7 +26,8 @@ public class ManagerAccountManager extends EmployeeAccountManager {
 			String city, String postalCode, String country, String streetName, int streetNumber, 
 			String accountType, String status, String password)
     {
-    	Account newAccount = super.createAccount(accountID, firstName, lastName, phoneNumber, province, city, postalCode, country, streetName, streetNumber, "Employee", status, password);
+    	Account newAccount = super.createAccount(accountID, firstName, lastName, phoneNumber, province, city, postalCode, 
+    			country, streetName, streetNumber, "Employee", status, password);
     	try
     	{
 			DBAdder.addNewAccountQuery(newAccount);
@@ -57,6 +59,23 @@ public class ManagerAccountManager extends EmployeeAccountManager {
     	employee.setStatus("Deactivated");
     	if(employee.getStatus().equals("Deactivated"))
     	{
+    		try
+    		{
+				DBWriter.setAccountQuery(employee);
+			}
+    		catch (FileNotFoundException e)
+    		{
+				System.out.print("Error: Could not deactivate account");
+			}
+    		catch (IOException e)
+    		{
+    			System.out.print("Error: Could not deactivate account");
+			}
+    		catch (SQLException e)
+    		{
+    			System.out.print("Error: Could not deactivate account");
+			}
+
     		return true;
     	}
     	else

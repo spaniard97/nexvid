@@ -2,7 +2,7 @@ package com.nexvid.inventory_manager;
 
 /**The TvShowDisk class is used to identify the diskID and the disk information
  * 
- * @author Brian Chan, 
+ * @author Brian Chan, Juan Carlos Pinillos
  * @since 04/01/2017
  * @version 1.0.1.2
  *
@@ -14,7 +14,14 @@ public class TvShowDisk extends MediaCopy{
 	public int diskNumber;
 	
 	/**
-	 * Creates a default TvShowDisk .
+	 * Default Constructor
+	 */
+	public TvShowDisk(){
+		
+	}
+	
+	/**
+	 * Creates a minimal TvShowDisk .
 	 * @param id The number that identifies the media
 	 * @param mediaTitle The title of the media
 	 * @param timesRented The number of times the media was rented
@@ -67,7 +74,7 @@ public class TvShowDisk extends MediaCopy{
 	 * @return The season number
 	 */
 	public int getSeasonNumber() {
-		return seasonNumber;
+		return this.seasonNumber;
 	}
 
 	/**
@@ -83,7 +90,7 @@ public class TvShowDisk extends MediaCopy{
 	 * @return The number of episodes in the disk
 	 */
 	public int getNumberOfEpisodes() {
-		return numberOfEpisodes;
+		return this.numberOfEpisodes;
 	}
 
 	/**
@@ -99,7 +106,7 @@ public class TvShowDisk extends MediaCopy{
 	 * @return The disk number of the TvShow disk
 	 */
 	public int getDiskNumber() {
-		return diskNumber;
+		return this.diskNumber;
 	}
 
 	/**

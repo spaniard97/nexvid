@@ -6,19 +6,19 @@ import com.nexvid.accounts.*;
 
 /**
  * The Rental class is responsible for creating Rental objects.
- * @author Samuel Pimenta, Brian Chan
+ * @author Samuel Pimenta, Brian Chan, Juan Carlos Pinillos
  * @since 03/19/2017
  * @version 1.0.0.2
  *
  */
 public class Rental {
 	
-	public int rentalID;
-	public java.sql.Date dateRented;
-	public java.sql.Date dateDue;
-	public boolean isActive;
-	public Account account;
-	public MediaCopy mediaCopy;
+	protected int rentalID;
+	protected java.sql.Date dateRented;
+	protected java.sql.Date dateDue;
+	protected boolean isActive;
+	protected Account account;
+	protected MediaCopy mediaCopy;
 	private static final int RENTAL_PERIOD = 7;
 	private static final int NEW_RENTAL_PERIOD = 3;
 	
@@ -44,27 +44,27 @@ public class Rental {
 	{
 		if(isNew)
 		{
-			Calendar temp = dayRented;
+			Calendar cal = dayRented;
 			this.account = customerAccount;
 			this.mediaCopy = selectedMedia;
 			this.rentalID = id;
-			Date myDate = temp.getTime();
+			Date myDate = cal.getTime();
 			this.dateRented = new java.sql.Date(myDate.getTime());
-			temp.add(Calendar.DAY_OF_MONTH, NEW_RENTAL_PERIOD);
-			myDate = temp.getTime();
+			cal.add(Calendar.DAY_OF_MONTH, NEW_RENTAL_PERIOD);
+			myDate = cal.getTime();
 			this.dateDue = new java.sql.Date(myDate.getTime());
 			this.isActive = active;
 		}
 		else
 		{
-			Calendar temp = dayRented;
+			Calendar cal = dayRented;
 			this.account = customerAccount;
 			this.mediaCopy = selectedMedia;
 			this.rentalID = id;
-			Date myDate = temp.getTime();
+			Date myDate = cal.getTime();
 			this.dateRented = new java.sql.Date(myDate.getTime());
-			temp.add(Calendar.DAY_OF_MONTH, RENTAL_PERIOD);
-			myDate = temp.getTime();
+			cal.add(Calendar.DAY_OF_MONTH, RENTAL_PERIOD);
+			myDate = cal.getTime();
 			this.dateDue = new java.sql.Date(myDate.getTime());
 			this.isActive = active;
 		}
