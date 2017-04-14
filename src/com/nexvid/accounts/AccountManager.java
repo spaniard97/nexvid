@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.nexvid.database_interface.DBAdder;
@@ -13,7 +14,7 @@ import com.nexvid.inventory_manager.*;
 
 /**
  * The AccountManager class is responsible for all account based actions
- * @author Brian Chan
+ * @author Brian Chan, Juan Carlos Pinillos
  * @since 03/18/2017
  * @version 1.0.1.4
  *
@@ -68,15 +69,15 @@ public class AccountManager
     public Account createAccount(int accountID, String firstName, String lastName, String phoneNumber, 
     		String email, String province, String city, String postalCode, String country, String streetName, 
     		int apartmentNumber, int streetNumber, String accountType, String status, String password, 
-    		String passPhrase, SubAccount subAccount) 
+    		String passPhrase/*, SubAccount subAccount*/) 
     {
     	
-    	Account temp = new Account(accountID,firstName,lastName,phoneNumber,
+    	Account account = new Account(accountID,firstName,lastName,phoneNumber,
     			email,province,city,postalCode,country,streetName,apartmentNumber,
-    			streetNumber,accountType,status,password,passPhrase, subAccount);
+    			streetNumber,accountType,status,password,passPhrase/*, subAccount*/);
     	try
     	{
-			DBAdder.addNewAccountQuery(temp);
+			DBAdder.addNewAccountQuery(account);
 		}
     	catch (FileNotFoundException e)
     	{
@@ -90,7 +91,7 @@ public class AccountManager
     	{
 			System.out.print("Error: Account could not be created. Please check inputs or database status");
 		}
-    	return temp;
+    	return account;
     	
     }
 	
@@ -105,10 +106,10 @@ public class AccountManager
 	 */
 	public boolean login(String Email, String password)
 	{
-		Account temp = null;
+		Account account = null;
 		try
 		{
-			temp = DBReader.loginQuery(Email, password);
+			account = DBReader.loginQuery(Email, password);
 		}
 		catch (FileNotFoundException e) {
 			System.out.print("Error: Could not log in. Please try again later");
@@ -123,9 +124,9 @@ public class AccountManager
 		}
 		finally
 		{
-			if(temp.getEmail().equals(Email))
+			if(account.getEmail().equals(Email))
 			{
-				if(temp.getPassword().equals(password))
+				if(account.getPassword().equals(password))
 				{
 					return true;
 				}
@@ -200,7 +201,26 @@ public class AccountManager
 	 */
 	public List<Rental> getAccountRentals(Account customerAccount)
 	{
-		return null;
+		List<Rental> rentals = null;
+		
+		try
+		{
+			rentals = DBReader.getAccountRentalsQuery(customerAccount.accountID);
+		}
+		catch (FileNotFoundException e)
+		{
+			System.out.print("Error: Could not access database. Check connection.");
+		} 
+		catch (IOException e) 
+		{
+			System.out.print("Error: Could not access database. Check connection");
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Error: Could not get a list of rentals. Check inputs.");
+		}
+		
+		return rentals;
 	}
 	
 	/** Returns account information
@@ -263,6 +283,25 @@ public class AccountManager
 	 */
 	public List<Reservation> getAccountReservations(Account customerAccount)
 	{
-		return null; //TODO: database? 
+		List<Reservation> reservations = null;
+		
+		try
+		{
+			reservations = DBReader.getAccountReservationsQuery(customerAccount.accountID);
+		}
+		catch (FileNotFoundException e)
+		{
+			System.out.print("Error: Could not access database. Check connection.");
+		} 
+		catch (IOException e) 
+		{
+			System.out.print("Error: Could not access database. Check connection");
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Error: Could not get a list of reservations. Check inputs.");
+		}
+		
+		return reservations;
 	}
 }

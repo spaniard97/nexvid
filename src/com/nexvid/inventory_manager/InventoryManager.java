@@ -172,8 +172,8 @@ public class InventoryManager {
 	{
 		try
 		{
-			PriceTier temp = DBReader.getPriceTier(tier.priceID);
-			return temp.getPrice();
+			PriceTier priceTier = DBReader.getPriceTier(tier.getPriceID());
+			return priceTier.getPrice();
 		}
 		catch (IOException | SQLException e)
 		{

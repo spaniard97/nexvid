@@ -75,9 +75,11 @@ public class EmployeeAccountManager extends AccountManager
     public Account addCustomer(int accountID, String firstName, String lastName, String phoneNumber, 
     		String email, String province, String city, String postalCode, String country, String streetName, 
     		int apartmentNumber, int streetNumber, String accountType, String status, String password, 
-    		String passPhrase, SubAccount subAccount)
+    		String passPhrase/*, SubAccount subAccount*/)
     {
-    	Account newAccount = super.createAccount(accountID, firstName, lastName, phoneNumber, email, province, city, postalCode, country, streetName, apartmentNumber, streetNumber, accountType, status, password, passPhrase, subAccount);
+    	Account newAccount = super.createAccount(accountID, firstName, lastName, phoneNumber, email, 
+    			province, city, postalCode, country, streetName, apartmentNumber, streetNumber, 
+    			accountType, status, password, passPhrase/*, subAccount*/);
     	return newAccount;
     }
     
@@ -91,8 +93,8 @@ public class EmployeeAccountManager extends AccountManager
      */
     public boolean deactivateCustomerAccount(Account account)
     {
-    	account.setStatus("Deactive");
-    	if(account.getStatus().equals("Deactive"))
+    	account.setStatus("Deactivated");
+    	if(account.getStatus().equals("Deactivated"))
     	{
     		try
     		{
@@ -164,7 +166,7 @@ public class EmployeeAccountManager extends AccountManager
      */
     public Account addFine(double fine, Account account) 
     {
-    	account.setBalanceOwed(fine);
+    	account.setBalanceOwed(account.getBalanceOwed() + fine);
     	try
 		{
 			DBWriter.setAccountQuery(account);
@@ -194,7 +196,7 @@ public class EmployeeAccountManager extends AccountManager
      */
     public Account reduceFine(double fine, Account account)
     {
-    	if(fine > account.getBalanceOwed())
+    	if(fine >= account.getBalanceOwed())
     	{
     		account.setBalanceOwed(0);
     	}

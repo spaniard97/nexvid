@@ -34,13 +34,15 @@ public class DatabaseTester {
 			//System.out.println(dateDue);
 			
 			Account myAccount = DBReader.getAccountQuery(100000019);
-			SubAccount mySub = new SubAccount(0, sqlDate, "Jenny", "Low", true, myAccount);
+			SubAccount mySub = new SubAccount(0, sqlDate, "Tiffany", "Smith", true, myAccount);
 			PriceTier mediaPrice = new PriceTier(1, 2, "New Release", 5.75);
 			Format mediaFormat = new Format(1, "Blu-ray");
-			Media myMedia = new Media(0, "John Wick", 0, 4, "Movie", mediaPrice, mediaFormat);
-			MediaCopy myCopy = new MediaCopy(4, "John Wick", 0, 4, "Movie", mediaPrice, mediaFormat, 4, false, false, "New", true);
-			Rental rental = Renter.rentMedia(myAccount, myCopy);
-			Reservation reserve = Reserver.reserveMedia(myAccount, myCopy);
+			Media myMedia = new Media(0, "The Matrix 2", 0, 7, "Movie", mediaPrice, mediaFormat);
+			MediaCopy myCopy = new MediaCopy(6, "The Matrix 2", 0, 0, "Movie", mediaPrice, mediaFormat, 4, false, false, "New", true);
+			Rental rental = new Rental(myAccount, myCopy, 4, Calendar.getInstance(), true, true);
+			Reservation reserve = new Reservation(0, Calendar.getInstance(), true, myAccount, myCopy);
+			//Rental rental = Renter.rentMedia(myAccount, myCopy);
+			//Reservation reserve = Reserver.reserveMedia(myAccount, myCopy);
 
 			
 			/******************************************************************************
@@ -76,25 +78,33 @@ public class DatabaseTester {
 			System.out.println("\nPriceTier Query:");
 			DBReader.getPriceTier(3);*/
 			
-			System.out.println("\ngetAccountReservations Query: ");
-			DBReader.getAccountReservationsQuery(myAccount.getAccountID());
+			/*System.out.println("\ngetAccountReservations Query: ");
+			DBReader.getAccountReservationsQuery(myAccount.getAccountID());*/
+			
+			/*System.out.println("\ngetAccountRentals Query: ");
+			DBReader.getAccountRentalsQuery(myAccount.getAccountID());*/
+			
+			/*AccountManager aManager = new AccountManager();
+			aManager.getAccountReservations(myAccount);*/
 			
 			/*****************************************************************************
 			 * Adder Queries
 			 *****************************************************************************/
-			/*Uncomment to execute.  But change Media object as to not duplicate values
-			System.out.println("\naddNewMedia Query:");
-			PriceTier mediaPrice = new PriceTier(1, 2, "New Release", 5.75);
-			Format mediaFormat = new Format(1, "Blu-ray");
-			DBAdder.addNewMediaQuery(myMedia);
-			
+			//Uncomment to execute.  But change Media object as to not duplicate values
+			//System.out.println("\naddNewMedia Query:");
+			//PriceTier mediaPrice = new PriceTier(1, 2, "New Release", 5.75);
+			//Format mediaFormat = new Format(1, "Blu-ray");
+			/*int mediaID = DBAdder.addNewMediaQuery(myMedia);
+			System.out.println("The returned ID is: " + mediaID);*/
 
-			System.out.println("\naddMediaCopy Query:");
-			DBAdder.addMediaCopyQuery(myCopy);
+			/*System.out.println("\naddMediaCopy Query:");
+			int copyID = DBAdder.addMediaCopyQuery(myCopy);
+			System.out.println("The returned ID is: " + copyID);*/
 			
 			System.out.println("\naddNewFormat Query:");
-			Format myFormat = new Format(0, "VHS");
-			DBAdder.addNewFormatQuery(myFormat);*/
+			Format myFormat = new Format(0, "Beta");
+			int formatID = DBAdder.addNewFormatQuery(myFormat);
+			System.out.println("The returned ID is: " + formatID);
 			
 			/*System.out.println("\naddNewPriceTier Query:");
 			double thePrice = 3.99;
@@ -102,20 +112,31 @@ public class DatabaseTester {
 			DBAdder.addNewPriceTier(myPrice);*/
 			
 			/*System.out.println("\naddNewAccount Query:");
-			Account myAccount2 = new Account(0, "Sam", "Works", "6042259587", "SamWorks6@hotmail.com", "BC", "North Vancouver", "V5J8U7", 
+			Account myAccount2 = new Account(0, "Sam", "Works", "6042259587", "SamWorks7@hotmail.com", "BC", "North Vancouver", "V5J8U7", 
 					"Canada", "Definitely Rd", 0, 12, "Registered Customer", "Active", 0, "brazil", "cheap");
 			DBAdder.addNewAccountQuery(myAccount2);*/
 			
-			/*System.out.println("\naddNewSubAccount Query:");
-			DBAdder.addNewSubAccountQuery(mySub);*/
+			System.out.println("\naddNewSubAccount Query:");
+			int subID = DBAdder.addNewSubAccountQuery(mySub);
+			System.out.println("The returned ID is: " + subID);
 			
-			/*
 			System.out.println("\naddNewRental Query:");
+			int rentalID = DBAdder.addNewRentalQuery(rental);
+			System.out.println("The returned ID is: " + rentalID);
+			/*myCopy.setMediaCopyId(8);
+			rental.setMediaCopy(myCopy);
+			DBAdder.addNewRentalQuery(rental);
+			myCopy.setMediaCopyId(6);
+			rental.setMediaCopy(myCopy);
+			DBAdder.addNewRentalQuery(rental);
+			myCopy.setMediaCopyId(1);
+			rental.setMediaCopy(myCopy);
 			DBAdder.addNewRentalQuery(rental);*/
 			
-			/*System.out.println("\naddNewReserve Query:");
-			DBAdder.addNewReservationQuery(reserve);
-			myCopy.setMediaCopyId(8);
+			System.out.println("\naddNewReserve Query:");
+			int reservationID = DBAdder.addNewReservationQuery(reserve);
+			System.out.println("The returned ID is: " + reservationID);
+			/*myCopy.setMediaCopyId(8);
 			reserve.setMediaCopy(myCopy);
 			DBAdder.addNewReservationQuery(reserve);
 			myCopy.setMediaCopyId(6);
