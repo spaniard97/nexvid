@@ -2,9 +2,9 @@ package com.nexvid.inventory_manager;
 
 /**
  * The Media class creates media objects.
- * @author Samuel Pimenta
+ * @author Samuel Pimenta, Brian Chan
  * @since 03/19/2017
- * @version 1.0.0.2
+ * @version 1.0.1.2
  *
  */
 public class Media {
@@ -16,6 +16,7 @@ public class Media {
 	protected String type;
 	protected PriceTier price;
 	protected Format format;
+	protected boolean isNew;
 	
 	/**
 	 * Default constructor
@@ -156,5 +157,24 @@ public class Media {
 	 */
 	public void setFormat(Format format) {
 		this.format = format;
+	}
+	
+	/**
+	 * Sets a media to be either new or old
+	 * @param mediaStatus The current status of the media
+	 */
+	public void setNew(boolean mediaStatus)
+	{
+		this.isNew = mediaStatus;
+	}
+	
+	/**
+	 * Gets the current status of the media
+	 * @return true if the media is new
+	 * @return false if the media is old
+	 */
+	public boolean getAcquiredStatus()
+	{
+		return this.isNew;
 	}
 }

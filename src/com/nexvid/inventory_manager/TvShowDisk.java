@@ -4,7 +4,7 @@ package com.nexvid.inventory_manager;
  * 
  * @author Brian Chan, 
  * @since 04/01/2017
- * @version 1.0.0.2
+ * @version 1.0.1.2
  *
  */
 public class TvShowDisk extends MediaCopy{
@@ -34,7 +34,6 @@ public class TvShowDisk extends MediaCopy{
 			String copyStatus, boolean active) {
 		super(id, mediaTitle, timesRented, mediaOnlineID, mediaType, mediaPrice,
 				mediaFormat, copyId, rented, reserved, copyStatus, active);
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**
