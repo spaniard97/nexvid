@@ -153,7 +153,7 @@ public class DBReader
 	
 	/**
 	 * Retrieves a media from the database
-	 * @param online_ID the media's online ID number
+	 * @param onlineID the media's online ID number
 	 * @return the Media object or NULL
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
@@ -181,6 +181,72 @@ public class DBReader
 			
 			//Sets the parameter for the prepared statement.
 			myStmt.setInt(1, onlineID);
+			
+			//Execute the query to the database
+			myRs = myStmt.executeQuery();
+			
+			//Loops through the result set and sets all the properties to the corresponding object variables
+			while(myRs.next()){
+				
+				media.setMediaId(myRs.getInt("media_ID"));
+				media.setTitle(myRs.getString("title"));
+				media.setTimesRented(myRs.getInt("times_rented"));
+				media.setOnlineID(myRs.getInt("online_ID"));
+				media.setType(myRs.getString("type"));
+				price.setPriceID(myRs.getInt("price_ID"));
+				media.setPrice(price);
+				format.setFormatID(myRs.getInt("format_ID"));
+				media.setFormat(format);
+				
+				//For Testing.  Comment out later.
+				System.out.println(media.getMediaId() + ", " + media.getTitle() + ", " + media.getTimesRented() + 
+						", " + media.getOnlineID() + ", " + media.getType() + ", " + media.getPrice().getPriceID() + ", " + 
+						media.getFormat().getFormatID());
+			}
+		}
+		finally{
+			if (myRs != null) {
+				myRs.close();
+			}
+			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			System.out.println(db.endConnection(myConn)); //Closes the connection
+		}
+		return media;
+	}
+	
+	/**
+	 * Retrieves a media from the database by media ID
+	 * @param mediaID the media's database ID number
+	 * @return the Media object or NULL
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
+	 * @precondition an integer greater than 0 for the media ID
+	 * @postcondition a media object with either the media information for a found media or with null values.
+	 */
+	public static Media getMediaByMediaIDQuery(int mediaID) throws FileNotFoundException, IOException, SQLException 
+	{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		ResultSet myRs = null;
+		Media media = new Media();
+		PriceTier price = new PriceTier();
+		Format format = new Format();
+		
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call get_mediaById_info(?)}");
+			
+			//Sets the parameter for the prepared statement.
+			myStmt.setInt(1, mediaID);
 			
 			//Execute the query to the database
 			myRs = myStmt.executeQuery();
@@ -345,6 +411,8 @@ public class DBReader
 		}
 		return mediaCopy;
 	}
+	
+	
 	
 	/**
 	 * Retrieves a tv show disk from the database
