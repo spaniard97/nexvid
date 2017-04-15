@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -63,10 +64,19 @@ public class DatabaseTester {
 			System.out.println("\ngetMediaByMediaID Query: ");
 			DBReader.getMediaByMediaIDQuery(7);*/
 			
-			/*System.out.println("\nMediaCopies Query:");
-			DBReader.getMediaCopiesQuery(1);
+			System.out.println("\nMediaCopies Query:");
+			ArrayList<MediaCopy> mediaCopies = DBReader.getMediaCopiesQuery(1);
+			for(int row = 0; row < mediaCopies.size(); row++){
+				System.out.println(mediaCopies.get(row).getMediaCopyId() + ", " + mediaCopies.get(row).isRented() + ", " + mediaCopies.get(row).isReserved() + 
+						", " + mediaCopies.get(row).getState() + ", " + mediaCopies.get(row).isActive() + ", " + mediaCopies.get(row).getMediaId() +
+						", " + mediaCopies.get(row).getTitle() + ", " + mediaCopies.get(row).getTimesRented() + ", " + mediaCopies.get(row).getOnlineID() + 
+						", " + mediaCopies.get(row).getType() + ", " + mediaCopies.get(row).getPrice().getPriceID() + ", " + 
+						mediaCopies.get(row).getFormat().getFormatID());
+
+			}
 			
-			System.out.println("\nMediaCopy Query:");
+			
+			/*System.out.println("\nMediaCopy Query:");
 			DBReader.getMediaCopyQuery(4);
 			
 			System.out.println("\nloginQuery:");
@@ -92,6 +102,14 @@ public class DatabaseTester {
 			
 			/*AccountManager aManager = new AccountManager();
 			aManager.getAccountReservations(myAccount);*/
+			
+			/*System.out.println("\ngetTvShowDisk Query: ");
+			TvShowDisk myTvShow = DBReader.getTVShowDiskQuery(13);
+			System.out.println("MediaID: "+ myTvShow.getMediaId() + "\nTitle: " + myTvShow.getTitle() + "\nPriceID: " +
+					myTvShow.getPrice().getPriceID() + "\nFormatID: " + myTvShow.getFormat().getFormatID() + 
+					"\nCopyID: " + myTvShow.getMediaCopyId() + "\nState: " + myTvShow.getState() + "\nSeason Number: " +
+					myTvShow.getSeasonNumber() + "\nNumber of Episodes: " + myTvShow.getNumberOfEpisodes() + 
+					"\nDisk Number: " + myTvShow.getDiskNumber());*/
 			
 			/*****************************************************************************
 			 * Adder Queries
@@ -155,12 +173,12 @@ public class DatabaseTester {
 			reserve.setMediaCopy(myCopy);
 			DBAdder.addNewReservationQuery(reserve);*/
 			
-			System.out.println("\naddTvShowDiskQuery Query: ");
+			/*System.out.println("\naddTvShowDiskQuery Query: ");
 			int mediaID = DBAdder.addNewMediaQuery(tvShow);
 			tvShow.setMediaId(mediaID);
 			int copyID = DBAdder.addMediaCopyQuery(tvShow);
 			tvShow.setMediaCopyId(copyID);			
-			DBAdder.addTvShowDiskQuery(tvShow);
+			DBAdder.addTvShowDiskQuery(tvShow);*/
 			
 			/*****************************************************************************
 			 * Writer Queries

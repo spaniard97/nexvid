@@ -76,7 +76,7 @@ public class Rental {
 	 * @return The customer's account object
 	 */
 	public Account getAccount() {
-		return account;
+		return this.account;
 	}
 	
 	/**
@@ -92,7 +92,7 @@ public class Rental {
 	 * @return The media object
 	 */
 	public MediaCopy getMediaCopy() {
-		return mediaCopy;
+		return this.mediaCopy;
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class Rental {
 	 * @return The rental Id number
 	 */
 	public int getRentalID() {
-		return rentalID;
+		return this.rentalID;
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class Rental {
 	 * @return The date the media is rented
 	 */
 	public java.sql.Date getDateRented() {
-		return dateRented;
+		return this.dateRented;
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class Rental {
 	 */
 	public boolean isActive()
 	{
-		return isActive;
+		return this.isActive;
 	}
 
 	/**

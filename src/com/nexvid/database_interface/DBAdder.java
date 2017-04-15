@@ -246,7 +246,7 @@ public class DBAdder
 			myStmt.executeUpdate();
 		}
 		finally{			
-			if (myStmt != null) {
+			if (myStmt != null){
 				myStmt.close();
 			}
 			if (myConn != null){

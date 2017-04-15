@@ -234,8 +234,6 @@ public class DBReader
 		CallableStatement myStmt = null;
 		ResultSet myRs = null;
 		Media media = new Media();
-		PriceTier price = new PriceTier();
-		Format format = new Format();
 		
 		try{
 			//Creates a Database object to establish a connection
@@ -259,10 +257,8 @@ public class DBReader
 				media.setTimesRented(myRs.getInt("times_rented"));
 				media.setOnlineID(myRs.getInt("online_ID"));
 				media.setType(myRs.getString("type"));
-				price.setPriceID(myRs.getInt("price_ID"));
-				media.setPrice(price);
-				format.setFormatID(myRs.getInt("format_ID"));
-				media.setFormat(format);
+				media.setPrice(DBReader.getPriceTier(myRs.getInt("price_ID")));
+				media.setFormat(DBReader.getFormat(myRs.getInt("format_ID")));
 				
 				//For Testing.  Comment out later.
 				System.out.println(media.getMediaId() + ", " + media.getTitle() + ", " + media.getTimesRented() + 
@@ -293,20 +289,23 @@ public class DBReader
 	 * @precondition an integer greater than 0 for the media id
 	 * @postcondition an array of media copy objects with either the copies information for a found copy or with null values.
 	 */
-	public static MediaCopy[] getMediaCopiesQuery(int mediaID) throws SQLException, FileNotFoundException, IOException
+	public static ArrayList<MediaCopy> getMediaCopiesQuery(int mediaID) throws SQLException, FileNotFoundException, IOException
 	{
 		DatabaseConnector db = null;
 		Connection myConn = null;
 		CallableStatement myStmt = null;
 		ResultSet myRs = null;
-		MediaCopy[] mediaCopies = null;
-		//MediaCopy mediaCopy = new MediaCopy();
-		int totalRows;
+		ArrayList<MediaCopy> mediaCopies = null;
+		Media media = null;
+		MediaCopy mediaCopy = null;
+		PriceTier price = null;
+		Format format = null;
 		int row = 0;
 		try{
 			//Creates a Database object to establish a connection
 			db = new DatabaseConnector();
 			myConn = db.getConnection();
+			mediaCopies = new ArrayList<MediaCopy>();
 			
 			// Creates a prepared statement query
 			myStmt = myConn.prepareCall("{call get_mediaCopies_info(?)}");
@@ -318,25 +317,37 @@ public class DBReader
 			myRs = myStmt.executeQuery();
 			
 			//Gets the total number of rows from the result set
-			totalRows = getNumberOfRows(myRs);
+			//totalRows = getNumberOfRows(myRs);
 			
 			//Creates an array of MediaCopy with the size of total rows from the result set
-			mediaCopies = new MediaCopy[totalRows];
-			generateMediaCopies(mediaCopies);
+			//mediaCopies = new MediaCopy[totalRows];
+			//generateMediaCopies(mediaCopies);
 			
 			//Loops through the result set and sets all the properties to the corresponding object variables
 			while(myRs.next()){
 				
-				mediaCopies[row].setMediaCopyId(myRs.getInt("copy_ID"));
-				mediaCopies[row].setRented(myRs.getBoolean("rental_status"));
-				mediaCopies[row].setReserved(myRs.getBoolean("reservation_status"));
-				mediaCopies[row].setState(myRs.getString("state"));
-				mediaCopies[row].setActive(myRs.getBoolean("active"));
-				mediaCopies[row].setMediaId(myRs.getInt("media_ID"));
+				mediaCopy = new MediaCopy();
+				mediaCopy.setMediaCopyId(myRs.getInt("copy_ID"));
+				mediaCopy.setRented(myRs.getBoolean("rental_status"));
+				mediaCopy.setReserved(myRs.getBoolean("reservation_status"));
+				mediaCopy.setState(myRs.getString("state"));
+				mediaCopy.setActive(myRs.getBoolean("active"));
+				mediaCopy.setMediaId(myRs.getInt("media_ID"));
+				media = DBReader.getMediaByMediaIDQuery(mediaCopy.getMediaId());
+				mediaCopy.setTitle(media.getTitle());
+				mediaCopy.setTimesRented(media.getTimesRented());
+				mediaCopy.setOnlineID(media.getOnlineID());
+				mediaCopy.setType(media.getType());
+				price = DBReader.getPriceTier(media.getPrice().getPriceID());
+				mediaCopy.setPrice(price);
+				format = DBReader.getFormat(media.getFormat().getFormatID());
+				mediaCopy.setFormat(format);
+				mediaCopies.add(mediaCopy);
+				
 				
 				//For Testing.  Comment out later.
-				System.out.println(mediaCopies[row].getMediaCopyId() + ", " + mediaCopies[row].isRented() + ", " + mediaCopies[row].isReserved() + 
-						", " + mediaCopies[row].getState() + ", " + mediaCopies[row].isActive() + ", " + mediaCopies[row].getMediaId());
+				//System.out.println(mediaCopies.get(row).getMediaCopyId() + ", " + mediaCopies.get(row).isRented() + ", " + mediaCopies.get(row).isReserved() + 
+					//	", " + mediaCopies.get(row).getState() + ", " + mediaCopies.get(row).isActive() + ", " + mediaCopies.get(row).getMediaId());
 				row++;
 			}
 		}
@@ -370,6 +381,9 @@ public class DBReader
 		CallableStatement myStmt = null;
 		ResultSet myRs = null;
 		MediaCopy mediaCopy = new MediaCopy();
+		Media media = null;
+		PriceTier price = null;
+		Format format = null;
 		try{
 			//Creates a Database object to establish a connection
 			db = new DatabaseConnector();
@@ -398,6 +412,16 @@ public class DBReader
 				//System.out.println(mediaCopy.getMediaCopyId() + ", " + mediaCopy.isRented() + ", " + mediaCopy.isReserved() + 
 						//", " + mediaCopy.getState() + ", " + mediaCopy.isActive() + ", " + mediaCopy.getMediaId());
 			}
+			media = DBReader.getMediaByMediaIDQuery(mediaCopy.getMediaId());
+			mediaCopy.setTitle(media.getTitle());
+			mediaCopy.setTimesRented(media.getTimesRented());
+			mediaCopy.setOnlineID(media.getOnlineID());
+			mediaCopy.setType(media.getType());
+			price = DBReader.getPriceTier(media.getPrice().getPriceID());
+			mediaCopy.setPrice(price);
+			format = DBReader.getFormat(media.getFormat().getFormatID());
+			mediaCopy.setFormat(format);
+
 		}
 		finally{
 			if (myRs != null) {
@@ -412,16 +436,82 @@ public class DBReader
 		return mediaCopy;
 	}
 	
-	
-	
 	/**
 	 * Retrieves a tv show disk from the database
 	 * @param media_ID the tv show disk's ID number
 	 * @return the TVShowDisk object or NULL
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
 	 */
-	public TvShowDisk getTVShowDiskQuery(int mediaID) 
+	public static TvShowDisk getTVShowDiskQuery(int copyID) throws FileNotFoundException, IOException, SQLException 
 	{
-		return null;
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		ResultSet myRs = null;
+		TvShowDisk tvShow = null;
+		Media media = null;
+		MediaCopy copy = null;
+		PriceTier price = null;
+		Format format = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			tvShow = new TvShowDisk();
+			media = new Media();
+			copy = new MediaCopy();
+			price = new PriceTier();
+			format = new Format();
+			
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call get_tvShowDisk_info(?)}");
+			
+			//Sets the parameter for the prepared statement.
+			myStmt.setInt(1, copyID);
+			
+			//Execute the query to the database
+			myRs = myStmt.executeQuery();
+			
+			//Loops through the result set and sets all the properties to the corresponding object variables
+			while(myRs.next()){
+				
+				tvShow.setSeasonNumber(myRs.getInt("season_number"));
+				tvShow.setNumberOfEpisodes(myRs.getInt("number_of_episodes"));
+				tvShow.setDiskNumber(myRs.getInt("disk_number"));
+				tvShow.setMediaCopyId(myRs.getInt("copy_ID"));
+				
+			}
+			copy = DBReader.getMediaCopyQuery(tvShow.getMediaCopyId());
+			tvShow.setRented(copy.isRented());
+			tvShow.setReserved(copy.isReserved());
+			tvShow.setState(copy.getState());
+			tvShow.setActive(copy.isActive());
+			tvShow.setMediaId(copy.getMediaId());
+			media = DBReader.getMediaByMediaIDQuery(tvShow.getMediaId());
+			tvShow.setTitle(media.getTitle());
+			tvShow.setTimesRented(media.getTimesRented());
+			tvShow.setOnlineID(media.getOnlineID());
+			tvShow.setType(media.getType());
+			price = DBReader.getPriceTier(media.getPrice().getPriceID());
+			tvShow.setPrice(price);
+			format = DBReader.getFormat(media.getFormat().getFormatID());
+			tvShow.setFormat(format);
+			
+		}
+		finally{
+			if (myRs != null) {
+				myRs.close();
+			}
+			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			System.out.println(db.endConnection(myConn)); //Closes the connection
+		}
+		return tvShow;
 	}
 	
 	/**
@@ -524,24 +614,9 @@ public class DBReader
 			
 			//Execute the query to the database
 			myRs = myStmt.executeQuery();
-			
-			//Gets the total number of rows from the result set
-			//totalRows = getNumberOfRows(myRs);
-			
-			//Creates an array of Reservation with the size of total rows from the result set
-			//rental = new Rental[totalRows];
-			//generateRentals(rental);
-			
+						
 			//Loops through the result set and sets all the properties to the corresponding object variables
 			while(myRs.next()){
-				
-				/*rental[row].setRentalID(myRs.getInt("rental_ID"));
-				rental[row].setDateRented(myRs.getDate("date_rented"));
-				rental[row].setDateDue(myRs.getDate("date_due"));
-				rental[row].setActive(myRs.getBoolean("active"));
-				rental[row].setAccount(DBReader.getAccountQuery(accountID));
-				copyID = myRs.getInt("copy_ID");
-				rental[row].setMediaCopy(DBReader.getMediaCopyQuery(copyID));*/
 				
 				rental.setRentalID(myRs.getInt("rental_ID"));
 				rental.setDateRented(myRs.getDate("date_rented"));
@@ -907,88 +982,6 @@ public class DBReader
 		}
 
 		return priceTier;
-	}
-
-	
-	/**
-	 * Retrieves the ID of the last record added to the database.
-	 * This is used to get IDs when a record is added since the database auto increments the IDs.
-	 * @return The ID of the last record added.
-
-	 */
-	public int getLastIdAddedQuery()
-	{
-		return 0;
-	}
-		
-	/**
-	 * Gets the number of rows in a ResultSet
-	 * @param myRs a result set from a query
-	 * @return the total number of rows in a result set
-	 * @throws SQLException
-	 * @precondition a valid Result set
-	 * @postcondition an integer equal to or greater than 0
-	 */
-	public static int getNumberOfRows(ResultSet myRs) throws SQLException{
-		int totalRows = 0;
-		
-		//Moves the cursor to the last row of the result set to get the size
-		if(myRs.last()){
-			totalRows = myRs.getRow();
-			System.out.println(totalRows);
-			//Moves the cursor back to the first row
-			myRs.beforeFirst();
-		}
-
-		return totalRows;
-	}
-	
-	/**
-	 * Fills an array of MediaCopy with default MediaCopy objects.
-	 * @param mediaCopies an array of MediaCopy
-	 * @return the array of MediaCopy
-	 * @precondition the array must have a set size
-	 * @postcondition the array must be filled with media copy objects
-	 */
-	public static MediaCopy[] generateMediaCopies(MediaCopy[] mediaCopies){
-		
-		for(int i = 0; i < mediaCopies.length; i++){
-			mediaCopies[i] = new MediaCopy();
-		}
-		
-		return mediaCopies;
-	}
-	
-	/**
-	 * Fills an array of Rental with default Rental objects.
-	 * @param rental an array of Rental
-	 * @return the array of Rental with default Rental objects
-	 * @precondition the array must have a set size
-	 * @postcondition the array must be filled with default Rental objects
-	 */
-	public static Rental[] generateRentals(Rental[] rental){
-		
-		for(int i = 0; i < rental.length; i++){
-			rental[i] = new Rental();
-		}
-		
-		return rental;
-	}
-
-	/**
-	 * Fills an array of Reservation with default Reservation objects.
-	 * @param reservation an array of Reservation
-	 * @return the array of Reservation with default Reservation objects
-	 * @precondition the array must have a set size
-	 * @postcondition the array must be filled with default Reservation objects
-	 */
-	public static Reservation[] generateReservations(Reservation[] reservation){
-		
-		for(int i = 0; i < reservation.length; i++){
-			reservation[i] = new Reservation();
-		}
-		
-		return reservation;
 	}
 
 }
