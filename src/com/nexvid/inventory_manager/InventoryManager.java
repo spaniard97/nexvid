@@ -2,6 +2,8 @@ package com.nexvid.inventory_manager;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +13,7 @@ import com.nexvid.database_interface.DBWriter;
 
 /**
  * The InventoryManager is responsible for the management of the inventory.
- * @author Samuel Pimenta, Brian Chan
+ * @author Samuel Pimenta, Brian Chan, Juan Carlos Pinillos
  * @since 03/19/2017
  * @version 1.0.1.2
  * 
@@ -25,7 +27,7 @@ public class InventoryManager {
 	 */
 	public void addMediaCopies(Media media, int numberOfCopies)
 	{
-		Media[] numOfMedia = null;
+		/*ArrayList<MediaCopy> numOfMedia = null;
 		try
 		{
 			numOfMedia = DBReader.getMediaCopiesQuery(media.getMediaId());
@@ -34,16 +36,16 @@ public class InventoryManager {
 		{
 			System.out.print("Error: Could not create media copies.");
 		}
-		int lastNumber = numOfMedia.length;
+		int lastNumber = numOfMedia.size();*/
 		
 		for(int i = 1; i <= numberOfCopies; i++)
 		{
-			int newCopy = i+lastNumber;
-			MediaCopy temp = new MediaCopy(media.getMediaId(), media.getTitle(), media.getTimesRented(), media.getOnlineID(),
-					media.getType(), media.getPrice(), media.getFormat(), newCopy, false, false, "New", true);
+			//int newCopy = i+lastNumber;
+			MediaCopy mediaCopy = new MediaCopy(media.getMediaId(), media.getTitle(), media.getTimesRented(), media.getOnlineID(),
+					media.getType(), media.getPrice(), media.getFormat(), 0, false, false, "New", true);
 			try
 			{
-				DBWriter.setMediaCopyQuery(temp);
+				DBWriter.setMediaCopyQuery(mediaCopy);
 			}
 			catch (IOException | SQLException e)
 			{
@@ -62,8 +64,8 @@ public class InventoryManager {
 	public int getMediaCopies(Media media){
 		try
 		{
-			Media[] numOfMedia = DBReader.getMediaCopiesQuery(media.getMediaId());
-			return numOfMedia.length;
+			ArrayList<MediaCopy> numOfMedia = DBReader.getMediaCopiesQuery(media.getMediaId());
+			return numOfMedia.size();
 		}
 		catch (SQLException | IOException e)
 		{
