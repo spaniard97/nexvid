@@ -18,4 +18,8 @@
       name="AccountManager"
       implementation="com.nexvid.accounts.AccountManager"
       url-pattern="/AccountManager"/>
+      <endpoint
+      name="Renter"
+      implementation="com.nexvid.inventory_manager.Renter"
+      url-pattern="/Renter"/>
 </endpoints>

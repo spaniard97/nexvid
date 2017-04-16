@@ -100,7 +100,7 @@ public class AccountManager
 
 		
     	Account customerAccount = new Account();
-    	int newAccountID = 0;
+    	int newAccountID = 17;
     	
     	customerAccount.setFirstName(firstName);
     	customerAccount.setLastName(lastName);

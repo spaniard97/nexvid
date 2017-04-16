@@ -385,7 +385,7 @@ public class InventoryManager {
 	 * @return
 	 */
 	@WebMethod(operationName="addNewMedia")
-	public static int addNewMedia(String mediaTitle, int mediaOnlineID, 
+	public int addNewMedia(String mediaTitle, int mediaOnlineID, 
 			String mediaType, int mediaPriceID, int mediaFormatID){
 		
 		Media newMedia = new Media();
@@ -407,8 +407,6 @@ public class InventoryManager {
 		    
 		    newMedia.setFormat(format);
 		    newMedia.setPrice(price);
-		    
-			System.out.println(newMedia.mediaToJSONString());
 			
 			newMediaID = DBAdder.addNewMediaQuery(newMedia);
 			

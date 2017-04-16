@@ -83,6 +83,7 @@ public class DBReader
 			if (myStmt != null) {
 				myStmt.close();
 			}
+			db.endConnection(myConn); //Closes the connection
 		}
 		
 		return account;
