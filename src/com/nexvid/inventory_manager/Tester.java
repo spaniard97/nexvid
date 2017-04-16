@@ -17,31 +17,15 @@ import com.nexvid.inventory_manager.Rental;*/
 public class Tester {
 	
 	public static void main(String[] args) {
-		
-		
-		int mediaID = InventoryManager.addNewMedia("The Fast and the Furious: Tokyo Drift", 9615, "Movie", 1, 1);
-		
 		/*
-		try {
-			PriceTier priceTier = DBReader.getPriceTier(1);
-			Format format = DBReader.getFormat(1);
-			
-			Media newMedia = new Media(0, "Fast and Furious", 0, 13804, "Movie", priceTier, format);
-			mediaID = DBAdder.addNewMediaQuery(newMedia);
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
-		System.out.println(mediaID);
 		
+		int accounID = 0;
+		
+		accounID = AccountManager.createAccount("Sam", "Please Work", "7781234455", "yreiueyis@hotmail.com", "BC", "Aa", "V4H7Y5", "Vancouver", "Street", 201, 10, "Registered Customer", 
+				"Active", "aaaa", "bbbb");
+		
+		System.out.println(accounID);
+		*/
 	}
 	
 }

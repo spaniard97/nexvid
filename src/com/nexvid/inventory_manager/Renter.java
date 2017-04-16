@@ -4,7 +4,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Calendar;
 
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+
 import com.nexvid.accounts.*;
+import com.nexvid.database_interface.DBAdder;
+import com.nexvid.database_interface.DBReader;
 import com.nexvid.database_interface.DBWriter;
 
 /**
@@ -14,6 +19,7 @@ import com.nexvid.database_interface.DBWriter;
  * @version 1.0.0.2
  *
  */
+@WebService(serviceName="Renter")
 public class Renter {
 	
 	private static Calendar today;
@@ -26,21 +32,30 @@ public class Renter {
 	 * @precondition the media and customer account must exist
 	 * @postcondition a Rental object is returned
 	 */
-	public static Rental rentMedia(Account customerAccount, MediaCopy mediaRented)
+	@WebMethod(operationName="rentMedia")
+	public int rentMedia(int customerAccountID, int mediaRentedID)
 	{
 		today = Calendar.getInstance();
-		Rental temp = new Rental(customerAccount, mediaRented, 0, today, mediaRented.isActive(), mediaRented.getAcquiredStatus());
-		mediaRented.setRented(true);
+		
+		Rental newRental = new Rental();
+		int rentalID = 0;
+		
 		try
 		{
-			DBWriter.setRentalQuery(temp);
-			DBWriter.changeRentStatus(mediaRented);
-			return temp;
+			newRental.setAccount(DBReader.getAccountQuery(customerAccountID));
+			newRental.setMediaCopy(DBReader.getMediaCopyQuery(mediaRentedID));
+			
+			rentalID = DBAdder.addNewRentalQuery(newRental);
+			
+			//DBWriter.setRentalQuery(newRental);
+			//DBWriter.changeRentStatus(mediaRented);
+
 		} catch (IOException | SQLException e)
 		{
 			System.out.print("Error: Could not make a rental.");
 		}
-		return null;
+		
+		return rentalID;
 	}
 	
 	/**
