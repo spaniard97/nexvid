@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 public class AccountTest
 {
-	public AccountManager accMan;
+	/*public AccountManager accMan;
 	public InventoryManager invMan;
 	public Renter rentMan;
 	
@@ -53,5 +53,5 @@ public class AccountTest
 		invMan.addMovie(testJSON);
 	}
 	
-	
+	*/
 }
