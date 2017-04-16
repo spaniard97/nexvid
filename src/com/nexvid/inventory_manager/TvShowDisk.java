@@ -119,5 +119,28 @@ public class TvShowDisk extends MediaCopy{
 	public void setDiskNumber(int diskNumber) {
 		this.diskNumber = diskNumber;
 	}
+	
+public String tvShowDiskToJSONString (){
+		
+		String _JSON = "{\"mediaId\":\"" + this.mediaId + "\","
+    			+ "\"title\":\"" + this.title + "\"," +
+    			"\"mediaCopyId\":\"" + this.copyId + "\"," +
+    			"\"timesRented\":\"" + this.timesRented + "\"," +
+    			"\"onlineId\":\"" + this.onlineID + "\"," +
+    			"\"type\":\"" + this.type + "\"," + 
+    			"\"priceTier\":\"" + this.price.getPriceTier() + "\"," + 
+    			"\"price\":\"" + this.price.getPrice() + "\"," +
+    			"\"format\":\"" + this.format.getType() + "\"," +
+    			"\"isRented\":\"" + this.isRented + "\"," + 
+    			"\"isReserved\":\"" + this.isReserved + "\"," +
+    			"\"state\":\"" + this.mediaCopyState + "\"," + 
+    			"\"isActive\":\"" + this.isActive + "\"," +
+    			"\"seasonNumber\":\"" + this.seasonNumber + "\"," +
+    			"\"numberOfEpisodes\":\"" + this.numberOfEpisodes + "\"," +
+    			"\"diskNumber\":\"" + this.diskNumber + "\"" +
+    			"}";
+		
+		return _JSON;
+	}
 
 }

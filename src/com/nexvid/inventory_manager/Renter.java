@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.Calendar;
 
 import com.nexvid.accounts.*;
-import com.nexvid.database_interface.DBReader;
 import com.nexvid.database_interface.DBWriter;
 
 /**

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoints
+  xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime"
+  version="2.0">
+  <endpoint
+      name="AccountSearcher"
+      implementation="com.nexvid.accounts.AccountSearcher"
+      url-pattern="/AccountSearcher"/>
+      <endpoint
+      name="MediaSearcher"
+      implementation="com.nexvid.inventory_manager.MediaSearcher"
+      url-pattern="/MediaSearcher"/>
+      <endpoint
+      name="InventoryManager"
+      implementation="com.nexvid.inventory_manager.InventoryManager"
+      url-pattern="/InventoryManager"/>
+      <endpoint
+      name="AccountManager"
+      implementation="com.nexvid.accounts.AccountManager"
+      url-pattern="/AccountManager"/>
+</endpoints>

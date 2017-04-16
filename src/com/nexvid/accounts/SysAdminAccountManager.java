@@ -1,5 +1,4 @@
 package com.nexvid.accounts;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -22,10 +21,9 @@ public class SysAdminAccountManager extends ManagerAccountManager{
      * @return the status of the account addition
      * @postcondition the manager account has been added
      */
-    public Account addManager(int accountID, String firstName, String lastName, String phoneNumber, String province,
-			String city, String postalCode, String country, String streetName, int streetNumber, 
-			String accountType, String status, String password)
+    public Account addManager(Account manager)
     {
+    	/*
     	Account manager = super.addEmployee(accountID, firstName, lastName, phoneNumber, province, city, postalCode, 
     			country, streetName, streetNumber, "Manager", status, password);
     	try
@@ -43,6 +41,7 @@ public class SysAdminAccountManager extends ManagerAccountManager{
     	catch (SQLException e) {
     		System.out.print("Error: Could not add Manager Account");
 		}
+		*/
     	return manager;
     }
     
@@ -55,6 +54,7 @@ public class SysAdminAccountManager extends ManagerAccountManager{
      */
     public boolean deactivateManager(Account manager)
     {
+    	/*
     	manager.setStatus("Deactivated");
     	if(manager.getStatus().equals("Deactivated"))
     	{
@@ -80,5 +80,9 @@ public class SysAdminAccountManager extends ManagerAccountManager{
     	{
     	return false;
     	}
+		*/
+    	
+    	return false;
     }
+    
 }

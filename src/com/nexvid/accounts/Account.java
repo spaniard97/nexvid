@@ -28,7 +28,6 @@ public class Account
 	protected String password;
 	protected String passPhrase;
 	//protected SubAccount subAccount;
-	private static final String DELIMITER=", ";
     
 	/**
 	 * Creates an Account with empty info
@@ -36,6 +35,7 @@ public class Account
 	public Account(){
 		//all fields are defined null as default
 	}
+
 	
     /**
      * Creates an Account with minimal information.
@@ -463,10 +463,12 @@ public class Account
      * Sets the account holder's sub account information
      * @param subAccount The account holder's sub account to be set
      */
-    /*public void setSubAccount(SubAccount subAccount)
+    /*
+    public void setSubAccountID(int subAccountID)
     {
-    	this.subAccount = subAccount;
-    }*/
+    	this.subAccount.subAccountID = subAccountID;
+    }
+    */
 	
     /**
      * Gets the account holder's postal code
@@ -486,20 +488,28 @@ public class Account
     	this.postalCode = newPostalCode;
     }
     
-    /**
-     * Overrides the super.toString()
-     * 
-     * Formats the Account's information into a String and returns it
-     */
-    public String toString()
-    {
-    	return ""+this.accountID+DELIMITER+this.firstName+DELIMITER+
-    			this.lastName+DELIMITER+this.phoneNumber+DELIMITER+
-    			this.email+DELIMITER+this.province+DELIMITER+this.city+
-    			DELIMITER+this.postalCode+DELIMITER+this.country+DELIMITER+
-    			this.streetName+DELIMITER+this.apartmentNumber+DELIMITER+
-    			this.streetNumber+DELIMITER+this.accountType+DELIMITER+
-    			this.status+DELIMITER+this.balanceOwed;
+    public String AccountToJSONString() {
+    	
+    	String _JSON =  "{\"accountId\":\"" + this.accountID + "\","
+    			+ "\"firstName\":\"" + this.firstName + "\"," + 
+    			"\"lastName\":\"" + this.lastName + "\"," + 
+    			"\"phoneNumber\":\"" + this.phoneNumber + "\"," + 
+    			"\"email\":\"" + this.email + "\"," + 
+    			"\"province\":\"" + this.province + "\"," +
+    			"\"city\":\"" + this.city + "\"," +
+    			"\"postalCode\":\"" + this.postalCode + "\"," +
+    			"\"country\":\"" + this.country + "\"," +
+    			"\"streetName\":\"" + this.streetName + "\"," +
+    			"\"apartmentNumber\":\"" + this.apartmentNumber + "\"," +
+    			"\"streetNumber\":\"" + this.streetNumber + "\"," +
+    			"\"accountType\":\"" + this.accountType + "\"," +
+    			"\"status\":\"" + this.status + "\"," +
+    			"\"balanceOwed\":\"" + this.balanceOwed + "\"," +
+    			"\"password\":\"" + this.password + "\"," +
+    			"\"passPhrase\":\"" + this.passPhrase + "\"" +
+    			"}";
+    	
+    	return _JSON;
     }
     
 }
