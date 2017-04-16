@@ -39,8 +39,6 @@ public class DBAdder
 			db = new DatabaseConnector();
 			myConn = db.getConnection();
 			
-			
-			
 			// Creates a prepared statement query
 			myStmt = myConn.prepareCall("{call insert_account(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 			
@@ -62,15 +60,13 @@ public class DBAdder
 			myStmt.setString(15, account.getPassword());
 			myStmt.setString(16, account.getPassPhrase());
 			myStmt.registerOutParameter(17, Types.INTEGER);
-
-			myStmt.execute();
 			
 			
 			//Execute the query to the database
 			myStmt.execute();
 			accountID = myStmt.getInt("the_id");
+			//System.out.println("The returned account ID is: " + accountID);
 		}
-		
 		finally{			
 			if (myStmt != null) {
 				myStmt.close();
@@ -80,7 +76,6 @@ public class DBAdder
 			}
 		}
 		return accountID;
-		
 	}
 		
 	/**
@@ -128,7 +123,6 @@ public class DBAdder
 		}
 		return subID;
 	}
-
 	
 	/**
 	 * Adds a new media to the database
@@ -144,8 +138,7 @@ public class DBAdder
 		DatabaseConnector db = null;
 		Connection myConn = null;
 		CallableStatement myStmt = null;
-		int mediaID = 0;
-		
+		int mediaID;
 		try{
 			//Creates a Database object to establish a connection
 			db = new DatabaseConnector();
@@ -156,7 +149,7 @@ public class DBAdder
 			
 			//Fills in the query with the corresponding parameters
 			myStmt.setString(1, media.getTitle());
-			myStmt.setInt(2, 0);
+			myStmt.setInt(2, media.getTimesRented());
 			myStmt.setInt(3, media.getOnlineID());
 			myStmt.setString(4, media.getType());
 			myStmt.setInt(5, media.getPrice().getPriceID());
@@ -187,7 +180,6 @@ public class DBAdder
 	 * @throws SQLException 
 	 * @postcondition a media copy is added to the database
 	 */
-
 	public static int addMediaCopyQuery(MediaCopy mediaCopy) throws FileNotFoundException, IOException, SQLException{
 		DatabaseConnector db = null;
 		Connection myConn = null;
@@ -254,7 +246,7 @@ public class DBAdder
 			myStmt.executeUpdate();
 		}
 		finally{			
-			if (myStmt != null){
+			if (myStmt != null) {
 				myStmt.close();
 			}
 			if (myConn != null){
@@ -262,7 +254,7 @@ public class DBAdder
 			}
 		}
 	}
-
+	
 	/**
 	 * Adds a new rental to the database
 	 * @param rental a new Rental object
@@ -304,12 +296,11 @@ public class DBAdder
 				myStmt.close();
 			}
 			if (myConn != null){
-				db.endConnection(myConn); //Closes the connection
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
 			}
 		}
 		return rentalID;
 	}
-
 	
 	/**
 	 * Adds a reservation to the database
@@ -351,7 +342,7 @@ public class DBAdder
 				myStmt.close();
 			}
 			if (myConn != null){
-				db.endConnection(myConn); //Closes the connection
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
 			}
 		}
 		return reservationID;
@@ -393,7 +384,7 @@ public class DBAdder
 				myStmt.close();
 			}
 			if (myConn != null){
-				db.endConnection(myConn); //Closes the connection
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
 			}
 		}
 		return formatID;
@@ -437,12 +428,11 @@ public class DBAdder
 				myStmt.close();
 			}
 			if (myConn != null){
-				db.endConnection(myConn); //Closes the connection
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
 			}
 		}
 		return priceID;
 	}
-
 	
 	/**
 	 * Checks if a property should be inserted as NULL
