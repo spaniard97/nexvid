@@ -15,7 +15,7 @@ import com.nexvid.database_interface.DBWriter;
  */
 public class EmployeeAccountManager extends AccountManager
 {
-
+/*
     // Guarantees that class can only be instantiated once
     protected static EmployeeAccountManager instance;
 
@@ -23,7 +23,6 @@ public class EmployeeAccountManager extends AccountManager
     {
     }
 
-    /*
     // static block initialization for exception handling
     static
     {
@@ -35,10 +34,9 @@ public class EmployeeAccountManager extends AccountManager
 	    throw new RuntimeException("Exception occured in creating singleton instance");
 	}
     }
-*/
-    public static EmployeeAccountManager getInstance()
-    {
-    	if(instance== null)
+
+    public static EmployeeAccountManager getInstance(){
+        if(instance== null)
     	{
     		try
     		{
@@ -48,10 +46,11 @@ public class EmployeeAccountManager extends AccountManager
     		    throw new RuntimeException("Exception occured in creating singleton instance");
     		}
     	}
+
         return instance;
     }
     // end singleton guarantee
-
+*/
     
     /**
      * The employee's method for creating new accounts, with only the required information.
@@ -72,15 +71,9 @@ public class EmployeeAccountManager extends AccountManager
      * @precondition The account must not exist
      * @postcondition the account has been added
      */
-    public Account addCustomer(int accountID, String firstName, String lastName, String phoneNumber, 
-    		String email, String province, String city, String postalCode, String country, String streetName, 
-    		int apartmentNumber, int streetNumber, String accountType, String status, String password, 
-    		String passPhrase/*, SubAccount subAccount*/)
+    public Account addCustomer(Account account)
     {
-    	Account newAccount = super.createAccount(accountID, firstName, lastName, phoneNumber, email, 
-    			province, city, postalCode, country, streetName, apartmentNumber, streetNumber, 
-    			accountType, status, password, passPhrase/*, subAccount*/);
-    	return newAccount;
+    	return account;
     }
     
     /**
@@ -93,6 +86,7 @@ public class EmployeeAccountManager extends AccountManager
      */
     public boolean deactivateCustomerAccount(Account account)
     {
+    	/*
     	account.setStatus("Deactivated");
     	if(account.getStatus().equals("Deactivated"))
     	{
@@ -118,6 +112,9 @@ public class EmployeeAccountManager extends AccountManager
     	{
     		return false;
     	}
+		*/
+    	
+    	return false;
     }
     
     /**
@@ -129,6 +126,7 @@ public class EmployeeAccountManager extends AccountManager
      */
     public Account suspendAccount(Account account)
     {
+    	/*
     	account.setStatus("Suspended");
     	if(account.getStatus().equals("Suspended"))
     	{
@@ -154,6 +152,9 @@ public class EmployeeAccountManager extends AccountManager
     	{
     		return account;
     	}
+    	*/
+
+    	return account;
     }
     
     /**
@@ -166,6 +167,7 @@ public class EmployeeAccountManager extends AccountManager
      */
     public Account addFine(double fine, Account account) 
     {
+    	/*
     	account.setBalanceOwed(account.getBalanceOwed() + fine);
     	try
 		{
@@ -184,6 +186,8 @@ public class EmployeeAccountManager extends AccountManager
 			System.out.print("Error: Could not add fine");
 		}
 		return account;
+		*/
+    	return account;
     }
     
     /**
@@ -196,6 +200,7 @@ public class EmployeeAccountManager extends AccountManager
      */
     public Account reduceFine(double fine, Account account)
     {
+    	/*
     	if(fine >= account.getBalanceOwed())
     	{
     		account.setBalanceOwed(0);
@@ -217,7 +222,9 @@ public class EmployeeAccountManager extends AccountManager
 		{
 			System.out.print("Error: Could not add fine");
 		}
-		return account;
+		*/
+    	
+    	return account;
     }
 
 

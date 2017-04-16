@@ -1,9 +1,6 @@
 package com.nexvid.accounts;
 
-
 import java.util.Date;
-
-
 /**The subaccount class holds the subaccount's information
  * 
  * @author Brian Chan
@@ -44,6 +41,7 @@ public class SubAccount
     	this.dateOfBirth = dateOfBirth;
     	this.isActive = active;
     	this.account = account;
+    	
     }
 	
 	/**
@@ -124,7 +122,7 @@ public class SubAccount
      */
     public boolean isActive()
     {
-        return isActive;
+        return this.isActive;
     }
 
     /**
@@ -141,7 +139,7 @@ public class SubAccount
      * @return the parent's account ID
      */
 	public Account getAccount() {
-		return account;
+		return this.account;
 	}
 	
 	/**
@@ -151,6 +149,34 @@ public class SubAccount
 	public void setAccount(Account account){
 		this.account = account;
 	}
-
+	
+	public String SubAccountToJSONString() {
+    	
+    	String _JSON =  "{\"subAccountId\":\"" + this.subAccountID + "\"," +
+    			"\"subAccountFirstName\":\"" + this.firstName + "\"," +
+    			"\"subAccountLastName\":\"" + this.lastName + "\"," +
+    			"\"subAccountDOB\":\"" + this.dateOfBirth + "\"," +
+    			"\"subAccountActive\":\"" + this.isActive + "\"," +
+    			"\"accountID\":\"" + this.account.accountID + "\","
+    			+ "\"firstName\":\"" + this.account.firstName + "\"," + 
+    			"\"lastName\":\"" + this.account.lastName + "\"," + 
+    			"\"phoneNumber\":\"" + this.account.phoneNumber + "\"," + 
+    			"\"email\":\"" + this.account.email + "\"," + 
+    			"\"province\":\"" + this.account.province + "\"," +
+    			"\"city\":\"" + this.account.city + "\"," +
+    			"\"postalCode\":\"" + this.account.postalCode + "\"," +
+    			"\"country\":\"" + this.account.country + "\"," +
+    			"\"streetName\":\"" + this.account.streetName + "\"," +
+    			"\"apartmentNumber\":\"" + this.account.apartmentNumber + "\"," +
+    			"\"streetNumber\":\"" + this.account.streetNumber + "\"," +
+    			"\"accountType\":\"" + this.account.accountType + "\"," +
+    			"\"status\":\"" + this.account.status + "\"," +
+    			"\"balanceOwed\":\"" + this.account.balanceOwed + "\"," +
+    			"\"password\":\"" + this.account.password + "\"," +
+    			"\"passPhrase\":\"" + this.account.passPhrase + "\"" +
+    			"}";
+    	
+    	return _JSON;
+    }
 
 }

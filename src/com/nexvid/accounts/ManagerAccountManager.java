@@ -1,5 +1,4 @@
 package com.nexvid.accounts;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -26,6 +25,7 @@ public class ManagerAccountManager extends EmployeeAccountManager {
 			String city, String postalCode, String country, String streetName, int streetNumber, 
 			String accountType, String status, String password)
     {
+    	/*
     	Account newAccount = super.createAccount(accountID, firstName, lastName, phoneNumber, province, city, postalCode, 
     			country, streetName, streetNumber, "Employee", status, password);
     	try
@@ -45,6 +45,10 @@ public class ManagerAccountManager extends EmployeeAccountManager {
 			System.out.print("Error: Could not add employee account.");
 		}
     	return newAccount;
+    	*/
+    	
+    	return null;
+
     }
     
     /**
@@ -56,6 +60,7 @@ public class ManagerAccountManager extends EmployeeAccountManager {
      */
     public boolean deactivateEmployee(Account employee)
     {
+    	/*
     	employee.setStatus("Deactivated");
     	if(employee.getStatus().equals("Deactivated"))
     	{
@@ -82,6 +87,9 @@ public class ManagerAccountManager extends EmployeeAccountManager {
     	{
     	return false;
     	}
+    	*/
+    	
+    	return false;
     }
     
 }
