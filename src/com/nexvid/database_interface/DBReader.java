@@ -40,7 +40,6 @@ public class DBReader
 			myConn = db.getConnection();
 			
 			// Creates a prepared statement query
-			//PreparedStatement myStmt = myConn.prepareStatement("SELECT * from Account WHERE `account_ID` = ?");
 			myStmt = myConn.prepareCall("{call get_account_info(?)}");
 			
 			//Sets the parameter for the prepared statement.  
@@ -71,8 +70,8 @@ public class DBReader
 				account.setPassPhrase(myRs.getString("passphrase"));
 				
 				//For Testing.  Comment out later.
-				/*System.out.println(account.getAccountID() + ", " + account.getFirstName() + ", " + account.getLastName() +
-						", " + account.getPhoneNumber() + ", " + account.getEmail());*/
+				//System.out.println(account.getAccountID() + ", " + account.getFirstName() + ", " + account.getLastName() +
+				//		", " + account.getPhoneNumber() + ", " + account.getEmail());
 				
 			}
 		}
@@ -84,7 +83,6 @@ public class DBReader
 			if (myStmt != null) {
 				myStmt.close();
 			}
-			db.endConnection(myConn); //Closes the connection to the database
 		}
 		
 		return account;
@@ -134,8 +132,8 @@ public class DBReader
 				subAccount.setAccount(DBReader.getAccountQuery(accountID));			
 				
 				//For Testing.  Comment out later.
-				System.out.println(subAccount.getSubAccountID() + ", " + subAccount.getDateOfBirth() + ", " + subAccount.getFirstName() + ", " + subAccount.getLastName() + 
-						", " + subAccount.isActive() + ", " + subAccount.getAccount().getAccountID());
+				/*System.out.println(subAccount.getSubAccountID() + ", " + subAccount.getDateOfBirth() + ", " + subAccount.getFirstName() + ", " + subAccount.getLastName() + 
+						", " + subAccount.isActive() + ", " + subAccount.getAccount().getAccountID());*/
 			}
 		}
 		finally{
@@ -146,11 +144,11 @@ public class DBReader
 			if (myStmt != null) {
 				myStmt.close();
 			}
-			System.out.println(db.endConnection(myConn)); //Closes the connection
+			db.endConnection(myConn); //Closes the connection
 		}
 		return subAccount;
 	}
-	
+
 	/**
 	 * Retrieves a media from the database
 	 * @param onlineID the media's online ID number
@@ -168,8 +166,6 @@ public class DBReader
 		CallableStatement myStmt = null;
 		ResultSet myRs = null;
 		Media media = new Media();
-		PriceTier price = new PriceTier();
-		Format format = new Format();
 		
 		try{
 			//Creates a Database object to establish a connection
@@ -193,16 +189,16 @@ public class DBReader
 				media.setTimesRented(myRs.getInt("times_rented"));
 				media.setOnlineID(myRs.getInt("online_ID"));
 				media.setType(myRs.getString("type"));
-				price.setPriceID(myRs.getInt("price_ID"));
-				media.setPrice(price);
-				format.setFormatID(myRs.getInt("format_ID"));
-				media.setFormat(format);
+				media.setPrice(DBReader.getPriceTier(myRs.getInt("price_ID")));
+				media.setFormat(DBReader.getFormat(myRs.getInt("format_ID")));
 				
 				//For Testing.  Comment out later.
-				System.out.println(media.getMediaId() + ", " + media.getTitle() + ", " + media.getTimesRented() + 
+				/*System.out.println(media.getMediaId() + ", " + media.getTitle() + ", " + media.getTimesRented() + 
 						", " + media.getOnlineID() + ", " + media.getType() + ", " + media.getPrice().getPriceID() + ", " + 
 						media.getFormat().getFormatID());
+			*/
 			}
+			
 		}
 		finally{
 			if (myRs != null) {
@@ -212,7 +208,7 @@ public class DBReader
 			if (myStmt != null) {
 				myStmt.close();
 			}
-			System.out.println(db.endConnection(myConn)); //Closes the connection
+			db.endConnection(myConn); //Closes the connection
 		}
 		return media;
 	}
@@ -261,9 +257,9 @@ public class DBReader
 				media.setFormat(DBReader.getFormat(myRs.getInt("format_ID")));
 				
 				//For Testing.  Comment out later.
-				System.out.println(media.getMediaId() + ", " + media.getTitle() + ", " + media.getTimesRented() + 
+				/*System.out.println(media.getMediaId() + ", " + media.getTitle() + ", " + media.getTimesRented() + 
 						", " + media.getOnlineID() + ", " + media.getType() + ", " + media.getPrice().getPriceID() + ", " + 
-						media.getFormat().getFormatID());
+						media.getFormat().getFormatID());*/
 			}
 		}
 		finally{
@@ -274,10 +270,11 @@ public class DBReader
 			if (myStmt != null) {
 				myStmt.close();
 			}
-			System.out.println(db.endConnection(myConn)); //Closes the connection
+			db.endConnection(myConn); //Closes the connection
 		}
 		return media;
 	}
+
 	
 	/**
 	 * Retrieves all the copies associated with a media
@@ -359,10 +356,11 @@ public class DBReader
 			if (myStmt != null) {
 				myStmt.close();
 			}
-			System.out.println(db.endConnection(myConn)); //Closes the connection
+			db.endConnection(myConn); //Closes the connection
 		}
 		return mediaCopies;
 	}
+
 	
 	/**
 	 * Retrieves a media copy from the database
@@ -431,7 +429,7 @@ public class DBReader
 			if (myStmt != null) {
 				myStmt.close();
 			}
-			System.out.println(db.endConnection(myConn)); //Closes the connection
+			db.endConnection(myConn); //Closes the connection
 		}
 		return mediaCopy;
 	}
@@ -509,7 +507,7 @@ public class DBReader
 			if (myStmt != null) {
 				myStmt.close();
 			}
-			System.out.println(db.endConnection(myConn)); //Closes the connection
+			db.endConnection(myConn); //Closes the connection
 		}
 		return tvShow;
 	}
@@ -560,8 +558,8 @@ public class DBReader
 				rental.setMediaCopy(DBReader.getMediaCopyQuery(copyID));
 				
 				//For Testing.  Comment out later.
-				System.out.println(rental.getRentalID() + ", " + rental.getDateRented() + ", " + rental.getDateDue() + 
-						", " + rental.isActive() + ", " + rental.getAccount().getAccountID() + ", " + rental.getMediaCopy().getMediaCopyId());
+				/*System.out.println(rental.getRentalID() + ", " + rental.getDateRented() + ", " + rental.getDateDue() + 
+						", " + rental.isActive() + ", " + rental.getAccount().getAccountID() + ", " + rental.getMediaCopy().getMediaCopyId());*/
 			}
 		}
 		finally{
@@ -572,7 +570,7 @@ public class DBReader
 			if (myStmt != null) {
 				myStmt.close();
 			}
-			System.out.println(db.endConnection(myConn)); //Closes the connection
+			db.endConnection(myConn); //Closes the connection
 		}
 		return rental;
 
@@ -629,9 +627,9 @@ public class DBReader
 				rentals.add(rental);
 				
 				//For Testing.  Comment out later.
-				System.out.println(rentals.get(row).getRentalID() + ", " + rentals.get(row).getDateRented()+ ", "+ rentals.get(row).getDateDue() + ", " + 
+				/*System.out.println(rentals.get(row).getRentalID() + ", " + rentals.get(row).getDateRented()+ ", "+ rentals.get(row).getDateDue() + ", " + 
 						rentals.get(row).isActive() + ", " + rentals.get(row).getAccount().getAccountID() + ", " + 
-						rentals.get(row).getMediaCopy().getMediaCopyId());
+						rentals.get(row).getMediaCopy().getMediaCopyId());*/
 				row++;
 			}
 		}
@@ -643,11 +641,11 @@ public class DBReader
 			if (myStmt != null) {
 				myStmt.close();
 			}
-			System.out.println(db.endConnection(myConn)); //Closes the connection
+			db.endConnection(myConn); //Closes the connection
 		}
 		return rentals;
 	}
-
+	
 	/**
 	 * Retrieves a reservation from the database
 	 * @param reservation_ID the reservation's ID number
@@ -664,14 +662,13 @@ public class DBReader
 		Connection myConn = null;
 		CallableStatement myStmt = null;
 		ResultSet myRs = null;
-		Reservation reservation = null;
+		Reservation reservation = new Reservation();
 		int accountID;
 		int copyID;
 		try{
 			//Creates a Database object to establish a connection
 			db = new DatabaseConnector();
 			myConn = db.getConnection();
-			reservation = new Reservation();
 			
 			// Creates a prepared statement query
 			myStmt = myConn.prepareCall("{call get_reservation_info(?)}");
@@ -694,8 +691,8 @@ public class DBReader
 				reservation.setMediaCopy(DBReader.getMediaCopyQuery(copyID));
 				
 				//For Testing.  Comment out later.
-				System.out.println(reservation.getReservationId() + ", " + reservation.getReservationDate() + ", " + reservation.isReservationActive() + 
-						", " + reservation.getCustomerAccount().getAccountID() + ", " + reservation.getMediaCopy().getMediaCopyId());
+				/*System.out.println(reservation.getReservationId() + ", " + reservation.getReservationDate() + ", " + reservation.isReservationActive() + 
+						", " + reservation.getCustomerAccount().getAccountID() + ", " + reservation.getMediaCopy().getMediaCopyId());*/
 			}
 		}
 		finally{
@@ -706,7 +703,7 @@ public class DBReader
 			if (myStmt != null) {
 				myStmt.close();
 			}
-			System.out.println(db.endConnection(myConn)); //Closes the connection
+			db.endConnection(myConn); //Closes the connection
 		}
 		return reservation;
 	}
@@ -775,8 +772,8 @@ public class DBReader
 				reservations.add(reservation);
 				
 				//For Testing.  Comment out later.
-				System.out.println(reservations.get(row).getReservationId() + ", " + reservations.get(row).getReservationDate() + ", " + reservations.get(row).isReservationActive() + 
-						", " + reservations.get(row).getCustomerAccount().getAccountID() + ", " + reservations.get(row).getMediaCopy().getMediaCopyId());
+				/*System.out.println(reservations.get(row).getReservationId() + ", " + reservations.get(row).getReservationDate() + ", " + reservations.get(row).isReservationActive() + 
+						", " + reservations.get(row).getCustomerAccount().getAccountID() + ", " + reservations.get(row).getMediaCopy().getMediaCopyId());*/
 				row++;
 			}
 		}
@@ -788,11 +785,10 @@ public class DBReader
 			if (myStmt != null) {
 				myStmt.close();
 			}
-			System.out.println(db.endConnection(myConn)); //Closes the connection
+			db.endConnection(myConn); //Closes the connection
 		}
 		return reservations;
 	}
-
 	
 	/**
 	 * Checks if the given email and password match an account
@@ -850,8 +846,8 @@ public class DBReader
 				account.setPassPhrase(myRs.getString("passphrase"));
 				
 				//For Testing.  Comment out later.
-				System.out.println(account.getAccountID() + ", " + account.getFirstName() + ", " + account.getLastName() +
-						", " + account.getPhoneNumber() + ", " + account.getEmail());
+				/*System.out.println(account.getAccountID() + ", " + account.getFirstName() + ", " + account.getLastName() +
+						", " + account.getPhoneNumber() + ", " + account.getEmail());*/
 				
 			}
 		}
@@ -863,7 +859,7 @@ public class DBReader
 			if (myStmt != null) {
 				myStmt.close();
 			}
-			System.out.println(db.endConnection(myConn)); //Closes the connection to the database
+			db.endConnection(myConn); //Closes the connection to the database
 		}
 
 		return account;
@@ -907,7 +903,7 @@ public class DBReader
 				format.setType(myRs.getString("type"));
 				
 				//For Testing.  Comment out later.
-				System.out.println(format.getFormatID() + ", " + format.getType());
+				//System.out.println(format.getFormatID() + ", " + format.getType());
 				
 			}
 		}
@@ -919,7 +915,7 @@ public class DBReader
 			if (myStmt != null) {
 				myStmt.close();
 			}
-			System.out.println(db.endConnection(myConn)); //Closes the connection to the database
+			db.endConnection(myConn); //Closes the connection to the database
 		}
 
 		return format;
@@ -965,8 +961,8 @@ public class DBReader
 				
 				
 				//For Testing.  Comment out later.
-				System.out.println(priceTier.getPriceID() + ", " + priceTier.getRentalPeriod() + ", " + priceTier.getPriceTier() + ", " + 
-						priceTier.getPrice());
+				/*System.out.println(priceTier.getPriceID() + ", " + priceTier.getRentalPeriod() + ", " + priceTier.getPriceTier() + ", " + 
+						priceTier.getPrice());*/
 				
 			}
 		}
@@ -978,7 +974,7 @@ public class DBReader
 			if (myStmt != null) {
 				myStmt.close();
 			}
-			System.out.println(db.endConnection(myConn)); //Closes the connection to the database
+			db.endConnection(myConn); //Closes the connection to the database
 		}
 
 		return priceTier;

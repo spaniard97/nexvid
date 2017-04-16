@@ -1,10 +1,10 @@
 package com.nexvid.database_interface;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+//import java.io.FileInputStream;
+//import java.io.FileNotFoundException;
+//import java.io.IOException;
 import java.sql.*;
-import java.util.Properties;
+//import java.util.Properties;
 
 
 /**
@@ -14,18 +14,26 @@ import java.util.Properties;
  * @author Juan Carlos Pinillos
  */
 public class DatabaseConnector {
-	private String user = "";
-	private String password = "";
-	private String dbUrl = "";
 	
-	public DatabaseConnector() throws FileNotFoundException, IOException{
+	//private String user = "";
+	//private String password = "";
+	//private String dbUrl = "";
+
+	
+	private String user = "java";
+	private String password = "nexvid2301";
+	private String dbUrl = "jdbc:mysql://192.99.58.76:3306/NexVid2?useSSL=false";
+	
+	
+	
+	/*public DatabaseConnector() throws FileNotFoundException, IOException{
 		Properties props = new Properties();
 		props.load(new FileInputStream("src/db.properties"));
 		
 		this.user = props.getProperty("user");
 		this.password = props.getProperty("password");
 		this.dbUrl = props.getProperty("dburl");
-	}
+	}*/
 	
 	/**
 	 * Gets the database user
@@ -87,6 +95,7 @@ public class DatabaseConnector {
 		
 		try{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			
 			myConn = DriverManager.getConnection(this.getDbUrl(), this.getUser(), this.getPassword());
 		}
 		catch (Exception exception){
