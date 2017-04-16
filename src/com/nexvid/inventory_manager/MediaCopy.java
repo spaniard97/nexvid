@@ -8,10 +8,11 @@ package com.nexvid.inventory_manager;
  *
  */
 public class MediaCopy extends Media{
-	public int mediaCopyId;
+	
+	public int copyId;
 	public boolean isRented;
 	public boolean isReserved;
-	public String state;
+	public String mediaCopyState;
 	public boolean isActive;
 	
 	/**
@@ -57,10 +58,10 @@ public class MediaCopy extends Media{
 			boolean rented, boolean reserved, String copyState, boolean active){
 		super(id, mediaTitle, timesRented, mediaOnlineID, mediaType, mediaPrice,
 				mediaFormat);
-		this.mediaCopyId = copyId;
+		this.copyId = copyId;
 		this.isRented = rented;
 		this.isReserved = reserved;
-		this.state = copyState;
+		this.mediaCopyState = copyState;
 		this.isActive = active;
 	}
 	
@@ -69,7 +70,7 @@ public class MediaCopy extends Media{
 	 * @return The media's copy Id number
 	 */
 	public int getMediaCopyId() {
-		return this.mediaCopyId;
+		return this.copyId;
 	}
 	
 	/**
@@ -77,7 +78,7 @@ public class MediaCopy extends Media{
 	 * @param mediaCopyId The media's copy Id number
 	 */
 	public void setMediaCopyId(int mediaCopyId) {
-		this.mediaCopyId = mediaCopyId;
+		this.copyId = mediaCopyId;
 	}
 
 	/**
@@ -119,7 +120,7 @@ public class MediaCopy extends Media{
 	 * @return The state of the media's copy
 	 */
 	public String getState() {
-		return state;
+		return this.mediaCopyState;
 	}
 	
 	/**
@@ -127,7 +128,7 @@ public class MediaCopy extends Media{
 	 * @param state The state of a media's copy
 	 */
 	public void setState(String state) {
-		this.state = state;
+		this.mediaCopyState = state;
 	}
 
 	/**
@@ -145,5 +146,26 @@ public class MediaCopy extends Media{
 	 */
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	
+	public String mediaCopyToJSONString (){
+		
+		String _JSON = "{\"mediaId\":\"" + this.mediaId + "\","
+    			+ "\"title\":\"" + this.title + "\"," +
+    			"\"mediaCopyId\":\"" + this.copyId + "\"," +
+    			"\"timesRented\":\"" + this.timesRented + "\"," +
+    			"\"onlineId\":\"" + this.onlineID + "\"," +
+    			"\"type\":\"" + this.type + "\"," + 
+    			"\"priceTier\":\"" + this.price.getPriceTier() + "\"," + 
+    			"\"price\":\"" + this.price.getPrice() + "\"," +
+    			"\"format\":\"" + this.format.getType() + "\"," +
+    			"\"isRented\":\"" + this.isRented + "\"," + 
+    			"\"isReserved\":\"" + this.isReserved + "\"," +
+    			"\"state\":\"" + this.mediaCopyState + "\"," + 
+    			"\"isActive\":\"" + this.isActive + "\"" +
+    			"}";
+		
+		return _JSON;
 	}
 }

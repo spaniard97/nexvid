@@ -22,8 +22,7 @@ public class Reservation {
 	/**
 	 * Default constructor
 	 */
-	public Reservation()
-	{
+	public Reservation(){
 		
 	}
 	
@@ -50,7 +49,7 @@ public class Reservation {
 	 * @return The reservation's Id number
 	 */
 	public int getReservationId() {
-		return reservationId;
+		return this.reservationId;
 	}
 
 	/**
@@ -66,7 +65,7 @@ public class Reservation {
 	 * @return The reservation's date
 	 */
 	public java.sql.Date getReservationDate() {
-		return reservationDate;
+		return this.reservationDate;
 	}
 
 	/**
@@ -83,7 +82,7 @@ public class Reservation {
 	 * @return False if the reservation is inactive
 	 */
 	public boolean isReservationActive() {
-		return isReservationActive;
+		return this.isReservationActive;
 	}
 
 	/**
@@ -99,7 +98,7 @@ public class Reservation {
 	 * @return The customer's account object
 	 */
 	public Account getCustomerAccount() {
-		return customerAccount;
+		return this.customerAccount;
 	}
 
 	/**
@@ -124,6 +123,18 @@ public class Reservation {
 	 */
 	public void setMediaCopy(MediaCopy mediaCopy) {
 		this.mediaCopy = mediaCopy;
+	}
+	
+public String reservationToJSONString(){
+		
+		String _JSON =  "{\"reservationId\":\"" + this.reservationId + "\"," +
+    			"\"reservationDate\":\"" + this.reservationDate + "\"," + 
+    			"\"isReservationActive\":\"" + this.isReservationActive + "\"," +
+    			"\"account\":" + this.customerAccount.AccountToJSONString() + "," +
+    			"\"mediaCopy\":" + this.mediaCopy.mediaCopyToJSONString() +
+    			"}";
+		
+    	return _JSON;
 	}
 	
 }

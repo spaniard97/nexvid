@@ -38,7 +38,7 @@ public class PriceTier {
 	 * @return the ID of the price tier
 	 */
 	public int getPriceID() {
-		return priceID;
+		return this.priceID;
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class PriceTier {
 	 * @return the rental period of the price tier
 	 */
 	public int getRentalPeriod() {
-		return rentalPeriod;
+		return this.rentalPeriod;
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class PriceTier {
 	 * @return the price tier name of the price tier
 	 */
 	public String getPriceTier() {
-		return priceTier;
+		return this.priceTier;
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class PriceTier {
 	 * @return the price of the price tier
 	 */
 	public double getPrice() {
-		return price;
+		return this.price;
 	}
 
 	/**

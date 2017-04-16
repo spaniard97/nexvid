@@ -1,12 +1,10 @@
 package com.nexvid.inventory_manager;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 
 import com.nexvid.database_interface.DBAdder;
 import com.nexvid.database_interface.DBWriter;
-
 /**
  * The Format class creates Format objects.
  * @author Juan Carlos Pinillos
@@ -23,6 +21,7 @@ public class Format {
 	{
 		
 	}
+
 	
 	/**
 	 * Create a Format object
@@ -49,6 +48,7 @@ public class Format {
 		{
 			System.out.print("Error: Could not add new format");
 		}*/
+
 	}
 	
 	/**
@@ -63,8 +63,7 @@ public class Format {
 	 * Set the ID of the format
 	 * @param formatID the ID of the format
 	 */
-	public void setFormatID(int formatID)
-	{
+	public void setFormatID(int formatID) {
 		this.formatID = formatID;
 	}
 
@@ -72,8 +71,7 @@ public class Format {
 	 * Get the type name of the format
 	 * @return the type name of the format
 	 */
-	public String getType()
-	{
+	public String getType() {
 		return type;
 	}
 
@@ -84,6 +82,5 @@ public class Format {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
 	
 }

@@ -1,12 +1,13 @@
 package com.nexvid.inventory_manager;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+
 import com.nexvid.database_interface.DBAdder;
 import com.nexvid.database_interface.DBReader;
 import com.nexvid.database_interface.DBWriter;
@@ -18,6 +19,7 @@ import com.nexvid.database_interface.DBWriter;
  * @version 1.0.1.2
  * 
  */
+@WebService(serviceName="InventoryManager")
 public class InventoryManager {
 	
 	/**
@@ -25,8 +27,7 @@ public class InventoryManager {
 	 * @param media the media to add copies
 	 * @param numberOfCopies the number of copies to be added
 	 */
-	public void addMediaCopies(Media media, int numberOfCopies)
-	{
+	public void addMediaCopies(Media media, int numberOfCopies){
 		/*ArrayList<MediaCopy> numOfMedia = null;
 		try
 		{
@@ -52,6 +53,7 @@ public class InventoryManager {
 				System.out.print("Error: Could not create media copies.");
 			}
 		}
+
 	}
 	
 	/**
@@ -61,19 +63,33 @@ public class InventoryManager {
 	 * @precondition the media must exist
 	 * @postcondition the number of copies is returned as an integer
 	 */
-	public int getMediaCopies(Media media){
-		try
-		{
-			ArrayList<MediaCopy> numOfMedia = DBReader.getMediaCopiesQuery(media.getMediaId());
-			return numOfMedia.size();
+	@WebMethod(operationName="getMediaCopies")
+	public String getMediaCopies(int mediaID){
+		
+		ArrayList<MediaCopy> mediaCopies = new ArrayList<MediaCopy>();
+		String copies = "";
+		
+		try {
+			mediaCopies = DBReader.getMediaCopiesQuery(mediaID);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		catch (SQLException | IOException e)
-		{
-			System.out.print("Error: Could not retrieve media copies.");
+		
+		for(int i = 0; i < mediaCopies.size(); i++){
+		
+			copies += mediaCopies.get(i).mediaCopyToJSONString();
 		}
-		// Return -1 if an error has occurred.
-		return -1;
+		
+		return copies;
 	}
+
 	
 	/**
 	 * Create a Movie type MediaCopy object to be added to the inventory.
@@ -81,6 +97,7 @@ public class InventoryManager {
 	 * @precondition The Movie type MediaCopy must not exist
 	 * @postcondition The Movie type MediaCopy object is created
 	 */
+	/*
 	public void addMovie(JSONObject JSONFromWebpage) throws JSONException
 	{
 		int onlineID = (int)(JSONFromWebpage.get("Online ID"));
@@ -100,6 +117,7 @@ public class InventoryManager {
 			System.out.print("Error: Could not add media");
 		}
 	}
+	*/
 	
 	/**
 	 * Create a TvShow type MediaCopy object to be added to the inventory.
@@ -108,6 +126,7 @@ public class InventoryManager {
 	 * @precondition The TvShow type MediaCopy must not exist
 	 * @postcondition The TvShow type MediaCopy object is created
 	 */
+	/*
 	public void addTvShow(JSONObject JSONFromWebpage) throws JSONException
 	{
 		int onlineID = (int)(JSONFromWebpage.get("Online ID"));
@@ -127,6 +146,7 @@ public class InventoryManager {
 			System.out.print("Error: Could not add media");
 		}
 	}
+	*/
 	
 	/**
 	 * Deactivates an existing media.
@@ -134,8 +154,8 @@ public class InventoryManager {
 	 * @precondition the media must exist and be active
 	 * @postcondition the media is deactivated
 	 */
-	public void deactivateMedia(MediaCopy mediaToDeactivate)
-	{
+	public void deactivateMedia(MediaCopy mediaToDeactivate){
+		/*
 		try
 		{
 			DBWriter.deactivate(mediaToDeactivate);
@@ -143,6 +163,7 @@ public class InventoryManager {
 		{
 			System.out.print("Error: Media could not be deactivated.");
 		}
+		*/
 	}
 	
 	/**
@@ -151,8 +172,8 @@ public class InventoryManager {
 	 * @precondition The price tier must exist
 	 * @postcondition The value of the price tier is modified
 	 */
-	public void modifyPriceTier(PriceTier priceTier, double price)
-	{
+	public void modifyPriceTier(PriceTier priceTier, double price){
+		/*
 		priceTier.setPrice(price);
 		try
 		{
@@ -162,6 +183,8 @@ public class InventoryManager {
 		{
 			System.out.print("Error: Could not change price tier.");
 		}
+		*/
+
 	}
 	
 	/**
@@ -172,6 +195,7 @@ public class InventoryManager {
 	 */
 	public double getPriceTier(PriceTier tier)
 	{
+		/*
 		try
 		{
 			PriceTier priceTier = DBReader.getPriceTier(tier.getPriceID());
@@ -182,8 +206,10 @@ public class InventoryManager {
 			System.out.print("Error: Could not get price tier");
 		}
 		// Returns -1 if an error occurs
+		 */
 		return -1;
 	}
+
 	
 	/**
 	 * Add a new media format.
@@ -191,8 +217,8 @@ public class InventoryManager {
 	 * @precondition the media format must not exist
 	 * @postcondition The media format is added
 	 */
-	public void addMediaFormat(String format)
-	{
+	public void addMediaFormat(String format){
+		/*
 		Format newFormat = new Format(0, format);
 		try
 		{
@@ -201,6 +227,7 @@ public class InventoryManager {
 		{
 			System.out.print("Error: Could not add new format");
 		}
+		*/
 	}
 	
 	/**
@@ -213,11 +240,236 @@ public class InventoryManager {
 	 */
 	public boolean isMediaAvailable(MediaCopy media)
 	{
+		/**
 		if(media.isRented() == true)
 		{
 			return false;
 		}
+		*/
 		return true;
+	}
+
+	/**
+	 * 
+	 * @param onlineId
+	 * @return
+	 */
+	public static Media getMediaInformation(int onlineId){
+		
+		Media media = new Media();
+		
+		try {
+			media = DBReader.getMediaQuery(onlineId);
+					
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return media;
+	}
+	
+	/**
+	 * 
+	 * @param mediaID
+	 * @return
+	 */
+	public static Media getMediaInformationByID(int mediaID){
+		
+		Media media = new Media();
+		
+		try {
+			media = DBReader.getMediaByMediaIDQuery(mediaID);
+					
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return media;
+	}
+	
+	/**
+	 * 
+	 * @param mediaCopyID
+	 * @return
+	 */
+	public static MediaCopy getMediaCopyInformation(int mediaCopyID){
+		
+		MediaCopy mediaCopy = new MediaCopy();
+		
+		try {
+			
+			mediaCopy = DBReader.getMediaCopyQuery(mediaCopyID);
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return mediaCopy;
+	}
+	
+	public static TvShowDisk getTvShowDiskInformation(int copyID){
+		
+		TvShowDisk tvShowDisk = new TvShowDisk();
+		
+		try {
+			tvShowDisk = DBReader.getTVShowDiskQuery(copyID);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return tvShowDisk;
+	}
+	
+	/**
+	 * 
+	 * @param rentalID
+	 * @return 
+	 * @return
+	 */
+	@WebMethod(operationName="getRentalInformation")
+	public String getRentalInformation(int rentalID){
+		
+		Rental rental = new Rental();
+		
+		try {
+			rental = DBReader.getRentalQuery(rentalID);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return rental.rentalToJSONString();
+	}
+	
+	/**
+	 * 
+	 * @param mediaTitle
+	 * @param mediaOnlineID
+	 * @param mediaType
+	 * @param mediaPriceID
+	 * @param mediaFormatID
+	 * @return
+	 */
+	@WebMethod(operationName="addNewMedia")
+	public int addNewMedia(String mediaTitle, int mediaOnlineID, 
+			String mediaType, int mediaPriceID, int mediaFormatID){
+		
+		Media newMedia = new Media();
+		int newMediaID = 0;
+		
+		newMedia.setTitle(mediaTitle);
+		newMedia.setOnlineID(mediaOnlineID);
+		newMedia.setType(mediaType);
+		newMedia.price.setPriceID(mediaPriceID);
+		newMedia.format.setFormatID(mediaFormatID);
+		
+		try {
+			
+			newMediaID = DBAdder.addNewMediaQuery(newMedia);
+			
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return newMediaID;
+	}
+	
+	/**
+	 * 
+	 * @param mediaID
+	 * @param mediaState
+	 * @param numberOfCopies
+	 * @return
+	 */
+	@WebMethod(operationName="addNewMediaCopy")
+	public String addNewMediaCopy(int mediaID, String mediaState, int numberOfCopies){
+		
+		MediaCopy mediaCopy = new MediaCopy();
+		String copyCreated = "";
+		
+		mediaCopy.setMediaId(mediaID);
+		mediaCopy.setState(mediaState);
+		
+		for(int i = 0; i < numberOfCopies; i++){
+			
+			try {
+				copyCreated += DBAdder.addMediaCopyQuery(mediaCopy) + ", ";
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return copyCreated;
+	}
+	
+	@WebMethod(operationName="getReservationInformation")
+	public String getReservationInformation(int reservationID){
+		
+		Reservation reservation = new Reservation();
+		
+		try {
+			reservation = DBReader.getReservationQuery(reservationID);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return reservation.reservationToJSONString();
 	}
 	
 }

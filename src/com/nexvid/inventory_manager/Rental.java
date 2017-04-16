@@ -140,7 +140,7 @@ public class Rental {
 	 * @return The date the media is due
 	 */
 	public java.sql.Date getDateDue() {
-		return dateDue;
+		return this.dateDue;
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class Rental {
 	 */
 	public boolean isActive()
 	{
-		return this.isActive;
+		return isActive;
 	}
 
 	/**
@@ -169,6 +169,19 @@ public class Rental {
 	public void setActive(boolean isActive)
 	{
 		this.isActive = isActive;
+	}
+	
+	public String rentalToJSONString(){
+		
+		String _JSON =  "{\"rentalID\":\"" + this.rentalID + "\"," +
+    			"\"dateRented\":\"" + this.dateRented + "\"," + 
+    			"\"dateDue\":\"" + this.dateDue + "\"," + 
+    			"\"isActive\":\"" + this.isActive + "\"," +
+    			"\"account\":" + this.account.AccountToJSONString() + "," +
+    			"\"mediaCopy\":" + this.mediaCopy.mediaCopyToJSONString() +
+    			"}";
+		
+    	return _JSON;
 	}
 
 }

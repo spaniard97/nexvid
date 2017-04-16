@@ -177,4 +177,21 @@ public class Media {
 	{
 		return this.isNew;
 	}
+
+	
+	public String mediaToJSONString (){
+		
+		String _JSON = "{\"mediaId\":\"" + this.mediaId + "\","
+    			+ "\"title\":\"" + this.title + "\"," +
+    			"\"timesRented\":\"" + this.timesRented + "\"," + 
+    			"\"onlineId\":\"" + this.onlineID + "\"," + 
+    			"\"type\":\"" + this.type + "\"," + 
+    			"\"priceTier\":\"" + this.price.priceTier + "\"," + 
+    			"\"price\":\"" + this.price.price + "\"," +
+    			"\"format\":\"" + this.format.type + "\"" +
+    			"}";
+		
+		return _JSON;
+	}
+
 }
