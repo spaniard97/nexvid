@@ -7,21 +7,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+
 import com.nexvid.database_interface.DBAdder;
 import com.nexvid.database_interface.DBReader;
 import com.nexvid.database_interface.DBWriter;
 import com.nexvid.inventory_manager.*;
 
 /**
- * The AccountManager class is responsible for all account based actions
+ * The AccountMAnager class is responsible for all account based actions
  * @author Brian Chan, Juan Carlos Pinillos
  * @since 03/18/2017
  * @version 1.0.1.4
  *
  */
+@WebService (serviceName="AccountManager") 
 public class AccountManager
 {
-		
+	
 	/**
      * Creates an Account with minimal information.
      * @param accountID The account ID
@@ -38,13 +42,14 @@ public class AccountManager
      * @param status The account status
      * @param password The account password
      */
-	public Account createAccount(int accountID, String firstName, String lastName, String phoneNumber, String province,
+	public Account createAccountMinimum(int accountID, String firstName, String lastName, String phoneNumber, String province,
 			String city, String postalCode, String country, String streetName, int streetNumber, 
 			String accountType, String status, String password)
 	{
 		return new Account(accountID, firstName, lastName, phoneNumber, province,
 				city, postalCode, country, streetName, streetNumber, 
 				accountType, status, password);
+
 	}
 	
 	/**
@@ -66,15 +71,16 @@ public class AccountManager
      * @param password The account password
 	 * @param passPhrase The account holder's pass phrase
 	 */
-    public Account createAccount(int accountID, String firstName, String lastName, String phoneNumber, 
+	@WebMethod(operationName="createAccount") 
+    public int createAccount(String firstName, String lastName, String phoneNumber, 
     		String email, String province, String city, String postalCode, String country, String streetName, 
     		int apartmentNumber, int streetNumber, String accountType, String status, String password, 
-    		String passPhrase/*, SubAccount subAccount*/) 
+    		String passPhrase) 
     {
     	
-    	Account account = new Account(accountID,firstName,lastName,phoneNumber,
+    	/*Account account = new Account(accountID,firstName,lastName,phoneNumber,
     			email,province,city,postalCode,country,streetName,apartmentNumber,
-    			streetNumber,accountType,status,password,passPhrase/*, subAccount*/);
+    			streetNumber,accountType,status,password,passPhrase);
     	try
     	{
 			DBAdder.addNewAccountQuery(account);
@@ -90,9 +96,47 @@ public class AccountManager
     	catch (SQLException e)
     	{
 			System.out.print("Error: Account could not be created. Please check inputs or database status");
-		}
-    	return account;
+		}*/
+
+		
+    	Account customerAccount = new Account();
+    	int newAccountID = 0;
     	
+    	customerAccount.setFirstName(firstName);
+    	customerAccount.setLastName(lastName);
+    	customerAccount.setPhoneNumber(phoneNumber);
+    	customerAccount.setEmail(email);
+    	customerAccount.setProvince(province);
+    	customerAccount.setCity(city);
+    	customerAccount.setPostalCode(postalCode);
+    	customerAccount.setCountry(country);
+    	customerAccount.setStreetName(streetName);
+    	customerAccount.setApartmentNumber(apartmentNumber);
+    	customerAccount.setStreetNumber(streetNumber);
+    	customerAccount.setAccountType(accountType);
+    	customerAccount.setStatus(status);
+    	customerAccount.setPassword(password);
+    	customerAccount.setPassPhrase(passPhrase);
+    	customerAccount.setBalanceOwed(0);
+    	
+    	try {
+    		
+    		newAccountID = DBAdder.addNewAccountQuery(customerAccount);
+    		
+    		//customerAccount = DBReader.getAccountQuery(newAccountID);
+    		
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return newAccountID;
     }
 	
 	/** The login method will allow a user to log in to the system
@@ -104,8 +148,9 @@ public class AccountManager
 	 * @precondition  AccountID must be an integer and password must be a String
 	 * @postcondition returns true or false depending on input
 	 */
-	public boolean login(String Email, String password)
+	public boolean login(int accountID, String password)
 	{
+		/*
 		Account account = null;
 		try
 		{
@@ -132,6 +177,7 @@ public class AccountManager
 				}
 			}
 		}
+		*/
 		return false;
 	}
 	
@@ -140,7 +186,7 @@ public class AccountManager
 	 */
 	public void logout()
 	{
-		// TODO: logout
+		//TODO: logout
 	}
 	
 	/** Allows the user to change the current password of their account
@@ -154,6 +200,7 @@ public class AccountManager
 	 */
 	public void setPassword(Account userAccount, String oldPassword, String newPassword, String confirmPassword)
 	{
+		/*
 		if(userAccount.getPassword().equals(oldPassword))
 		{
 			if(newPassword.equals(confirmPassword))
@@ -178,6 +225,8 @@ public class AccountManager
 		{
 			System.out.println("Error: Could not change password.");
 		}
+		*/
+
 	}
 	
 	/** Allows the user to see their current balance
@@ -199,40 +248,67 @@ public class AccountManager
 	 * @precondition The Account object must exist
 	 * @postcondition The List of Rental objects is returned to the caller
 	 */
-	public List<Rental> getAccountRentals(Account customerAccount)
+	@WebMethod(operationName="getAccountRentals") 
+	public String getAccountRentals(int accountID)
 	{
-		List<Rental> rentals = null;
+		
+		List<Rental> rentals = new ArrayList<Rental>();
+		String accountRentals = "";
 		
 		try
 		{
-			rentals = DBReader.getAccountRentalsQuery(customerAccount.accountID);
+			rentals = DBReader.getAccountRentalsQuery(accountID);
 		}
 		catch (FileNotFoundException e)
 		{
-			System.out.print("Error: Could not access database. Check connection.");
+			//System.out.print("Error: Could not access database. Check connection.");
+			e.printStackTrace();
 		} 
 		catch (IOException e) 
 		{
-			System.out.print("Error: Could not access database. Check connection");
+			//System.out.print("Error: Could not access database. Check connection");
+			e.printStackTrace();
 		}
 		catch (SQLException e)
 		{
-			System.out.println("Error: Could not get a list of rentals. Check inputs.");
+			//System.out.println("Error: Could not get a list of rentals. Check inputs.");
+			e.printStackTrace();
 		}
 		
-		return rentals;
+		for(int i = 0; i < rentals.size(); i++){
+			
+			accountRentals += rentals.get(i).rentalToJSONString() + "\n";
+		}
+		
+		return accountRentals;
 	}
 	
 	/** Returns account information
 	 * 
-	 * @param customerAccount The account of the customer
-	 * @return A formatted string consisting of customer information
+	 * @param account_ID The account ID of the customer
+	 * @return The customer account information
 	 * @precondition The Account object must exist
 	 * @postcondition A formatted string is returned to the caller
 	 */
-	public String getAccountInformation(Account customerAccount)
+	public static Account getAccountInformation(int account_ID)
 	{
-		return customerAccount.toString();
+		Account customerAccount = new Account();
+		try {
+			
+			customerAccount = DBReader.getAccountQuery(account_ID);
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return customerAccount;
 	}
 	
 	/** A subaccount is added to the main user's account
@@ -241,8 +317,9 @@ public class AccountManager
 	 * @precondition The customer's account object must exist
 	 * @postcondition The subaccount is created
 	 */
-	public void addSubAccount(int subAccountNumber, Date DOB, String firstName, String lastName, Boolean active, Account customerAccount)
+	public void addSubAccount(Account customerAccount)
 	{
+		/*
 		SubAccount temp = new SubAccount(subAccountNumber, DOB, firstName, lastName, active, customerAccount);
 		try
 		{
@@ -260,18 +337,38 @@ public class AccountManager
 		{
 			System.out.print("Error: Could not create subaccount.");
 		}
+		*/
+
 	}
 	
 	/** Retrieves SubAccount information for the customer to view
 	 * 
 	 * @param customerAccount The account of the customer
 	 * @return A formatted String that lists the information of the SubAccount
+	 * @throws SQLException 
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	public String getSubAccountInformation(Account customerAccount)
+	public static SubAccount getSubAccountInformation(int subAccountID)
 	{
-		//TODO LOW PRIORITY
-		//return null as current progress is not high priority
-		return null;
+		SubAccount subAccount = new SubAccount();
+		
+		try {
+			
+			subAccount = DBReader.getSubAccountQuery(subAccountID);			
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return subAccount;
 	}
 	
 	/** Retrieves a list of the customer's reservations
@@ -281,27 +378,36 @@ public class AccountManager
 	 * @precondition The customer account object must exist
 	 * @postcondition The list is returned to the caller
 	 */
-	public List<Reservation> getAccountReservations(Account customerAccount)
+	public String getAccountReservations(int accountID)
 	{
-		List<Reservation> reservations = null;
+		List<Reservation> reservations = new ArrayList<Reservation>();
+		String accountReservations = "";
 		
 		try
 		{
-			reservations = DBReader.getAccountReservationsQuery(customerAccount.accountID);
+			reservations = DBReader.getAccountReservationsQuery(accountID);
 		}
 		catch (FileNotFoundException e)
 		{
-			System.out.print("Error: Could not access database. Check connection.");
+			//System.out.print("Error: Could not access database. Check connection.");
+			e.printStackTrace();
 		} 
 		catch (IOException e) 
 		{
-			System.out.print("Error: Could not access database. Check connection");
+			//System.out.print("Error: Could not access database. Check connection");
+			e.printStackTrace();
 		}
 		catch (SQLException e)
 		{
-			System.out.println("Error: Could not get a list of reservations. Check inputs.");
+			//System.out.println("Error: Could not get a list of rentals. Check inputs.");
+			e.printStackTrace();
 		}
 		
-		return reservations;
+		for(int i = 0; i < reservations.size(); i++){
+			
+			accountReservations += reservations.get(i).reservationToJSONString() + "\n";
+		}
+		
+		return accountReservations;
 	}
 }
