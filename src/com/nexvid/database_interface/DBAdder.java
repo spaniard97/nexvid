@@ -63,9 +63,6 @@ public class DBAdder
 			myStmt.setString(16, account.getPassPhrase());
 			myStmt.registerOutParameter(17, Types.INTEGER);
 
-			myStmt.execute();
-			
-			
 			//Execute the query to the database
 			myStmt.execute();
 			accountID = myStmt.getInt("the_id");
