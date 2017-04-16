@@ -5,7 +5,7 @@ package com.nexvid.accounts;
  * 
  * @author Brian Chan, Juan Carlos Pinillos
  * @since 03/26/2017
- * @version 1.0.0.3
+ * @version 1.0.1.8
  *
  */
 public class Account 
@@ -138,8 +138,8 @@ public class Account
 	 */
     public Account(int accountID, String firstName, String lastName, String phoneNumber, String email, 
     		String province, String city, String postalCode, String country, String streetName, int apartmentNumber, 
-    		int streetNumber, String accountType, String status, String password, String passPhrase /*, 
-    		SubAccount subAaacount*/) 
+    		int streetNumber, String accountType, String status, String password, String passPhrase/*, 
+    		SubAccount subAccount*/) 
     {
     	this.accountID = accountID;
     	this.firstName = firstName;
@@ -246,9 +246,9 @@ public class Account
      * Sets the account type.
      * @param type The account type
      */
-    public void setAccountType(String type)
+    public void setAccountType(String accountType)
     {
-    	this.accountType = type;
+    	this.accountType = accountType;
     }
 	
     /**
