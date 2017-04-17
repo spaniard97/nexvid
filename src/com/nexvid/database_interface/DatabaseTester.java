@@ -298,12 +298,26 @@ public class DatabaseTester {
 			long testValue = getDateDiff(testDate1, testDate2, TimeUnit.DAYS);
 			System.out.println("The difference in time is "+ testValue + " days");*/
 			
-			System.out.println("\nreturn method: ");
+			System.out.println("\nRenterRent method: ");
 			Renter renter = new Renter();
-			renter.returnMedia(35);
+			int rentID = renter.rentMedia(100000016, 14);
+			System.out.println(rentID);
+			
+			/*System.out.println("\nRenterReturn method: ");
+			Renter renter = new Renter();
+			renter.returnMedia(35);*/
+			
+			/*System.out.println("\nReserver Reserve: ");
+			Reserver reserver = new Reserver();
+			int reserveID = reserver.reserveMedia(100000016, 14);
+			System.out.println(reserveID);*/
+			
+			/*System.out.println("\nReserver Cancel: ");
+			Reserver reserver = new Reserver();
+			boolean isCanceled = reserver.cancelReservation(4);
+			System.out.println(isCanceled);*/
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

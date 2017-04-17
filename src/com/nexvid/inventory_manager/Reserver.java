@@ -4,11 +4,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 
 import com.nexvid.accounts.*;
+import com.nexvid.database_interface.DBAdder;
 import com.nexvid.database_interface.DBReader;
 import com.nexvid.database_interface.DBWriter;
 
@@ -31,88 +33,109 @@ public class Reserver {
 	 * @precondition the media and customer account must exist
 	 * @postcondition returns true or false depending on the success of the reserve operation
 	 */
-	public boolean reserveMedia(Account customerAccount, MediaCopy mediaToBeReserved){
-		/*Reservation temp = new Reservation(0, Calendar.getInstance(), mediaToBeReserved.isActive, customerAccount, mediaToBeReserved);
-		temp.setReservationActive(true);
-		mediaToBeReserved.setReserved(true);		
-		try
-		{
-			DBWriter.setReservation(temp);
-			return temp;
-		}
-		catch (IOException | SQLException e)
-		{
-			System.out.print("Error: Could not make reservation.");
-		}*/
+	public int reserveMedia(int customerAccount, int mediaToBeReserved){
 		
+		Account account = null;
+		MediaCopy mediaCopy = null;
 		Reservation newReservation = new Reservation();
-		newReservation.setReservationId(0);
-		newReservation.setReservationDate(Calendar.getInstance().getTime());
-		newReservation.setReservationActive(true);
-		newReservation.setCustomerAccount(customerAccount);
-		newReservation.setMediaCopy(mediaToBeReserved);
-		
+		int reservationID = 0;
+				
 		try
 		{
-			DBWriter.setReservation(newReservation);
+			account = DBReader.getAccountQuery(customerAccount);
+			mediaCopy = DBReader.getMediaCopyQuery(mediaToBeReserved);
+			if(canBeReserved(mediaCopy)){
+				newReservation.setReservationDate(sqlToday());
+				newReservation.setReservationActive(true);
+				newReservation.setCustomerAccount(account);
+				newReservation.setMediaCopy(mediaCopy);
+				reservationID = DBAdder.addNewReservationQuery(newReservation);
+				mediaCopy.setReserved(true);
+				DBWriter.changeReserveStatus(mediaCopy);
+			}
 		}
 		catch (FileNotFoundException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		if(newReservation.isReservationActive())
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return reservationID;
 	}
 	
 	/**
 	 * Cancels a reservation made by a customer.
-	 * @param customerAccount the customer account that made the reservation
-	 * @param mediaReserved the reserved media
+	 * @param mediaCopyID the copy id of the reserved media
 	 * @return true if the reserve cancellation is successful
 	 * @return false if the reserve cancellation fail
 	 * @precondition the media must be reserved by the account
 	 * @postcondition returns true or false depending on the success of the cancellation
 	 */
-	public boolean cancelReservation(Account customerAccount, MediaCopy mediaReserved, Reservation reservedMedia){
-		Account account = customerAccount;
-		MediaCopy media = mediaReserved;
-		Reservation cancelReservation = new Reservation();
-		if(reservedMedia.getCustomerAccount().equals(account))
-		{
-			try
-			{
-				cancelReservation = DBReader.getReservationQuery(reservedMedia.getReservationId());
-				DBWriter.changeReserveStatus(media);
-				DBWriter.deactivate(cancelReservation);
-				if(!cancelReservation.isReservationActive())
-				{
-					return true;
-				}
-			}
-			catch (IOException | SQLException e)
-			{
-				System.out.print("Error: Could not cancel reservation");
-			}
+	public boolean cancelReservation(int mediaCopyID){
+
+		Reservation reservation = null;
+		MediaCopy mediaCopy = null;
+		
+		try {
+			mediaCopy = DBReader.getMediaCopyQuery(mediaCopyID);
+			reservation = DBReader.getReservationByCopyIDQuery(mediaCopyID);
+			System.out.println("Is the media reserved?: " + mediaCopy.isReserved());
+			System.out.println("Is the reservation active?: " + reservation.isReservationActive());
+			mediaCopy.setReserved(false);
+			DBWriter.changeReserveStatus(mediaCopy);
+			reservation.setReservationActive(false);
+			DBWriter.deactivate(reservation);
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if(!reservation.isReservationActive()){
+			System.out.println("Is the media reserved?: " + mediaCopy.isReserved());
+			System.out.println("Is the reservation active?: " + reservation.isReservationActive());
+			return true;
+		}
+		System.out.println("Is the media reserved?: " + mediaCopy.isReserved());
+		System.out.println("Is the reservation active?: " + reservation.isReservationActive());
+		return false;
+	}
+	
+	/**
+	 * Gets today's date as a java.sql.Date type
+	 * @return the current date
+	 */
+	public java.sql.Date sqlToday(){
+		java.sql.Date today = null;
+		Calendar cal = Calendar.getInstance();
+		Date myDate = cal.getTime();
+		today = new java.sql.Date(myDate.getTime());
+		return today;
+	}
+	
+	/**
+	 * Checks if the media copy can be rented
+	 * @param account the account object which wants to rent the media copy
+	 * @param mediaCopy the media copy to check if it can be rented
+	 * @return true if the media copy can be rented, false otherwise.
+	 */
+	public boolean canBeReserved(MediaCopy mediaCopy){
+		
+		if(mediaCopy.isActive() && !mediaCopy.isRented() && !mediaCopy.isReserved()){
+			return true;
 		}
 		return false;
 	}
+
 }
 

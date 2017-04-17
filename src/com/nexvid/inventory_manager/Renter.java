@@ -167,17 +167,22 @@ public class Renter {
 	 * @return true if the media copy can be rented, false otherwise.
 	 */
 	public boolean canBeRented(Account account, MediaCopy mediaCopy){
-		
+		Reserver reserver = new Reserver();
 		try {
 			if(mediaCopy.isActive() && !mediaCopy.isRented()){
+				System.out.println("first if.");
 				if(mediaCopy.isReserved()){
 					Reservation reserve = DBReader.getReservationByCopyIDQuery(mediaCopy.getMediaCopyId());
+					System.out.println("second if.");
+					System.out.println(account.getAccountID() + ", " + reserve.getCustomerAccount().getAccountID());
 					if(account.getAccountID() == reserve.getCustomerAccount().getAccountID()){
-						
+						reserver.cancelReservation(mediaCopy.getMediaCopyId());
+						System.out.println("third if.");
 						return true;
 					}
 				}
 				else{
+					System.out.println("else.");
 					return true;
 				}
 			}
@@ -188,7 +193,7 @@ public class Renter {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println("Nothing.");
 		return false;
 	}
 	
