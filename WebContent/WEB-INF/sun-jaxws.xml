@@ -22,4 +22,8 @@
       name="Renter"
       implementation="com.nexvid.inventory_manager.Renter"
       url-pattern="/Renter"/>
+      <endpoint
+      name="Reserver"
+      implementation="com.nexvid.inventory_manager.Reserver"
+      url-pattern="/Reserver"/>
 </endpoints>

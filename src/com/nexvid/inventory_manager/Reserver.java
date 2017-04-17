@@ -1,8 +1,12 @@
 package com.nexvid.inventory_manager;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Calendar;
+
+import javax.jws.WebService;
+import javax.jws.WebMethod;
 
 import com.nexvid.accounts.*;
 import com.nexvid.database_interface.DBReader;
@@ -15,6 +19,7 @@ import com.nexvid.database_interface.DBWriter;
  * @version 1.0.1.2
  *
  */
+@WebService (serviceName="Reserver")
 public class Reserver {
 	
 	/**
@@ -26,10 +31,10 @@ public class Reserver {
 	 * @precondition the media and customer account must exist
 	 * @postcondition returns true or false depending on the success of the reserve operation
 	 */
-	public static Reservation reserveMedia(Account customerAccount, MediaCopy mediaToBeReserved){
-		Reservation temp = new Reservation(0, Calendar.getInstance(), mediaToBeReserved.isActive, customerAccount, mediaToBeReserved);
+	public boolean reserveMedia(Account customerAccount, MediaCopy mediaToBeReserved){
+		/*Reservation temp = new Reservation(0, Calendar.getInstance(), mediaToBeReserved.isActive, customerAccount, mediaToBeReserved);
 		temp.setReservationActive(true);
-		/*mediaToBeReserved.setReserved(true);		
+		mediaToBeReserved.setReserved(true);		
 		try
 		{
 			DBWriter.setReservation(temp);
@@ -39,7 +44,42 @@ public class Reserver {
 		{
 			System.out.print("Error: Could not make reservation.");
 		}*/
-		return null;
+		
+		Reservation newReservation = new Reservation();
+		newReservation.setReservationId(0);
+		newReservation.setReservationDate(Calendar.getInstance().getTime());
+		newReservation.setReservationActive(true);
+		newReservation.setCustomerAccount(customerAccount);
+		newReservation.setMediaCopy(mediaToBeReserved);
+		
+		try
+		{
+			DBWriter.setReservation(newReservation);
+		}
+		catch (FileNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(newReservation.isReservationActive())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	/**
@@ -51,19 +91,27 @@ public class Reserver {
 	 * @precondition the media must be reserved by the account
 	 * @postcondition returns true or false depending on the success of the cancellation
 	 */
-	public boolean cancelReservation(Account customerAccount, MediaCopy mediaReserved){
-		Reservation temp = new Reservation(0, Calendar.getInstance(), mediaReserved.isActive, customerAccount, mediaReserved);
-		temp.setReservationActive(false);
-		/*mediaReserved.setReserved(false);
-		try
+	public boolean cancelReservation(Account customerAccount, MediaCopy mediaReserved, Reservation reservedMedia){
+		Account account = customerAccount;
+		MediaCopy media = mediaReserved;
+		Reservation cancelReservation = new Reservation();
+		if(reservedMedia.getCustomerAccount().equals(account))
 		{
-			DBWriter.changeReserveStatus(mediaReserved);
-			return true;
+			try
+			{
+				cancelReservation = DBReader.getReservationQuery(reservedMedia.getReservationId());
+				DBWriter.changeReserveStatus(media);
+				DBWriter.deactivate(cancelReservation);
+				if(!cancelReservation.isReservationActive())
+				{
+					return true;
+				}
+			}
+			catch (IOException | SQLException e)
+			{
+				System.out.print("Error: Could not cancel reservation");
+			}
 		}
-		catch (IOException | SQLException e)
-		{
-			System.out.print("Error: Could not cancel reservation");
-		}*/
 		return false;
 	}
 }
