@@ -578,6 +578,69 @@ public class DBReader
 	}
 	
 	/**
+	 * Retrieves a rental from the database
+	 * @param mediaCopy the media copy's ID number
+	 * @return the Rental object or NULL
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
+	 * @precondition an integer greater than 0 for the media copy id
+	 * @postcondition a rental object with either the rental information for a found rental or with null values.
+	 */
+	public static Rental getRentalByCopyIDQuery(int mediaCopy) throws FileNotFoundException, IOException, SQLException 
+	{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		ResultSet myRs = null;
+		Rental rental = new Rental();
+		int accountID;
+		int copyID;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call get_activeRentalByCopyID(?)}");
+			
+			//Sets the parameter for the prepared statement.
+			myStmt.setInt(1, mediaCopy);
+			
+			//Execute the query to the database
+			myRs = myStmt.executeQuery();
+			
+			//Loops through the result set and sets all the properties to the corresponding object variables
+			while(myRs.next()){
+				
+				rental.setRentalID(myRs.getInt("rental_ID"));
+				rental.setDateRented(myRs.getDate("date_rented"));
+				rental.setDateDue(myRs.getDate("date_due"));
+				rental.setActive(myRs.getBoolean("active"));
+				accountID = myRs.getInt("account_ID");
+				rental.setAccount(DBReader.getAccountQuery(accountID));
+				copyID = myRs.getInt("copy_ID");
+				rental.setMediaCopy(DBReader.getMediaCopyQuery(copyID));
+				
+				//For Testing.  Comment out later.
+				System.out.println(rental.getRentalID() + ", " + rental.getDateRented() + ", " + rental.getDateDue() + 
+						", " + rental.isActive() + ", " + rental.getAccount().getAccountID() + ", " + rental.getMediaCopy().getMediaCopyId());
+			}
+		}
+		finally{
+			if (myRs != null) {
+				myRs.close();
+			}
+			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			db.endConnection(myConn); //Closes the connection
+		}
+		return rental;
+	}
+
+	/**
 	 * Retrieves a reservation from the database
 	 * @param reservation_ID the reservation's ID number
 	 * @return the Reservation object or NULL
@@ -709,6 +772,68 @@ public class DBReader
 		return reservation;
 	}
 	
+	/**
+	 * Retrieves a reservation from the database
+	 * @param reservation_ID the reservation's ID number
+	 * @return the Reservation object or NULL
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws SQLException 
+	 * @precondition an integer greater than 0 for the reservation id
+	 * @postcondition a reservation object with either the reservation information for a found reservation or with null values.
+	 */
+	public static Reservation getReservationByCopyIDQuery(int mediaCopy) throws FileNotFoundException, IOException, SQLException 
+	{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		ResultSet myRs = null;
+		Reservation reservation = new Reservation();
+		int accountID;
+		int copyID;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call get_activeReservationByCopyID(?)}");
+			
+			//Sets the parameter for the prepared statement.
+			myStmt.setInt(1, mediaCopy);
+			
+			//Execute the query to the database
+			myRs = myStmt.executeQuery();
+			
+			//Loops through the result set and sets all the properties to the corresponding object variables
+			while(myRs.next()){
+				
+				reservation.setReservationId(myRs.getInt("reservation_ID"));
+				reservation.setReservationDate(myRs.getDate("reservation_date"));
+				reservation.setReservationActive(myRs.getBoolean("active"));
+				accountID = myRs.getInt("account_ID");
+				reservation.setCustomerAccount(DBReader.getAccountQuery(accountID));
+				copyID = myRs.getInt("copy_ID");
+				reservation.setMediaCopy(DBReader.getMediaCopyQuery(copyID));
+				
+				//For Testing.  Comment out later.
+				System.out.println(reservation.getReservationId() + ", " + reservation.getReservationDate() + ", " + reservation.isReservationActive() + 
+						", " + reservation.getCustomerAccount().getAccountID() + ", " + reservation.getMediaCopy().getMediaCopyId());
+			}
+		}
+		finally{
+			if (myRs != null) {
+				myRs.close();
+			}
+			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			db.endConnection(myConn); //Closes the connection
+		}
+		return reservation;
+	}
+
 	/**
 	 * Retrieves a reservation from the database
 	 * @param reservation_ID the reservation's ID number

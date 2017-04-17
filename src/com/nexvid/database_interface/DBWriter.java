@@ -74,6 +74,40 @@ public class DBWriter {
 	}
 	
 	/**
+	 * 
+	 * @param account
+	 * @throws SQLException 
+	 */
+	public static void setAccountBalance(Account account) throws SQLException{
+		DatabaseConnector db = null;
+		Connection myConn = null;
+		CallableStatement myStmt = null;
+		try{
+			//Creates a Database object to establish a connection
+			db = new DatabaseConnector();
+			myConn = db.getConnection();
+			
+			// Creates a prepared statement query
+			myStmt = myConn.prepareCall("{call update_account_balance(?,?)}");
+			
+			//Fills in the query with the corresponding parameters
+			myStmt.setInt(1, account.getAccountID());
+			myStmt.setDouble(2, account.getBalanceOwed());
+			
+			System.out.println("Was the Account successfulling updated: " + myStmt.executeUpdate());
+		}
+		finally{			
+			if (myStmt != null) {
+				myStmt.close();
+			}
+			if (myConn != null){
+				System.out.println("Was connection closed: " + db.endConnection(myConn)); //Closes the connection
+			}
+		}
+		
+	}
+	
+	/**
 	 * Receives a SubAccount object that already exists in the database, then writes to the database.
 	 * This is used to modify the record. 
 	 * @param subAccount a subAccount object

@@ -1,8 +1,12 @@
 package com.nexvid.inventory_manager;
 
 import java.util.Date;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Calendar;
 import com.nexvid.accounts.*;
+import com.nexvid.database_interface.DBReader;
 
 /**
  * The Rental class is responsible for creating Rental objects.
@@ -28,6 +32,17 @@ public class Rental {
 	 */
 	public Rental()
 	{
+		
+	}
+	
+	public Rental(Account account, MediaCopy mediaCopy, java.sql.Date dateRented,
+			java.sql.Date dueDate){
+		this.account = account;
+		this.mediaCopy = mediaCopy;
+		this.dateRented = dateRented;//sqlToday();
+		this.dateDue = dueDate;// generateDueDate(mediaCopy, Calendar.getInstance());
+		this.isActive = true;
+		
 		
 	}
 	
@@ -170,7 +185,7 @@ public class Rental {
 	{
 		this.isActive = isActive;
 	}
-	
+		
 	public String rentalToJSONString(){
 		
 		String _JSON =  "{\"rentalID\":\"" + this.rentalID + "\"," +
